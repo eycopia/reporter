@@ -1,0 +1,29 @@
+{
+	"require": {
+		"php": ">=5.2.4",
+		"eycopia/excel": "^1.0"
+	},
+	"require-dev": {
+		vendor
+		index
+		system
+		.idea
+
+
+		application/**/*
+		!application/controllers/Report.php
+		!application/controllers/Project.php
+		!application/controllers/admin
+		!application/models/reporter/*.php
+!application/views/reporter
+
+
+*/logs/log-*.php
+		!*/logs/index.html
+		*/cache/*
+!*/cache/index.html
+		!*/cache/.htaccess
+		"mikey179/vfsStream": "1.1.*",
+		"kenjis/ci-phpunit-test": "^0.11.0"
+	}
+}
