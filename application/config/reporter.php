@@ -1,13 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
-$templateDirectory = 'reporter/';
+$namePackege = 'reporter/';
 
 //path to base template for report site
-$config['rpt_views'] = $templateDirectory ;
-$config['rpt_template'] = $templateDirectory.'template/';
-$config['rpt_admin_template'] = $templateDirectory .'admin/';
+$config['rpt_views'] = $namePackege ;
+$config['rpt_template'] = $namePackege.'template/';
+$config['rpt_admin_template'] = $namePackege .'admin/';
 
-$config['rpt_assets'] = 'assets/' . $templateDirectory;
-$config['rpt_models'] = $templateDirectory;
-$config['rpt_controllers'] = $templateDirectory;
+$config['rpt_assets'] = 'assets/' . $namePackege;
+$config['rpt_models'] = $namePackege;
+$config['rpt_controllers'] = $namePackege;
+
+//adapter for auth
+$config['rpt_auth_adapter'] = $namePackege.'Ion_auth_adapter';
+$config['rpt_login'] = 'Auth/login';

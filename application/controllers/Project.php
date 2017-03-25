@@ -6,29 +6,31 @@ class Project extends CI_Controller
         $models = $this->config->item('rpt_models');
         $this->load->model( $models . 'Report_m');
         $this->load->model($models . 'Project_m');
-//        $this->ion_auth->isLogin();
-//        $this->ion_auth->login();
-        $_SESSION['user_id'] = 1;
-
+        $this->reporter_auth->isLogin();
     }
 
     public function index(){
-        $projects = $this->project_m->getUserProjects($_SESSION['user_id']);
-        $totalProjects = count($projects);
-        if($totalProjects == 1){
-            return $this->name($projects[0]->slug);
-        }else if( $totalProjects == 0) {
-            $this->session->set_flashdata('message', $this->lang->line('empty_projects'));
-            $this->session->set_flashdata('type_message', 'success');
-        }
-        $data = array(
-            'main_content' => $this->config->item('rpt_views') . "projects",
-            'title_page' => $this->lang->line('index_title'),
-            'projects' =>  $projects
-        );
-        $this->load->view( $this->config->item('rpt_template') . 'index', $data);
+            $projects = $this->project_m->getUserProjects($_SESSION['user_id']);
+            $totalProjects = count($projects);
+            if($totalProjects == 1){
+                return $this->name($projects[0]->slug);
+            }else if( $totalProjects == 0) {
+                $this->session->set_flashdata('message', $this->lang->line('empty_projects'));
+                $this->session->set_flashdata('type_message', 'success');
+            }
+            $data = array(
+                'main_content' => $this->config->item('rpt_views') . "projects",
+                'title_page' => $this->lang->line('index_title'),
+                'projects' =>  $projects
+            );
+            $this->load->view( $this->config->item('rpt_template') . 'index', $data);
     }
 
+    /**
+     * Show a grid with the project reports
+     * @param $name_project
+     * @return mixed
+     */
     public function name($name_project){
         $slug = urldecode($name_project);
         $rpt_template = $this->config->item('rpt_template');
