@@ -93,9 +93,11 @@ if(isset($css_files)){
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            <?php echo isset($title_page) ? $title_page : 'Untitled'; ?>
-                        </h1>
+                        <?php
+                            if(isset($title_page)){
+                                echo "<h1 class='page-header'> $title_page</h1>";
+                            }
+                        ?>
                         <?php if(isset($breadcrumb)){ ?>
                             <ol class="breadcrumb">
                                 <?php foreach( $breadcrumb as $section ){  ?>

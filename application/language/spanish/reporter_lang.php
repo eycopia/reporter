@@ -48,4 +48,5 @@ $lang['button_download_all'] = 'Descargar todo';
 $lang['button_download_view'] = 'Descargar esta tabla';
 $lang['button_columns_view'] = 'Ocultar/mostrar';
 
-$lang['empty_projects'] = 'Necesita crear un nuevo proyecto desde el menú de Configuraciones';
+$lang['empty_projects'] = 'Usted no tiene ningun proyecto asignado, si es administrador puede crear un nuevo proyecto desde el menu: ' .$lang['menu_admin'];
+$lang['unauthorized_project'] = "Usted no tiene permisos para ver el proyecto";

@@ -52,6 +52,11 @@ class Ion_auth_adapter  implements interfaceAuthReporter
      */
     public function isAdmin()
     {
-        // TODO: Implement isAdmin() method.
+        return $this->CI->ion_auth->is_admin();
+    }
+
+    public function get_user_id()
+    {
+        return $this->CI->ion_auth->get_user_id();
     }
 }

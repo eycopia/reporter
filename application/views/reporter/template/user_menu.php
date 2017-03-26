@@ -1,9 +1,9 @@
-<?php if(isset($_SESSION['user_id'])){ ?>
+<?php if(!is_null($this->reporter_auth->get_user_id())){ ?>
 <ul class="nav navbar-right top-nav">
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> <?php echo $this->lang->line('menu_admin'); ?> <b class="caret"></b></a>
         <ul class="dropdown-menu alert-dropdown">
-          <?php if( true ) { //todo: corregir $this->ion_auth->is_admin() ) { ?>
+          <?php if( $this->reporter_auth->isAdmin() ) { ?>
             <li>
                 <a href="<?php echo site_url('admin/users'); ?>"><i class="fa fa-fw fa-users"></i> <?php echo $this->lang->line('menu_users'); ?></a>
             </li>

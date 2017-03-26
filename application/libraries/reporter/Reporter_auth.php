@@ -59,6 +59,11 @@ class Reporter_auth implements interfaceAuthReporter
      */
     public function isAdmin()
     {
-        $this->adapter->isAdmin();
+        return $this->adapter->isAdmin();
+    }
+
+    public function get_user_id()
+    {
+        return $this->adapter->get_user_id();
     }
 }

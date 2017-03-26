@@ -30,4 +30,10 @@ interface interfaceAuthReporter{
      * @return boolean
      */
     public function isAdmin();
+
+    /**
+     * Get the id for the current user
+     * @return integer
+     */
+    public function get_user_id();
 }

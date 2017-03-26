@@ -29,10 +29,10 @@ class Project_m extends Grid implements interfaceGrid{
      */
     public function getUserProjects($user_id){
         $join = $where = '';
-//        if(true) {//todo: mejora esta forma de validar al administrador !$this->ion_auth->is_admin()){
-//            $where  = " and  u.user_id = $user_id";
-//            $join = "LEFT JOIN user_projects as u on u.idProject = p.idProject ";
-//        }
+        if(!$this->reporter_auth->isAdmin()) {
+            $where  = " and  u.user_id = $user_id";
+            $join = "LEFT JOIN user_projects as u on u.idProject = p.idProject ";
+        }
 
         $q = $this->db->query("SELECT * FROM $this->table as p $join".
             " WHERE p.status=1 $where");
