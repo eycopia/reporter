@@ -32,6 +32,11 @@ interface interfaceAuthReporter{
     public function isAdmin();
 
     /**
+     * Check if the current user is admin
+     * @return HttpRequest
+     */
+    public function checkAdmin();
+    /**
      * Get the id for the current user
      * @return integer
      */

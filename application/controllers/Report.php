@@ -4,9 +4,9 @@ class Report extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model( $this->config->item('rpt_models') . 'report_m');
+		$this->load->model('report_m');
 		$this->validateUserReport();
-//		$this->ion_auth->isLogin();
+		$this->reporter_auth->isLogin();
 	}
 
 	public function show($id){
@@ -47,10 +47,11 @@ class Report extends CI_Controller{
     }
 
     private function validateUserReport(){
+        $this->load->model('Project_m');
         $this->load->library('CI_URI');
         $idReport = $this->uri->segment(3, null);
         $report = $this->report_m->find($idReport);
-//        $this->ion_auth->validateUserProject($_SESSION['user_id'], $report->idProject);
+        $this->Project_m->validate_user($this->reporter_auth->get_user_id(), $report->idProject);
     }
 
 	private function getBreadCrumb($report){

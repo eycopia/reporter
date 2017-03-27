@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require_once(__DIR__."/interfaceAuthReporter.php");
+require_once APPPATH."third_party/reporter/libraries/interfaceAuthReporter.php";
+require_once APPPATH."third_party/reporter/libraries/Ion_auth_adapter.php";
 
 
 
@@ -60,6 +61,14 @@ class Reporter_auth implements interfaceAuthReporter
     public function isAdmin()
     {
         return $this->adapter->isAdmin();
+    }
+
+    /**
+     * Check if the current user is admin
+     * @return HttpRequest
+     */
+    public function checkAdmin(){
+        $this->adapter->checkAdmin();
     }
 
     public function get_user_id()

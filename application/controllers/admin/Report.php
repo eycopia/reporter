@@ -32,7 +32,7 @@ class Report extends AdminGrid{
     /**
      * @var string Index view
      */
-    protected $index_view = 'report/grid';
+    protected $index_view = null;
 
     /**
      * @var string Title page
@@ -48,21 +48,17 @@ class Report extends AdminGrid{
             'field' => 'project',
             'label' => 'Project',
             'rules' => 'required'
-        ),
-        array(
-            'field' => 'connection',
-            'label' => 'Server Connection',
-            'rules' => 'required'
         ));
 
     public function __construct(){
         parent::__construct();
-        $this->ion_auth->isLogin();
-        $this->ion_auth->validateAdminUser();
-        $this->load->model('admin/AdminReport_m', 'model');
+        $this->reporter_auth->isLogin();
+        $this->reporter_auth->checkAdmin();
+        $this->load->model( 'admin/AdminReport_m', 'model');
         $this->load->model('VarReport_m');
         $this->load->model('admin/NotifyReport_m');
         $this->title_page = $this->lang->line('admin_report_title');
+        $this->index_view = $this->config->item('rpt_template') . 'grid';
     }
 
     public function add(){
@@ -85,16 +81,18 @@ class Report extends AdminGrid{
      * @return mixed
      */
     private function prepareForm($idReport=null){
+        $view = $this->config->item('rpt_views');
         $this->load->model('server_m');
         $this->load->model('project_m');
         $this->load->model('VarTypes_m');
+        $assets = $this->config->item('rpt_assets');
         $custom_js_files = array(base_url('assets/grocery_crud/texteditor/ckeditor/ckeditor.js'),
             base_url('assets/libs/ace/ace.js'),
-            base_url('assets/js/report/add.js')
+            base_url($assets . 'js/add.js')
         );
         $data = array(
-            'main_content' =>'admin/frmReport',
-            'custom_js_files' => $custom_js_files,
+            'main_content' =>$view . 'admin/frmReport',
+            'js_files' => $custom_js_files,
             'projects' => $this->project_m->getProjects(),
             'servers' => $this->server_m->getServers(),
             'type_vars' => $this->VarTypes_m->getTypes()
@@ -113,7 +111,7 @@ class Report extends AdminGrid{
                 'title'=> $this->lang->line('menu_report'),
                 'link'=> site_url('admin/report')));
         $data['columns'] = $this->getColumns($data);
-        return $this->load->view('template/index', $data);
+        return $this->load->view($view . "template/index", $data);
     }
 
     /**
@@ -227,7 +225,6 @@ class Report extends AdminGrid{
         $report = array(
             'title' => $reportValues['title'],
             'project' => $reportValues['project'],
-            'connection' => $reportValues['connection'],
             'description' => $reportValues['description'],
             'details' => $reportValues['details'],
             'columns' => (isset($reportValues['columns'])) ? $reportValues['columns'] : '',
@@ -237,7 +234,9 @@ class Report extends AdminGrid{
             'reload' => isset($reportValues['reload']) ? $reportValues['reload'] : null,
             'format_notify' => $reportValues['format_notify']
         );
-//        echo "<pre>";print_r($report);exit;
+        if(is_null($reportValues['connection'])){
+            $report['connection'] = $reportValues['connection'];
+        }
         if(isset($reportValues['report'])){
             $report['idReport'] = $reportValues['report'];
         }

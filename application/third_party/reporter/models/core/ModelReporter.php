@@ -1,5 +1,5 @@
 <?php
-require_once APPPATH."models/reporter/core/interfaceAccessDb.php";
+require_once APPPATH."third_party/reporter/models/core/interfaceAccessDb.php";
 /**
  * Class ModelReporter
  *

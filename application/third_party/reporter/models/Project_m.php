@@ -1,7 +1,5 @@
-<?php
-require_once APPPATH . "models/reporter/core/interfaceGrid.php";
-require_once APPPATH . "models/reporter/core/Grid.php";
-require_once APPPATH . "models/reporter/core/ModelReporter.php";
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once APPPATH."third_party/reporter/autoload_reporter.php";
 
 class Project_m extends Grid implements interfaceGrid{
 
@@ -74,6 +72,24 @@ class Project_m extends Grid implements interfaceGrid{
         return isset($data->idProject) ? true : false;
     }
 
+    /**
+     * Check if the current user is authorized for the project
+     * @param $idUser user to evaluate
+     * @param $idProject project id
+     */
+    public function validate_user($idUser, $idProject)
+    {
+        $project = $this->Project_m->find($idProject);
+        $is_admin = $this->reporter_auth->isAdmin();
+        if (!$is_admin && !is_null($project) && !$this->Project_m->hasPermission($idUser, $idProject)) {
+            $this->session->set_flashdata('type_message', 'danger');
+            $message = $this->lang->line('unauthorized_project')
+                . ": {$project->name}";
+            $this->session->set_flashdata('message', $message);
+            redirect(site_url());
+        }
+    }
+
     public function setProject($idProject){
         $this->idProject = $idProject;
     }
@@ -96,24 +112,33 @@ class Project_m extends Grid implements interfaceGrid{
         $that = $this;
         return array(
             array('dt' => 'Reports', 'db' => 'idReport', 'table' => 'r',
-                "formatter" => function($d, $row) {
-                    $url = site_url('report/grid/'.$d);
-                    if(strlen($row['url']) > 0 ){
-                        $url = site_url($row['url']);
-                    }
-                    return "<a class='' href='$url'>
+                "formatter" => function($d, $row) use ($that ) {
+                    $url = $that->generarRuta($d, $row);
+                    return "<a class='' $url>
                     ".$row['title']."</a>";
             }),
             array('dt' => 'Description', 'db' => 'description', 'type' => 'column'),
             array('dt' => '', 'db' => 'idReport', 'type' => 'column',
                 "formatter" => function($d, $row) use ($that){
-                    $url = site_url('report/grid/'.$d);
-                    if(strlen($row['url']) > 0 ){
-                        $url = site_url($row['url']);
-                    }
-                    return "<a class='btn btn-success' href='$url'>
+                    $url = $this->generarRuta($d, $row);
+                    return "<a class='btn btn-success' $url>
                     <i class='fa fa-eye'></i> {$that->lang->line('show')}</a>";
                 }),
         );
+    }
+
+    private function generarRuta($d, $row){
+        $text = trim($row['url']);
+        $pattern = "/\b((www|https?)[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/)))/";
+        $target = '';
+        if(strlen($text) > 0 && preg_match($pattern, $text)){
+            $url = $text;
+            $target = 'target="_blank"';
+        }else if(strlen($text) > 0 ){
+            $url = site_url($row['url']);
+        }else{
+            $url = site_url('report/grid/'.$d);
+        }
+        return "href='$url' target = '$target'";
     }
 }

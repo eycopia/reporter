@@ -1,8 +1,5 @@
-<?php
-require_once APPPATH . "models/reporter/core/interfaceGrid.php";
-require_once APPPATH . "models/reporter/core/Grid.php";
-require_once APPPATH . "models/reporter/core/ModelReporter.php";
-require_once APPPATH . "models/reporter/core/SyntaxAnalyze.php";
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once APPPATH."third_party/reporter/autoload_reporter.php";
 
 class Report_m extends Grid implements interfaceGrid {
 
@@ -17,9 +14,9 @@ class Report_m extends Grid implements interfaceGrid {
 	public function __construct()
     {
         parent::__construct( new ModelReporter() );
-        $this->load->model('reporter/component_m');
-        $this->load->model('reporter/project_m');
-        $this->load->model('reporter/server_m');
+        $this->load->model('component_m');
+        $this->load->model('project_m');
+        $this->load->model('server_m');
     }
 
     public function search($q){

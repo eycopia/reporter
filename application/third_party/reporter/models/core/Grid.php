@@ -1,6 +1,6 @@
 <?php
 require_once 'DatatablesSSP.php';
-require_once 'SyntaxAnalyze.php';
+//require_once 'SyntaxAnalyze.php';
 require_once 'Filter.php';
 /**
  * CREATE DYNAMIC GRIDS WITH JQUERY DATATABLES
@@ -89,7 +89,7 @@ class Grid extends CI_Model
 
     private function  initFilterGrid($filters){
         if(isset($filters)){
-            $this->load->model('reporter/VarTypes_m'); //todo: necesito quitar esto
+            $this->load->model('VarTypes_m'); //todo: necesito quitar esto
             $varTypes = $this->VarTypes_m->getTypes();
             $this->filterGrid = new Filter();
             $this->filterGrid->init($varTypes, $filters);

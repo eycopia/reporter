@@ -1,7 +1,5 @@
-<?php
-require_once APPPATH . "models/ModelReporter.php";
-require_once APPPATH . "models/Datatables/Grid.php";
-require_once APPPATH . "models/Datatables/interfaceGrid.php";
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once APPPATH . "third_party/reporter/autoload_reporter.php";
 
 class AdminReport_m extends Grid implements interfaceGrid{
     private $table = "report";
@@ -28,9 +26,9 @@ class AdminReport_m extends Grid implements interfaceGrid{
         $sql = sprintf("INSERT INTO {$this->table} "
             ."(`idUser`,`idProject`, `idServerConnection`, `title`,"
             ."`description`,`url`,`sql`, `items_per_page`,`auto_reload`) "
-            ." VALUE (%d,%d, %d, '%s','%s', '%s', \"%s\", %d, '%s')",
+            ." VALUE (%d,%d, %s, '%s','%s', '%s', \"%s\", %d, '%s')",
             $_SESSION['user_id'],
-            $data['project'], $data['connection'],
+            $data['project'], isset($data['connection']) ? $data['connection'] : 'null',
             strip_tags($data['title'],$this->htmlValid),
             strip_tags($data['description'], $this->htmlValid),
             $data['url'],
@@ -50,7 +48,7 @@ class AdminReport_m extends Grid implements interfaceGrid{
         $update = array(
            'idUser' => $_SESSION['user_id'],
            'idProject' => $data['project'],
-            'idServerConnection' => $data['connection'],
+            'idServerConnection' => isset($data['connection']) ? $data['connection'] : null,// $data['connection'],
             'title' => strip_tags($data['title'],$this->htmlValid),
             'description' => strip_tags($data['description'], $this->htmlValid),
             'details' => strip_tags($data['details'], $this->htmlValid),

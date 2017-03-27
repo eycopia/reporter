@@ -55,6 +55,17 @@ class Ion_auth_adapter  implements interfaceAuthReporter
         return $this->CI->ion_auth->is_admin();
     }
 
+    /**
+     * Check if the current user is admin
+     * @return HttpRequest
+     */
+    public function checkAdmin()
+    {
+        if(!$this->isAdmin()){
+            redirect(base_url());
+        }
+    }
+
     public function get_user_id()
     {
         return $this->CI->ion_auth->get_user_id();
