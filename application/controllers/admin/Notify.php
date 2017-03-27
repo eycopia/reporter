@@ -3,8 +3,8 @@ class Notify extends  CI_Controller{
 
     public function __construct(){
         parent::__construct();
+        $this->reporter_auth->isLogin();
         $this->load->model('notify_m');
-        $this->ion_auth->isLogin();
     }
 
     public function search(){

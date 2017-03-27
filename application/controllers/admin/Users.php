@@ -11,9 +11,9 @@ class Users extends CI_Controller{
     {
         parent::__construct();
 
-        $this->ion_auth->validateAdminUser();
+        $this->reporter_auth->isLogin();
+        $this->reporter_auth->checkAdmin();
         $this->load->library('grocery_CRUD');
-        $this->ion_auth->isLogin();
     }
 
     /**
@@ -29,15 +29,17 @@ class Users extends CI_Controller{
             $crud->set_subject('Users');
             $crud->set_relation_n_n('groups', 'users_groups', 'groups', 'user_id', 'group_id', 'name');
             $crud->set_relation_n_n('projects', 'user_projects', 'project', 'user_id', 'idProject', 'name');
-            $crud->fields('username','full_name', 'status', 'groups', 'projects');
-            $crud->required_fields('username','full_name');
-            $crud->edit_fields('full_name', 'status', 'groups', 'projects','updated');
-            $crud->callback_before_insert(array($this, 'addCentralLogin'));
-            $crud->callback_before_update(array($this, 'editUpdated'));
+            $crud->fields('username', 'email', 'first_name', 'last_name', 'company', 'phone', 'groups', 'projects');
+            $crud->columns('username', 'email', 'first_name', 'last_name');
+            $crud->required_fields('username','first_name', 'password');
+            //:todo integrar con ion auth
+//            $crud->edit_fields('full_name', 'status', 'groups', 'projects','updated');
+//            $crud->callback_before_insert(array($this, 'addCentralLogin'));
+//            $crud->callback_before_update(array($this, 'editUpdated'));
             $output = $crud->render();
             $output->title_page = 'Users for ' . APP_NAME ;
-            $output->main_content =  'admin';
-            $this->load->view('template/index',$output);
+            $output->main_content =  $this->config->item('rpt_views') . 'admin';
+            $this->load->view( $this->config->item('rpt_template') . 'index',$output);
         }catch(Exception $e){
             show_error($e->getMessage().' --- '.$e->getTraceAsString());
         }
