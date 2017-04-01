@@ -158,9 +158,7 @@ class Report extends AdminGrid{
         $idReport = $data['report']['idReport'];
         try {
             $this->model->edit($data['report']);
-            if(isset($data['vars']) && !empty($data['vars'])){
-                $this->VarReport_m->save($data['vars'], $idReport);
-            }
+            $this->VarReport_m->save($data['vars'], $idReport);
             if(empty($data['report']['url'])){
                 $this->getGridColumns($idReport);
                 $data['report']['columns'] =  $this->mergeColumns($data['report']['columns']);
@@ -234,7 +232,7 @@ class Report extends AdminGrid{
             'reload' => isset($reportValues['reload']) ? $reportValues['reload'] : null,
             'format_notify' => $reportValues['format_notify']
         );
-        if(is_null($reportValues['connection'])){
+        if(is_numeric($reportValues['connection'])){
             $report['connection'] = $reportValues['connection'];
         }
         if(isset($reportValues['report'])){

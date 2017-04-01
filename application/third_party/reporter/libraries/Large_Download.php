@@ -13,17 +13,24 @@ class Large_Download {
     private $filename = null;
 
     public function __construct($params){
+        $this->model = $params['model'];
+        $this->grid = $this->model->gridDefinition();
+        $this->con = isset($this->grid['db_connection']) ? $this->grid['db_connection'] : $this->model->db;
+        $this->model->prepare($this->grid);
         if(isset($_GET['datatable'])){
             foreach(json_decode($_GET['datatable'], true) as $key =>  $param ){
                 $_REQUEST[$key] =  $param;
             }
         }
+        $this->restart();
+    }
+
+    /**
+     * Configure for restart report download or save
+     */
+    public function restart(){
         $_REQUEST['length']  = 1000;
-        $_REQUEST['start'] = isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
-        $this->model = $params['model'];
-        $this->grid = $this->model->gridDefinition();
-        $this->con = isset($this->grid['db_connection']) ? $this->grid['db_connection'] : $this->model->db;
-        $this->model->prepare($this->grid);
+        $_REQUEST['start'] = 0;// isset($_REQUEST['start']) ? $_REQUEST['start'] : 0;
     }
 
 

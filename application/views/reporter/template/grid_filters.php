@@ -9,7 +9,9 @@
 </style>
 <div class="col-sm-12">
     <?php
-    if(!$table['avoid_basic_filter']){ ?>
+    $btnSearch = false;
+    if(!$table['avoid_basic_filter']){
+        $btnSearch = true;  ?>
     <div class="col-sm-3">
         <label class="form-label"><?php echo $this->lang->line('label_search'); ?>:</label>
         <input type="text" id="searchBox" class="form-control" value=""
@@ -30,6 +32,7 @@
     </div>
     <?php }
     if(is_array($table['filters'])) foreach ($table['filters'] as $filter) {
+        $btnSearch = true;
         if($filter['type'] == 'multiple'){
             echo "<div class=\"col-sm-4\"><label class='form-label'>{$filter['label']}:</label><br>";
             $options = explode(',', $filter['value']);
@@ -55,11 +58,13 @@
                        class="form-control <?php echo $filter['class']; ?>" value="<?php echo $filter['value']; ?>"
                        placeholder="<?php echo $filter['label'];?>">
             </div>
-        <?php }} ?>
+        <?php }}
+    if($btnSearch){    ?>
     <div class="col-lg-1 col-sm-2">
         <div clas=""></div>
         <label class="form-label clear"><br></label>
         <button class="btn btn-primary" id="runSearch">
             <i class="fa fa-search"></i> <?php echo $this->lang->line('button_search'); ?></button>
     </div>
+    <?php } ?>
 </div>

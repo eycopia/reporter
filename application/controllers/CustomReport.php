@@ -22,7 +22,8 @@ class CustomReport extends CI_Controller
         $this->idReport = $idReport;
         $this->report_m->loadReport($idReport);
         $this->report = $this->report_m->gridDefinition();
-        $CI->remoteDb = $this->report['db_connection'];
+        $CI->remoteDb = $this->report_m->getDbConnection();
+        $this->reportUrl = $this->report_m->getReportDataUrl();
         $idProject = $this->report['project']['idProject'];
         $this->ion_auth->isLogin();
         $this->ion_auth->validateUserProject($_SESSION['user_id'], $idProject);

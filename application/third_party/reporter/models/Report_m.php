@@ -57,7 +57,6 @@ class Report_m extends Grid implements interfaceGrid {
 			JOIN server_connection as s on s.idServerConnection = r.idServerConnection
 			WHERE idReport = $id and p.status = 1");
         $this->report = $query->row_object();
-        $this->con = $this->server_m->getDbConnection($this->report->idServerConnection);
     }
 
     public function getReportsPerProject(){
@@ -78,25 +77,20 @@ class Report_m extends Grid implements interfaceGrid {
 
     public function gridDefinition(){
         $vars = $this->declareVars();
-        $database = is_null($this->report->oracle) ? 'mysql' : 'oracle';
         $dbColumns = json_decode($this->report->columns, true);
         $project = array(
                 'name' => $this->report->project,
                 'idProject' =>$this->report->idProject);
         $sql = trim($this->report->sql);
-        $data_url = site_url('report/show/'.$this->report->idReport);
-
-        if(empty($sql)){
-            $data_url = site_url($this->report->url."/show");
-        }
+        $database = is_null($this->report->oracle) ? 'mysql' : 'oracle';
         return array(
             'title' => $this->report->title,
             'description' => $this->report->details,
             'project' => $project,
-            'data_url' => $data_url,
+            'data_url' => $this->getReportDataUrl(),
             'filters' => (count($vars) > 0) ? $vars : 'basic',
             'columns' => (count($dbColumns)>0) ? $dbColumns : array(),
-            'db_connection' => $this->con,
+            'db_connection' => $this->getDbConnection(),
             'pagination' => $this->report->pagination,
             'database' => $database,
             'sql' => $sql,
@@ -129,5 +123,27 @@ class Report_m extends Grid implements interfaceGrid {
             $url = site_url('report/download/'.$this->report->idReport);
         }
         return $url;
+    }
+
+    /**
+     * Devuelve la conexion a la base de datos que usara el reporte
+     */
+    public function getDbConnection()
+    {
+        return  $this->server_m->getDbConnection($this->report->idServerConnection);
+    }
+
+
+    /**
+     * Devuelve la url donde esta el report
+     * @return string
+     */
+    public function getReportDataUrl()
+    {
+        $data_url = site_url('report/show/'.$this->report->idReport);
+        if(!empty($this->report->url)){
+            $data_url = site_url($this->report->url."/show");
+        }
+        return $data_url;
     }
 }

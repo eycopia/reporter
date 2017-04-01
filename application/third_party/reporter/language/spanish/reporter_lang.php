@@ -50,3 +50,6 @@ $lang['button_columns_view'] = 'Ocultar/mostrar';
 
 $lang['empty_projects'] = 'Usted no tiene ningun proyecto asignado, si es administrador puede crear un nuevo proyecto desde el menu: ' .$lang['menu_admin'];
 $lang['unauthorized_project'] = "Usted no tiene permisos para ver el proyecto";
+
+$lang['send_email_error'] = 'No se pudo enviar el email';
+$lang['send_email_error_html'] = "Nota: Se muestra sólo una parte del reporte, debe revizar el archivo adjunto para obtener el reporte completo.";
