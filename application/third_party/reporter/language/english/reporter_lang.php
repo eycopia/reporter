@@ -55,6 +55,5 @@ $lang['button_columns_view'] = 'Hide/show';
 //for app
 $lang['empty_projects'] = "You don´t have any project assigned, if you are an administrator You can create a new project from the menu: ".$lang['menu_admin'];
 $lang['unauthorized_project'] = "You don't have permission for this project";
-
 $lang['send_email_error'] = 'Mail could not be sent';
 $lang['send_email_error_html'] = "Note: Shown only a part of the report, the attached file should check to get the full report.";
