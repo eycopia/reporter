@@ -1,7 +1,7 @@
 ## Reporter
 Crea reportes de manera rápida y fácil
 
-###Convierte una sentencia como esta:
+### Convierte una sentencia como esta:
 ```
 select f.title, f.rental_rate, f.special_features, 
 group_concat(concat(a.first_name, ' ', a.last_name) SEPARATOR ', ') as actors,
@@ -18,15 +18,11 @@ group by f.film_id
 
 ### Instalación
 
-<strong>Opción Uno</strong>
-
-Sólo tienes que descargar los archivos de este repositorio, colocarlos en 
+<strong>Opción Uno: </strong> Sólo tienes que descargar los archivos de este repositorio, colocarlos en 
 la carpeta correspondiente. Luego debes restaura el archivo <b>ReporterExample.sql</b> 
 ubicado dentro de la carpeta <b>docs</b>.
 
-<strong>Opción Dos</strong>
-
-Descarga el proyecto funcional, restaura la base de datos  y edita el archivo config.php
+<strong>Opción Dos: </strong> Descarga el proyecto funcional, restaura la base de datos  y edita el archivo config.php
 <b><a href='https://drive.google.com/open?id=0B3Z09dwANdmuanAtTFpqUUNnQm8'>Descargar</a></b>
 
 ### Únete
