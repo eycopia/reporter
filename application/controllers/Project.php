@@ -16,6 +16,7 @@ class Project extends CI_Controller
 
     public function index(){
         $projects = $this->Project_m->getUserProjects($this->user);
+        $is_pretty = $this->config->item('pretty_url');
         $totalProjects = count($projects);
         if($totalProjects == 1){
             return $this->name($projects[0]->slug);
@@ -26,7 +27,8 @@ class Project extends CI_Controller
         $data = array(
             'main_content' => $this->config->item('rpt_views') . "projects",
             'title_page' => $this->lang->line('index_title'),
-            'projects' =>  $projects
+            'projects' =>  $projects,
+            'is_pretty' => $is_pretty
         );
         $this->load->view( $this->config->item('rpt_template') . 'index', $data);
     }

@@ -31,8 +31,7 @@ class Report extends CI_Controller{
             'table' => $table,
 			'report' => $report,
             'breadcrumb' => $breadcrumb,
-            'data_url' => site_url('report/show/'.$id),
-			'custom_js_files' => array(base_url('assets/js/report/main.js')),
+            'data_url' => site_url('report/show/'.$id)
 		);
 		$this->load->view($template, $data);
 	}
