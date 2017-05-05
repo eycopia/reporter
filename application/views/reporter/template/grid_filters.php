@@ -1,3 +1,4 @@
+
 <style>
     .select2-container .select2-selection--multiple{
         max-height: 34px!important;
@@ -33,32 +34,34 @@
     <?php }
     if(is_array($table['filters'])) foreach ($table['filters'] as $filter) {
         $btnSearch = true;
-        if($filter['type'] == 'multiple'){
-            echo "<div class=\"col-sm-4\"><label class='form-label'>{$filter['label']}:</label><br>";
-            $options = explode(',', $filter['value']);
-            echo "<select class='form-control {$filter['class']}' multiple name='{$filter['name']}'>";
-            foreach($options as $option){
-                echo "<option value='{$option}' selected='selected'>$option</option>";
-            }
-            echo "</select></div>";
-        }else if($filter['type'] == 'select'){
-            echo "<div class=\"col-sm-2\"><label class='form-label'>{$filter['label']}:</label><br>";
-            $options = explode(',', $filter['value']);
-            echo "<select class='form-control {$filter['class']}'  name='{$filter['name']}'>";
-            echo "<option value='' selected='selected'>Todos</option>";
-            foreach($options as $option){
-                echo "<option value='{$option}'>$option</option>";
-            }
-            echo "</select></div>";
-        }else{
+        $this->load->view($table['viewsFilters'][$filter['type']], array('filter' => $filter));
+//        if($filter['type'] == 'multiple'){
+//            echo "<div class=\"col-sm-4\"><label class='form-label'>{$filter['label']}:</label><br>";
+//            $options = explode(',', $filter['value']);
+//            echo "<select class='form-control {$filter['class']}' multiple name='{$filter['name']}'>";
+//            foreach($options as $option){
+//                echo "<option value='{$option}' selected='selected'>$option</option>";
+//            }
+//            echo "</select></div>";
+//        }else if($filter['type'] == 'select'){
+//            echo "<div class=\"col-sm-2\"><label class='form-label'>{$filter['label']}:</label><br>";
+//            $options = explode(',', $filter['value']);
+//            echo "<select class='form-control {$filter['class']}'  name='{$filter['name']}'>";
+//            echo "<option value='' selected='selected'>Todos</option>";
+//            foreach($options as $option){
+//                echo "<option value='{$option}'>$option</option>";
+//            }
+//            echo "</select></div>";
+//        }else{
             ?>
-            <div class="col-sm-2">
-                <label class='form-label'><?php echo $filter['label'];?>:</label>
-                <input type="text" id="<?php echo $filter['name']; ?>" name="<?php echo $filter['name']; ?>"
-                       class="form-control <?php echo $filter['class']; ?>" value="<?php echo $filter['value']; ?>"
-                       placeholder="<?php echo $filter['label'];?>">
-            </div>
-        <?php }}
+<!--            <div class="col-sm-2">-->
+<!--                <label class='form-label'>--><?php //echo $filter['label'];?><!--:</label>-->
+<!--                <input type="text" id="--><?php //echo $filter['name']; ?><!--" name="--><?php //echo $filter['name']; ?><!--"-->
+<!--                       class="form-control --><?php //echo $filter['class']; ?><!--" value="--><?php //echo $filter['value']; ?><!--"-->
+<!--                       placeholder="--><?php //echo $filter['label'];?><!--">-->
+<!--            </div>-->
+        <?php //}
+    }
     if($btnSearch){    ?>
     <div class="col-lg-1 col-sm-2">
         <div clas=""></div>

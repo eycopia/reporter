@@ -72,6 +72,9 @@ class No_auth_adapter  implements interfaceAuthReporter
      */
     public function get_user_id()
     {
+        if(!isset($_SESSION['user_id'])){
+            $this->login();
+        }
         return $_SESSION['user_id'];
     }
 }

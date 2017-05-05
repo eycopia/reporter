@@ -276,12 +276,12 @@ table {
     font-size: 0.95em;
 }
 
-thead {
+#datatable thead {
     background-color: #337AB7;
     color: white;
 }
 
-thead th {
+#datatable thead th {
     border-right: 1px solid #2a5cb7 !important;
     border-left: 0px !important;
     border-top: 0px !important;
@@ -306,7 +306,7 @@ table.table-bordered.dataTable{
     background: #DEECFF !important; /*#CCFC9F */
 }
 
-tr:hover {
+#datatable tr:hover {
     background-color: rgba(80, 157, 212, 0.1) !important;
 }
 

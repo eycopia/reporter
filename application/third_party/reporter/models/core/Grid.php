@@ -107,6 +107,7 @@ class Grid extends CI_Model
         $rs =  array(
             "columns" => $this->makeColumns(),
             "filters" => $this->filterGrid->getFilters(),
+            "viewsFilters" => $this->filterGrid->getNameViews(),
             "data_url" => $this->data_url,
             "utilities" => $this->utilities,
             'avoid_basic_filter' => $this->avoid_basic_filter,

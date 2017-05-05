@@ -93,4 +93,6 @@
           ];
   var text_button_download_view = "<?php echo $this->lang->line('button_download_view'); ?>";
   var text_button_columns_view = "<?php echo $this->lang->line('button_columns_view'); ?>";
+  $('.date').datetimepicker({ 'sideBySide': true, format : 'YYYY-MM-DD'});
+  $('.datetime').datetimepicker({ 'sideBySide': true, format : 'YYYY-MM-DD HH:mm:ss'});
 </script>

@@ -16,6 +16,8 @@ class Filter
         'multiple' => "makeSelectValue"
     );
 
+    private $viewFilsters = array();
+
     /**
      * The var for the report
      * @var array
@@ -26,6 +28,19 @@ class Filter
     public function init($varTypes, $filters){
         $this->setTypes($varTypes);
         $this->setVar($filters);
+    }
+
+    /***
+     * Retorna el path a las viestas correspondientes a cada filtro
+     */
+    public function getNameViews()
+    {
+        $CI = &get_instance();
+        $template = $CI->config->item('rpt_template') . "filters/";
+        foreach($this->functionTypes as $filter => $value){
+            $this->viewFilsters[$filter] = $template . $filter;
+        }
+        return $this->viewFilsters;
     }
 
     public function getFilters(){
