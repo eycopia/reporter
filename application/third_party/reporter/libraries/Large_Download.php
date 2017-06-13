@@ -2,6 +2,9 @@
 /**
  * Permite generar un archivo csv a partir de una sentencia sql
  * Sin importar la cantidad de datos a procesar.
+ * @package Reporter\Libraries
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 class Large_Download {

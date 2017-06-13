@@ -2,7 +2,10 @@
 
 /**
  * Class CustomReport
- *
+ * Shortcut para crear una grilla personalizada
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 class CustomReport extends CI_Controller
 {

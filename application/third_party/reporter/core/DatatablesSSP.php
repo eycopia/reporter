@@ -1,5 +1,4 @@
 <?php
-require_once "SyntaxAnalyze.php";
 /*
  * Helper functions for building a DataTables server-side processing SQL query
  *
@@ -12,7 +11,9 @@ require_once "SyntaxAnalyze.php";
  * See http://datatables.net/usage/server-side for full details on the server-
  * side processing requirements of DataTables.
  *
- * @license MIT - http://datatables.net/license_mit
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 class DatatablesSSP {

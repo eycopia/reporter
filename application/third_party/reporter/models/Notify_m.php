@@ -1,4 +1,11 @@
-<?php
+<?php   if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * Class Notify_m
+ * @package Reporter\Models
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
 class Notify_m extends CI_Model {
     public function getPeopleToNotifyByReport($idReport){
         $sql = "SELECT email FROM notify_report as rn

@@ -27,8 +27,8 @@ var TimerTable = {
         if(this.playing){
             this.seconds--;
         }
-
-       if (this.seconds > 0) {
+        var secs;
+        if (this.seconds > 0) {
             secs=1000;
        } else {
             this.setSeconds();
@@ -66,8 +66,10 @@ var datatableAjaxRequest = function(callback, uri, data) {
 function autoRefresh(e){
     if(TimerTable.playing){
         TimerTable.stop();
+        $('#reload_report').val(0);
     }else{
         TimerTable.play();
+        $('#reload_report').val(1);
     }
     TimerTable.countdown();
 }
@@ -80,6 +82,7 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover({'trigger': 'hover', 'html':true});
     $('input[type=reset]').click();
     $(".multiple-var").select2();
+    $(".multiple-object").select2();
 
     $table = $('#datatable').DataTable( {
           "processing": true,
@@ -95,10 +98,11 @@ $(document).ready(function() {
           "columns": columns_datables
     } );
 
-    //auto refres
-    TimerTable.countdown();
+    $('#auto_refresh').on('click', autoRefresh);
+
+    //auto refresh
     if(auto_reload){
-        $('#auto_refresh').on('click', autoRefresh);
+        TimerTable.countdown();
     }
 
     function getDataVars(){

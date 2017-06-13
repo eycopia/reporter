@@ -1,5 +1,11 @@
-<?php
+<?php   if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class Server_m
+ * @package Reporter\Models
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
 class Server_m extends CI_Model{
     private $table = 'server_connection';
 

@@ -1,9 +1,10 @@
 <?php
-require_once APPPATH."third_party/reporter/models/core/interfaceAccessDb.php";
 /**
  * Class ModelReporter
- *
- * @package Generador
+ * Adaptador de DB_Result
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 class ModelReporter implements  interfaceAccessDb
 {

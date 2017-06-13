@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class SyntaxAnalyze
+ * Construye un sql valido
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
+
 class SyntaxAnalyze {
 
     /**

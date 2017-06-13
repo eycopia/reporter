@@ -2,8 +2,10 @@
 
 /**
  * Class Filter
- *
- * @package \\${NAMESPACE}
+ * Configura los filtros que se utilizan en las grillas
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 class Filter
 {
@@ -13,10 +15,10 @@ class Filter
         'int' => "makeNumberValue",
         'string' => "makeValue",
         'select' => "makeSelectValue",
-        'multiple' => "makeSelectValue"
+        'multiple' => "makeSelectValue",
+        'multiple_object' => "makeMultipleObject",
+        'select_object' => "makeSelectObject"
     );
-
-    private $viewFilsters = array();
 
     /**
      * The var for the report
@@ -66,8 +68,9 @@ class Filter
         if(!is_array($filters)){ return;}
         foreach( $filters as $var){
             $type = strtolower($var['type']);
+            $value = $this->getDefaultValue($type, $var['default']);
             array_push($this->filters, array('name' => $var['name'],
-                'value' => $this->getDefaultValue($type, $var['default']),
+                'value' => $value,
                 'label' => ucwords(str_replace(array('-','_'), ' ', $var['name'])),
                 'class' => $this->varTypes[$type]->frontendClass,
                 'type'=> $type));
@@ -77,15 +80,18 @@ class Filter
     private function setValueOnFilters($name, $value){
         $value = trim($value);
         for($i=0; $i < count($this->filters); $i++){
-            if($this->filters[$i]['name'] == $name && !empty($value)){
+            if($this->filters[$i]['name'] == $name && $value!=''){
                 if(!isset($this->filters[$i]['veces'])){
                     $this->filters[$i]['veces'] = 0;
                 }
-                if($this->filters[$i]['veces'] > 0 and $this->filters[$i]['type']=='multiple'){
+
+
+                if($this->filters[$i]['veces'] > 0 && ( $this->filters[$i]['type']=='multiple' || $this->filters[$i]['type']=='multiple_object')){
                     $this->filters[$i]['value'] .= ",". $value;
                 }else{
                     $this->filters[$i]['value'] = $value;
                 }
+
                 $this->filters[$i]['veces']++;
                 break;
             }
@@ -167,6 +173,16 @@ class Filter
         return $input;
     }
 
+    private function makeMultipleObject($input){
+        $data = (array)json_decode($input);
+        return array('original'=> $input, 'formatted'=>$data);
+    }
+
+    private function makeSelectObject($input){
+        $data = (array)json_decode($input);
+        return array('original'=> $input, 'formatted'=>$data);
+    }
+
     /**
      * Format the var types
      *
@@ -185,12 +201,19 @@ class Filter
      * @return string
      */
     private function formatVar($type, $value){
-        $value = trim(str_replace(array("\"", "'"), '',$value));
         switch($type){
             case 'multiple':
             case 'select':
                 $value = explode(',', $value);
                 $rs = "'" . join("','", $value) . "'";
+                break;
+            case 'multiple_object':
+            case 'select_object':
+                if(is_array($value)){
+                    $rs = "'".join("','",array_keys($value['formatted']))."'";
+                }else{
+                    $rs = "'".str_replace(',', "','",$value)."'";
+                }
                 break;
             case 'string':
                 $rs = "'" . $value . "'";

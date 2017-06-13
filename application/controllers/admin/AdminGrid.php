@@ -1,10 +1,12 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
- * Created by PhpStorm.
- * User: LANICAMA
- * Date: 22/02/2016
- * Time: 04:30 PM
+ * Class AdminGrid
+ * @package Reporter\Controllers
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
+
 
 class AdminGrid extends CI_Controller{
 

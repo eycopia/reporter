@@ -1,6 +1,9 @@
 <?php
 /**
  * Clase para cargar componentes definidos por el usuario
+ * @package Reporter\Libraries
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 class Load_Component {

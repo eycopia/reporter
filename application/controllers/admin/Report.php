@@ -1,20 +1,11 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Report Generator
- *
- * Los metodos de administración para crear Reportes
- *
- * Copyright (C) 2016 Tiricaya.com
- *
- *
- * @package    	Admin
- * @copyright  	Copyright (c) 2016, Jorge Copia Silva
- * @license
- * @version    	1.0.0
- * @author     	Jorge Luis Copia Silva <eycopia@gmail.com>
+ * Class Report
+ * @package Reporter\Controllers
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
-
 require_once "AdminGrid.php";
 
 class Report extends AdminGrid{

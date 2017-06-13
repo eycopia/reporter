@@ -1,4 +1,11 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * Class Type_Component
+ * @package Reporter\Controllers
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
 class Type_Component extends CI_Controller{
     public function __construct()
     {

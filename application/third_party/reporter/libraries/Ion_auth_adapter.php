@@ -1,12 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require_once(__DIR__."/interfaceAuthReporter.php");
 
 /**
- * Name: Ion_auth_adapter.php
+ * Ion_auth_adapter
+ * Adaptador de Ion_Auth para el Reportador
  *
- * Author: Jorge Copia <eycopia@gmail.com>
- *
+ * @package Reporter\Libraries
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
+
 class Ion_auth_adapter  implements interfaceAuthReporter
 {
     private $CI = null;

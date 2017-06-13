@@ -1,4 +1,11 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * Class Notify_Report
+ * @package Reporter\Controllers
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
 
 class Notify_Report extends CI_Controller{
     public function __construct()

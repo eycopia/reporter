@@ -1,10 +1,10 @@
 <?php
 /**
- * Name: interfaceAuthReporter.php
- *
- * Author: Jorge Copia <eycopia@gmail.com>
- *
- * Description:
+ * interfaceAuthReporter
+ * Define los métodos de autenticación que utiliza reporter
+ * @package Reporter\Libraries
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 interface interfaceAuthReporter{
 

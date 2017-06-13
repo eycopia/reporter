@@ -3,6 +3,9 @@
 /**
  * Esta interfaz define los metodos que utiliza
  * la clase Grid para poder extraer los datos
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 interface interfaceAccessDb{

@@ -1,6 +1,9 @@
 <?php
 /**
  * Permite cargar componentes
+ * @package Reporter\Core
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 class Component extends  CI_Controller{

@@ -1,11 +1,11 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: LANICAMA
- * Date: 24/02/2016
- * Time: 05:33 PM
- */
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class VarTypes
+ * @package Reporter\Controllers
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
 class VarTypes extends CI_Controller{
     public function __construct()
     {

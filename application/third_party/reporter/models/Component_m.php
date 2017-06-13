@@ -1,9 +1,10 @@
-<?php
+<?php   if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by PhpStorm.
- * User: LANICAMA
- * Date: 25/02/2016
- * Time: 02:14 PM
+ * Component_m
+ *
+ * @package Reporter\Models
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 class Component_m extends CI_Model {

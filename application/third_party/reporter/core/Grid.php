@@ -1,12 +1,10 @@
 <?php
-require_once 'DatatablesSSP.php';
-//require_once 'SyntaxAnalyze.php';
-require_once 'Filter.php';
+
 /**
  * CREATE DYNAMIC GRIDS WITH JQUERY DATATABLES
- * @package reportador.
+ * @package Reporter\Core
  * @author Jorge Copia Silva <eycopia@gmail.com>
- * Created: 20/03/2016 - 12:07 PM
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 class Grid extends CI_Model
 {

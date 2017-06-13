@@ -1,6 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-require_once APPPATH."third_party/reporter/autoload_reporter.php";
 
+
+/**
+ * Class Project_m
+ *
+ * @package Reporter\Models
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
+ */
 class Project_m extends Grid implements interfaceGrid{
 
     private $table = "project";

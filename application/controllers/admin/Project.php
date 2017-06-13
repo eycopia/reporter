@@ -1,18 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Report Generator CRUD
- *
- * CRUD for table Project
- *
- * Copyright (C) 2016 Tiricaya.com
- *
- *
- * @package    	Admin
- * @copyright  	Copyright (c) 2016, Jorge Copia Silva
- * @license
- * @version    	1.0.0
- * @author     	Jorge Luis Copia Silva <eycopia@gmail.com>
+ * Class Project
+ * @package Reporter\Controllers
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 class Project extends CI_Controller{

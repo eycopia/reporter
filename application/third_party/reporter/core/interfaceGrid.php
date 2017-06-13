@@ -1,8 +1,8 @@
 <?php
 /**
- * @package generador.
+ * @package Reporter\Core
  * @author Jorge Copia Silva <eycopia@gmail.com>
- * Created: 20/03/2016 - 12:32 PM
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
 
 interface interfaceGrid {

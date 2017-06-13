@@ -1,11 +1,10 @@
-<?php
+<?php   if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Created by PhpStorm.
- * User: LANICAMA
- * Date: 04/03/2016
- * Time: 04:02 PM
+ * Class VarReport_m
+ * @package Reporter\Models
+ * @author Jorge Copia Silva <eycopia@gmail.com>
+ * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
-
 class VarReport_m extends CI_Model{
 
     private $table = 'var_report';
