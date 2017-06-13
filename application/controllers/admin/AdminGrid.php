@@ -28,7 +28,7 @@ class AdminGrid extends CI_Controller{
             'main_content' => $this->index_view,
             'table' =>  $records
         );
-        $view = $this->config->item('rpt_template') . 'index';
+        $view = $this->config->item('rpt_base_template');
         $this->load->view($view, $data);
     }
 }

@@ -36,7 +36,7 @@ class Project extends CI_Controller{
             $output = $crud->render();
             $output->title_page = $this->lang->line('admin_project_title');
             $output->main_content = $this->config->item('rpt_views') . 'admin';
-            $this->load->view( $this->config->item('rpt_template') . 'index',$output);
+            $this->load->view( $this->config->item('rpt_base_template'),$output);
         }catch(Exception $e){
             show_error($e->getMessage().' --- '.$e->getTraceAsString());
         }

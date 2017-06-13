@@ -22,15 +22,16 @@ class CustomReport extends CI_Controller
         parent::__construct();
         $CI = &get_instance();
         $this->load->model('report_m');
+        $this->load->model('Project_m');
         $this->idReport = $idReport;
         $this->report_m->loadReport($idReport);
-        $this->report = $this->report_m->gridDefinition();
+        $this->report = $this->report_m->getReportData();
         $CI->remoteDb = $this->report_m->getDbConnection();
         $this->reportUrl = $this->report_m->getReportDataUrl();
         $this->reporter_auth->isLogin();
         $this->Project_m->validate_user(
             $this->reporter_auth->get_user_id(),
-            $this->report['project']['idProject']
+            $this->report->idProject
         );
     }
 
@@ -61,5 +62,15 @@ class CustomReport extends CI_Controller
         $params = array('model' => $this->model, 'idReport' => $this->idReport);
         $this->load->library('Large_Download', $params);
         return $this->large_download->download();
+    }
+
+    protected function getBreadCrumb(){
+        return array(
+            array(
+                'title'=> $this->report->project,
+                'link'=> site_url('project/name/'.url_title($this->report->slug))
+            ), array(
+                'title' => $this->report->title
+            ));
     }
 }
