@@ -26,8 +26,7 @@ class AdminGrid extends CI_Controller{
         $data = array(
             'title_page' => $this->title_page,
             'main_content' => $this->index_view,
-            'table' =>  $records,
-            'custom_js_files' => array(base_url('assets/js/report/main.js')),
+            'table' =>  $records
         );
         $view = $this->config->item('rpt_template') . 'index';
         $this->load->view($view, $data);

@@ -23,9 +23,8 @@ class VarTypes extends CI_Controller{
     {
         try{
             $crud = new grocery_CRUD();
-
+            $crud->set_theme('mybootstrap');
             $crud->unset_delete();//grid
-
             $crud->set_table('var_type');
             $crud->set_subject('Types of Var for Reports');
             $output = $crud->render();

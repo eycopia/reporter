@@ -28,7 +28,7 @@ class Server extends CI_Controller {
 			$crud = new grocery_CRUD();
 
             $crud->unset_delete();//grid
-
+			$crud->set_theme('mybootstrap');
 			$crud->set_table('server_connection');
 			$crud->set_subject('Server Connections');
 			$crud->field_type('password', 'password');

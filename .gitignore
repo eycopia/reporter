@@ -15,6 +15,7 @@ index.php
 system/
 
 !application/config/reporter.php
+!application/config/routes.php
 !application/views/reporter/template/index.php
 
 

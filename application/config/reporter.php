@@ -12,6 +12,7 @@ $config['pretty_url'] = false;
 //path to base template for report site
 $config['rpt_views'] = $namePackege;
 $config['rpt_template'] = $namePackege."template/";
+$config['rpt_base_template'] = $namePackege ."template/index";
 $config['rpt_admin_template'] = $namePackege ."admin/";
 
 $config['rpt_assets'] = "assets/{$namePackege}";

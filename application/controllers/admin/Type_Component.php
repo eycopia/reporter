@@ -23,7 +23,7 @@ class Type_Component extends CI_Controller{
     {
         try{
             $crud = new grocery_CRUD();
-
+            $crud->set_theme('mybootstrap');
             $crud->unset_delete();//grid
             $crud->set_table('type_component');
             $crud->set_subject('Type of Components');

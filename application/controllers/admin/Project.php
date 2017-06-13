@@ -25,6 +25,7 @@ class Project extends CI_Controller{
     {
         try{
             $crud = new grocery_CRUD();
+            $crud->set_theme('mybootstrap');
             $crud->unset_delete();//grid
             $crud->set_table('project');
             $crud->set_subject('Projects');

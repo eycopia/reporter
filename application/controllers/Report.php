@@ -30,7 +30,8 @@ class Report extends CI_Controller{
 		$report = $this->report_m->getReportData();
 		$breadcrumb = $this->getBreadCrumb($report);
 		$views = $this->config->item('rpt_template');
-		$template = is_null($report->template) ? $views . 'index' : $report->template;
+		$base = $this->config->item('rpt_base_template');
+		$template = is_null($report->template) ? $base : $report->template;
 		$data = array(
 			'title_page' => $report->title,
 			'main_content' => $views . 'grid',

@@ -76,8 +76,12 @@
         <!-- /#page-wrapper -->
 
     </div>
+
     <!-- /#wrapper -->
     <?php
+    $this->load->view($this->config->item('rpt_template') .'footer');
+//    $this->load->view('template/footer.php');
+
     if(!isset($main_js)){
        echo '<script type="text/javascript" src="'. base_url($this->config->item('rpt_assets') . 'js/main.js') .'"></script>';
     }else{

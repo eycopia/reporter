@@ -24,7 +24,7 @@ class VarReports  extends CI_Controller{
     {
         try{
             $crud = new grocery_CRUD();
-
+            $crud->set_theme('mybootstrap');
             $crud->unset_delete();//grid
             $crud->unset_fields('created');
             $crud->set_table('var_report');
