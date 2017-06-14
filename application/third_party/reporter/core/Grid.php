@@ -133,11 +133,16 @@ class Grid extends CI_Model
             "columns" => $_REQUEST['columns'],
             "draw" => isset ( $_REQUEST['draw'] ) ? intval( $_REQUEST['draw'] ) : 0,
             "data" => $data,
-            "sql" => $this->sqlFiltered,
             "filters" => $this->filterGrid->getFilters(),
             "recordsTotal" => $total,
             "recordsFiltered" => $total
         );
+
+        if(ENVIRONMENT == 'development'){
+            $result["sql"] = $this->sqlFiltered;
+        }
+
+        return $result;
     }
 
     public function getData(){

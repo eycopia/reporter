@@ -8,15 +8,15 @@
  */
 class Report_m extends Grid implements interfaceGrid {
 
-	private $table = "report";
+    private $table = "report";
 
-	protected $con;
+    protected $con;
 
-	public $columns = array();
+    public $columns = array();
 
     private $report = '';
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct( new ModelReporter() );
         $this->load->model('component_m');
@@ -73,7 +73,7 @@ class Report_m extends Grid implements interfaceGrid {
     }
 
     public function getProjectReports($idProject){
-        $q = $this->db->query("SELECT idReport, idProject,
+        $q = $this->db->query("SELECT idReport, idProject, url,
             idServerConnection, title, description
             FROM {$this->table}
             WHERE idProject = {$idProject} and status = 1");
@@ -84,8 +84,9 @@ class Report_m extends Grid implements interfaceGrid {
         $vars = $this->declareVars();
         $dbColumns = json_decode($this->report->columns, true);
         $project = array(
-                'name' => $this->report->project,
-                'idProject' =>$this->report->idProject);
+            'name' => $this->report->project,
+            'idProject' =>$this->report->idProject,
+            'slug' => $this->report->slug);
         $sql = trim($this->report->sql);
         $database = is_null($this->report->oracle) ? 'mysql' : 'oracle';
         return array(
@@ -109,27 +110,6 @@ class Report_m extends Grid implements interfaceGrid {
         );
     }
 
-
-    public function declareVars()
-    {
-        $sql = "SELECT vr.name as 'name', vr.label, vt.name  as 'type', vr.default, vt.frontendClass
-            FROM var_report as vr
-            JOIN var_type as vt on vr.idVarType = vt.idVarType
-            WHERE vr.idReport = {$this->report->idReport} and vr.status = 1";
-        $vars = $this->db->query($sql);
-        return $vars->result_array();
-    }
-
-    private function getDownloadUrl(){
-        $component = $this->component_m->getComponentDownload($this->report->idReport);
-        if(isset($component)){
-                          $url = site_url('component/download/'.$component->idComponent);
-        }else{
-            $url = site_url('report/download/'.$this->report->idReport);
-        }
-        return $url;
-    }
-
     /**
      * Devuelve la conexion a la base de datos que usara el reporte
      */
@@ -150,5 +130,26 @@ class Report_m extends Grid implements interfaceGrid {
             $data_url = site_url($this->report->url."/show");
         }
         return $data_url;
+    }
+
+
+    public function declareVars()
+    {
+        $sql = "SELECT vr.name as 'name', vr.label, vt.name  as 'type', vr.default, vt.frontendClass
+            FROM var_report as vr
+            JOIN var_type as vt on vr.idVarType = vt.idVarType
+            WHERE vr.idReport = {$this->report->idReport} and vr.status = 1";
+        $vars = $this->db->query($sql);
+        return $vars->result_array();
+    }
+
+    private function getDownloadUrl(){
+        $component = $this->component_m->getComponentDownload($this->report->idReport);
+        if(isset($component)){
+            $url = site_url('component/download/'.$component->idComponent);
+        }else{
+            $url = site_url('report/download/'.$this->report->idReport);
+        }
+        return $url;
     }
 }

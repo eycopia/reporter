@@ -32,9 +32,9 @@ class AdminReport_m extends Grid implements interfaceGrid{
         $sql = sprintf("INSERT INTO {$this->table} "
             ."(`idUser`,`idProject`, `idServerConnection`, `title`,"
             ."`description`,`url`,`sql`, `items_per_page`,`auto_reload`) "
-            ." VALUE (%d,%d, %s, '%s','%s', '%s', \"%s\", %d, '%s')",
+            ." VALUE (%d,%d, %d, '%s','%s', '%s', \"%s\", %d, '%s')",
             $_SESSION['user_id'],
-            $data['project'], isset($data['connection']) ? $data['connection'] : 'null',
+            $data['project'], $data['connection'],
             strip_tags($data['title'],$this->htmlValid),
             strip_tags($data['description'], $this->htmlValid),
             $data['url'],
@@ -52,9 +52,9 @@ class AdminReport_m extends Grid implements interfaceGrid{
      */
     public function  edit($data){
         $update = array(
-           'idUser' => $_SESSION['user_id'],
-           'idProject' => $data['project'],
-            'idServerConnection' => isset($data['connection']) ? $data['connection'] : null,// $data['connection'],
+            'idUser' => $_SESSION['user_id'],
+            'idProject' => $data['project'],
+            'idServerConnection' => $data['connection'],
             'title' => strip_tags($data['title'],$this->htmlValid),
             'description' => strip_tags($data['description'], $this->htmlValid),
             'details' => strip_tags($data['details'], $this->htmlValid),

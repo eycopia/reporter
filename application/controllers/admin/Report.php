@@ -102,7 +102,7 @@ class Report extends AdminGrid{
                 'title'=> $this->lang->line('menu_report'),
                 'link'=> site_url('admin/report')));
         $data['columns'] = $this->getColumns($data);
-        return $this->load->view($view . "template/index", $data);
+        return $this->load->view($this->config->item('rpt_base_template'), $data);
     }
 
     /**

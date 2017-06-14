@@ -133,8 +133,7 @@
                            } ?>
                        </select>
                    </div>
-                   <div class="col-sm-3"> <input value='<?php echo is_array($var->default['json']) ? $var->default['json'] : $var->default ; ?>' class="form-control" id="<?php echo $var->name; ?>_default"></div></div>
-
+                       <div class="col-sm-3"> <input value='<?php echo $var->default ; ?>' class="form-control" id="<?php echo $var->name; ?>_default"></div></div>
                <?php } }//end foreach and if ?>
            </div>
        </div>

@@ -93,7 +93,7 @@ class VarReport_m extends CI_Model{
      * @throws string Mysql error message
      */
     public function add($data, $idReport){
-        $default = str_replace(array('"',"'"), '',$data['default']);
+        $default = addslashes($data['default']);
         $sql = sprintf("INSERT INTO {$this->table}(`idReport`, `idVarType`, `name`, `label`, `default`)"
             ."VALUES($idReport, %d, '%s', '%s', '%s')", $data['idVarType'], $data['name'],
             $data['label'], $default);
@@ -105,9 +105,9 @@ class VarReport_m extends CI_Model{
 
     public function edit($vars, $idReport){
         foreach($vars as $var){
-            $default = str_replace(array('"',"'"), '',$var['default']);
+            $default = addslashes($var['default']);
             $sql = "UPDATE {$this->table} SET idVarType = {$var['idVarType']},
-                  `default` = '{$default}' WHERE idReport = $idReport and
+                  `default` = \"$default\" WHERE idReport = $idReport and
                   status = 1 and name = '{$var['name']}' ";
             $this->db->query($sql);
         }
