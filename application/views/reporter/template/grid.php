@@ -58,7 +58,7 @@
     </form>
 </div>
 
-<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="datatable" class="table table-striped table-bordered table-hover table-blue-head" cellspacing="0" width="100%">
     <thead>
         <tr><?php
            foreach ($table['columns'] as $value) {

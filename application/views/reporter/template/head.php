@@ -49,10 +49,10 @@
 <script src="<?php echo base_url('assets/libs/jquery.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/moment.min.js');?>"></script>
+<script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap-datetimepicker.min.js');?>"></script>
 
 <?php if(isset($table)){ ?>
 <script src="<?php echo base_url('assets/libs/select2/js/select2.min.js');?>"></script>
-<script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap-datetimepicker.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/js/jquery.dataTables.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/js/dataTables.bootstrap.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/extras/Buttons/js/dataTables.buttons.min.js');?>"></script>
