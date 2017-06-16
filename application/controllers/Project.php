@@ -51,7 +51,7 @@ class Project extends CI_Controller
         $project = $this->Project_m->searchBySlug($slug);
         $this->Project_m->validate_user($this->user, $project->idProject);
         $this->Project_m->setProject($project->idProject);
-        $template = is_null($project->template) ? $rpt_template.'index' : $project->template;
+        $template = is_null($project->template) ? $this->config->item('rpt_base_template'): $project->template;
         $data = array(
             'title_page' => $project->name,
             'main_content' => $rpt_template . 'grid',

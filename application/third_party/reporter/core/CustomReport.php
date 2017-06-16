@@ -39,12 +39,12 @@ class CustomReport extends CI_Controller
     {
         $data = array(
             'custom_js_files' => array(base_url('assets/js/report/main.js')),
-            'main_content' => 'report/grid',
-            'title_page' => $this->report['title'],
-            'data_url' => $this->report['data_url'],
+            'main_content' => $this->config->item('rpt_template') .'grid',
+            'title_page' => $this->report->title,
+            'data_url' => isset($this->report->data_url) ? $this->report->data_url :  '',
             'table' => $this->model->bodyGrid()
         );
-        $this->load->view('template/index', $data);
+        $this->load->view($this->config->item('rpt_base_template'), $data);
     }
 
     public function show(){
