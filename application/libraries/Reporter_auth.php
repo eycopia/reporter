@@ -25,18 +25,9 @@ class Reporter_auth implements interfaceAuthReporter
 
     private function loadAdapter()
     {
-        $base = $this->CI->config->item('third_party_name');
-        $adapterClass = $this->CI->config->item('rpt_auth_adapter');
-        $filename = APPPATH . "third_party/{$base}libraries/{$adapterClass}.php";
-        if(file_exists($filename)){
-            require_once $filename;
-            $adapter = $this->CI->config->item('rpt_auth_adapter');
-            $this->CI->load->library($adapter, null, 'auth_adapter');
-            $this->adapter = $this->checkAdapter($this->CI->auth_adapter);
-        }else{
-            show_error("File not found $filename");
-        }
-
+        $adapter = $this->CI->config->item('rpt_auth_adapter');
+        $this->CI->load->library($adapter, null, 'auth_adapter');
+        $this->adapter = $this->checkAdapter($this->CI->auth_adapter);
     }
 
     private function checkAdapter(interfaceAuthReporter $adapter){

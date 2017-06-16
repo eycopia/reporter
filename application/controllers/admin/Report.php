@@ -39,6 +39,11 @@ class Report extends AdminGrid{
             'field' => 'project',
             'label' => 'Project',
             'rules' => 'required'
+        ),
+        array(
+            'field' => 'connection',
+            'label' => 'Server Connection',
+            'rules' => 'required'
         ));
 
     public function __construct(){
@@ -96,11 +101,11 @@ class Report extends AdminGrid{
         }
         $data['title_page'] = $this->title_page;
         $data['breadcrumb'] = array( array(
-                'title'=> $this->lang->line('home'),
-                'link'=> site_url()
-            ),array(
-                'title'=> $this->lang->line('menu_report'),
-                'link'=> site_url('admin/report')));
+            'title'=> $this->lang->line('home'),
+            'link'=> site_url()
+        ),array(
+            'title'=> $this->lang->line('menu_report'),
+            'link'=> site_url('admin/report')));
         $data['columns'] = $this->getColumns($data);
         return $this->load->view($this->config->item('rpt_base_template'), $data);
     }
@@ -149,7 +154,9 @@ class Report extends AdminGrid{
         $idReport = $data['report']['idReport'];
         try {
             $this->model->edit($data['report']);
-            $this->VarReport_m->save($data['vars'], $idReport);
+            if(isset($data['vars']) && !empty($data['vars'])){
+                $this->VarReport_m->save($data['vars'], $idReport);
+            }
             if(empty($data['report']['url'])){
                 $this->getGridColumns($idReport);
                 $data['report']['columns'] =  $this->mergeColumns($data['report']['columns']);
@@ -250,10 +257,10 @@ class Report extends AdminGrid{
             if(isset($element->varName)){
                 $name = ucwords(str_replace(array('-', '_'), ' ', $element->varName));
                 $vars[] = array(
-                   'name'  =>  $element->varName,
-                   'label' => $name,
-                   'default' => isset($element->varDefault) ? $element->varDefault : null,
-                   'idVarType' => $element->varType
+                    'name'  =>  $element->varName,
+                    'label' => $name,
+                    'default' => isset($element->varDefault) ? $element->varDefault : null,
+                    'idVarType' => $element->varType
                 );
 
             }

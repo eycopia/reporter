@@ -123,18 +123,18 @@ class Project_m extends Grid implements interfaceGrid{
                     $url = $that->generarRuta($d, $row);
                     return "<a class='' $url>
                     ".$row['title']."</a>";
-            }),
+                }),
             array('dt' => 'Description', 'db' => 'description', 'type' => 'column'),
             array('dt' => '', 'db' => 'idReport', 'type' => 'column',
                 "formatter" => function($d, $row) use ($that){
-                    $url = $this->generarRuta($d, $row);
+                    $url = $that->generarRuta($d, $row);
                     return "<a class='btn btn-success' $url>
                     <i class='fa fa-eye'></i> {$that->lang->line('show')}</a>";
                 }),
         );
     }
 
-    private function generarRuta($d, $row){
+    public function generarRuta($d, $row){
         $text = trim($row['url']);
         $pattern = "/\b((www|https?)[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/)))/";
         $target = '';
