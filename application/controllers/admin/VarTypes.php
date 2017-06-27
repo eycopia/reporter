@@ -12,7 +12,8 @@ class VarTypes extends CI_Controller{
         parent::__construct();
         $this->load->helper('url');
         $this->load->library('grocery_CRUD');
-        $this->ion_auth->isLogin();
+        $this->reporter_auth->isLogin();
+        $this->reporter_auth->checkAdmin();
     }
 
     /**

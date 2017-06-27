@@ -62,6 +62,8 @@ class No_auth_adapter  implements interfaceAuthReporter
     public function checkAdmin()
     {
         if(!$this->isAdmin()){
+            $this->CI->session->set_flashdata('message', $this->CI->lang->line('unauthorized_resource'));
+            $this->CI->session->set_flashdata('type_message', 'danger');
             redirect(base_url());
         }
     }
