@@ -18,6 +18,7 @@
 <?php } ?>
 <?php if(isset($table['links'])){ ?>
 <div class="col-sm-12" >
+    <br>
     <?php
         foreach($table['links'] as $link){
             echo "<a href='{$link['fileExtension']}' class='{$link['nameClass']}'>{$link['fileName']}</a>";

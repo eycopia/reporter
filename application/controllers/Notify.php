@@ -92,12 +92,8 @@ class Notify extends CI_Controller{
         $components = $this->component_m->getComponentDownload($this->report->idReport);
         $totalComp = count($components);
         if(empty($html) && count($totalComp) == 0){
-            $params = array('model' => $this->report_m, 'idReport' => $this->report->idReport);
-            $this->load->library('Large_Download', $params);
             $html = $this->getEmailMessage();
             $html .= '<p>Reporte generador el: '.date('Y-m-d H:i:s') . '</p>';
-        }else{
-            $this->large_download->restart();
         }
 
         if( $totalComp > 0 ) {
@@ -106,6 +102,8 @@ class Notify extends CI_Controller{
             $extension = $components->fileExtension;
             $filename = $components->fileName . date('Ymd_His').'.'.$extension;
         }else{
+            $params = array('model' => $this->report_m, 'idReport' => $this->report->idReport);
+            $this->load->library('Large_Download', $params);
             $file = $this->large_download->save();
             $filename = 'report'.date('Ymd_His'). ".csv";
             $extension = 'csv';
