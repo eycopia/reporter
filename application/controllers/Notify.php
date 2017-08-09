@@ -30,6 +30,9 @@ class Notify extends CI_Controller{
         $this->email->initialize($config);
         $this->status = array('idReport' => $idReport, 'addresses' => null);
         $this->report = $this->report_m->find($idReport);
+        if(!empty($this->report->model)){
+            $this->load->model($this->report->model, 'custom_model');
+        }
         $this->report_m->loadReport($idReport);
         $this->addresses = $this->getAddresses($idReport);
         $this->email->from(
@@ -38,7 +41,6 @@ class Notify extends CI_Controller{
         );
         $this->email->to($this->addresses);
         $this->email->subject($this->report->title);
-
         $function = $this->formatsEmail[$this->report->format_notify];
         call_user_func(array($this, $function));
         if($this->email->send()){
@@ -72,8 +74,7 @@ class Notify extends CI_Controller{
      * Make the html table to send
      */
     private function makeHtml(){
-        $params = array('model' => $this->report_m, 'idReport' => $this->report->idReport);
-        $this->load->library('Large_Download', $params);
+        $this->load->library('Large_Download', $this->getParams());
         $html = $this->getEmailMessage();
         $rowLimit = $this->setDataTable($html);
         $html .= " </html>";
@@ -91,19 +92,18 @@ class Notify extends CI_Controller{
     private function makeExcel($html=''){
         $components = $this->component_m->getComponentDownload($this->report->idReport);
         $totalComp = count($components);
-        if(empty($html) && count($totalComp) == 0){
-            $html = $this->getEmailMessage();
-            $html .= '<p>Reporte generador el: '.date('Y-m-d H:i:s') . '</p>';
-        }
 
+        if(empty($html) || count($totalComp) == 0){
+            $html = $this->getEmailMessage();
+            $html .= '<p>Reporte generado el: '.date('Y-m-d H:i:s') . '</p>';
+        }
         if( $totalComp > 0 ) {
             $obj = $this->load_component->getInstance($components);
             $file = $obj->save($this->report->idReport);
             $extension = $components->fileExtension;
             $filename = $components->fileName . date('Ymd_His').'.'.$extension;
         }else{
-            $params = array('model' => $this->report_m, 'idReport' => $this->report->idReport);
-            $this->load->library('Large_Download', $params);
+            $this->load->library('Large_Download', $this->getParams());
             $file = $this->large_download->save();
             $filename = 'report'.date('Ymd_His'). ".csv";
             $extension = 'csv';
@@ -112,6 +112,20 @@ class Notify extends CI_Controller{
         $this->email->message($html);
         $this->email->attach($file, 'attachment', $filename, 'application/'.$extension);
     }
+
+    private function getParams(){
+        if(!empty($this->report->model)){
+            $params = array('model' => $this->custom_model, 'idReport' => $this->report->idReport);
+            $this->report_m->loadReport($this->report->idReport);
+            $this->remoteDb = $this->report_m->getDbConnection();
+        }else{
+            $params = array('model' => $this->report_m, 'idReport' => $this->report->idReport);
+            $this->report_m->loadReport($this->report->idReport);
+            $this->load->library('Large_Download', $params);
+        }
+        return $params;
+    }
+
 
     private function getEmailMessage(){
         return "<!DOCTYPE html> <html>

@@ -17,14 +17,14 @@ class Large_Download {
 
     public function __construct($params){
         $this->model = $params['model'];
-        $this->grid = $this->model->gridDefinition();
         $this->con = isset($this->grid['db_connection']) ? $this->grid['db_connection'] : $this->model->db;
-        $this->model->prepare($this->grid);
         if(isset($_GET['datatable'])){
             foreach(json_decode($_GET['datatable'], true) as $key =>  $param ){
                 $_REQUEST[$key] =  $param;
             }
         }
+        $this->grid = $this->model->gridDefinition();
+        $this->model->prepare($this->grid);
         $this->restart();
     }
 
