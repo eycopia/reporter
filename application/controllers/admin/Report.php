@@ -83,6 +83,7 @@ class Report extends AdminGrid{
         $this->load->model('VarTypes_m');
         $assets = $this->config->item('rpt_assets');
         $custom_js_files = array(base_url('assets/grocery_crud/texteditor/ckeditor/ckeditor.js'),
+            base_url('/assets/libs/select2/js/select2.min.js'),
             base_url('assets/libs/ace/ace.js'),
             base_url($assets . 'js/add.js')
         );
