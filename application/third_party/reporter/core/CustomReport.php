@@ -42,7 +42,8 @@ class CustomReport extends CI_Controller
             'main_content' => $this->config->item('rpt_template') .'grid',
             'title_page' => $this->report->title,
             'data_url' => isset($this->report->data_url) ? $this->report->data_url :  '',
-            'table' => $this->model->bodyGrid()
+            'table' => $this->model->bodyGrid(),
+            'breadcrumb' => $this->getBreadCrumb()
         );
         $this->load->view($this->config->item('rpt_base_template'), $data);
     }
