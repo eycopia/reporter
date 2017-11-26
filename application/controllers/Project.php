@@ -28,12 +28,12 @@ class Project extends CI_Controller
         if($totalProjects == 1){
             return $this->name($projects[0]->slug);
         }else if( $totalProjects == 0) {
-            $this->session->set_flashdata('message', $this->lang->line('empty_projects'));
+            $this->session->set_flashdata('message', lang('empty_projects'));
             $this->session->set_flashdata('type_message', 'success');
         }
         $data = array(
             'main_content' => $this->config->item('rpt_views') . "projects",
-            'title_page' => $this->lang->line('index_title'),
+            'title_page' => lang('index_title'),
             'projects' =>  $projects,
             'is_pretty' => $is_pretty
         );

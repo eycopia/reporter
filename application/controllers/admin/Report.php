@@ -53,12 +53,13 @@ class Report extends AdminGrid{
         $this->load->model( 'admin/AdminReport_m', 'model');
         $this->load->model('VarReport_m');
         $this->load->model('admin/NotifyReport_m');
-        $this->title_page = $this->lang->line('admin_report_title');
+        $this->title_page = lang('admin_report_title');
         $this->index_view = $this->config->item('rpt_template') . 'grid';
+        $this->load->helper('language');
     }
 
     public function add(){
-        $this->title_page = $this->lang->line('title_new_report');
+        $this->title_page = lang('title_new_report');
         return $this->prepareForm();
     }
 
@@ -82,7 +83,7 @@ class Report extends AdminGrid{
         $this->load->model('project_m');
         $this->load->model('VarTypes_m');
         $assets = $this->config->item('rpt_assets');
-        $custom_js_files = array(base_url('assets/grocery_crud/texteditor/ckeditor/ckeditor.js'),
+        $custom_js_files = array(base_url('assets/libs/ckeditor-4/ckeditor.js'),
             base_url('/assets/libs/select2/js/select2.min.js'),
             base_url('assets/libs/ace/ace.js'),
             base_url($assets . 'js/add.js')
@@ -102,10 +103,10 @@ class Report extends AdminGrid{
         }
         $data['title_page'] = $this->title_page;
         $data['breadcrumb'] = array( array(
-            'title'=> $this->lang->line('home'),
+            'title'=> lang('home'),
             'link'=> site_url()
         ),array(
-            'title'=> $this->lang->line('menu_report'),
+            'title'=> lang('menu_report'),
             'link'=> site_url('admin/report')));
         $data['columns'] = $this->getColumns($data);
         return $this->load->view($this->config->item('rpt_base_template'), $data);

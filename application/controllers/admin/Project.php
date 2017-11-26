@@ -33,6 +33,8 @@ class Project extends CI_Controller{
             $crud->required_fields('name');
             $crud->callback_before_insert(array($this,'configure_slug'));
             $crud->callback_before_update(array($this,'configure_slug'));
+            $crud->unset_export();
+            $crud->unset_print();
             $output = $crud->render();
             $output->title_page = $this->lang->line('admin_project_title');
             $output->main_content = $this->config->item('rpt_views') . 'admin';

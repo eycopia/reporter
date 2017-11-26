@@ -7,7 +7,7 @@ $config['app_name'] = "Generador de Reportes";
 $config['third_party_name'] = $namePackege;
 
 //config url
-$config['pretty_url'] = false;
+$config['pretty_url'] = true;
 
 //path to base template for report site
 $config['rpt_views'] = $namePackege;

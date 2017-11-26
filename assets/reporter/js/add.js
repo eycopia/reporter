@@ -1,6 +1,5 @@
 function init(){
-    //agrega ckeditor
-    CKEDITOR.replace( 'details',{toolbar : 'Basic'} );
+   CKEDITOR.replace( 'details');
 
 
     //editor sql

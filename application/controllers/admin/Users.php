@@ -34,6 +34,8 @@ class Users extends CI_Controller{
             $crud->fields('username', 'email', 'first_name', 'last_name', 'company', 'phone', 'groups', 'projects');
             $crud->columns('username', 'email', 'first_name', 'last_name');
             $crud->required_fields('username','first_name', 'password');
+            $crud->unset_export();
+            $crud->unset_print();
             $output = $crud->render();
             $output->title_page = 'Lists of Users  ';
             $output->main_content =  $this->config->item('rpt_views') . 'admin';

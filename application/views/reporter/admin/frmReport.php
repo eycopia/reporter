@@ -1,3 +1,13 @@
+<style>
+form   {
+    clear: both;
+    margin-bottom: 150px;
+}
+    footer{
+        bottom: 0;
+        position: relative;
+    }
+</style>
 <form class="form-horizontal col-sm-9 center-block" action="<?php echo site_url('admin/report/save'); ?> " method="POST"  style="float:none">
     <?php if(isset($report)){
           echo "<input name='report' value='{$report->idReport}' type='hidden'>";
@@ -80,7 +90,7 @@
       <div class="form-group">
             <div class="">
                 <label class="control-label">Leyend for the report</label>
-                <textarea id="details">
+                <textarea id="details" class="form-control">
                     <?php echo isset($report->details) ? $report->details : '';  ?>
                 </textarea>
             </div>
@@ -227,6 +237,7 @@
             <button type="submit" class="btn btn-primary pull-right" id="btn-save">Save</button>
         </div>
     </div>
+
 </form>
 
 <script type="text/javascript">

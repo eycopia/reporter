@@ -38,6 +38,8 @@ class Server extends CI_Controller {
     		$crud->callback_before_update(array($this,'encrypt_password_callback'));
     		$crud->callback_edit_field('password',array($this,'decrypt_password_callback'));
 			$crud->unset_texteditor('oracle');
+            $crud->unset_export();
+            $crud->unset_print();
 			$output = $crud->render();
 			$output->title_page = $this->lang->line('admin_server_title');
             $output->main_content = $this->config->item('rpt_views') . 'admin';
