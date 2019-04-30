@@ -17,7 +17,10 @@ system/
 !application/config/reporter.php
 !application/config/routes.php
 !application/views/reporter/template/index.php
-
+application/libraries/Grocery_CRUD.php
+application/libraries/image_moo.php
+application/models/Grocery_crud_model.php
+application/index.html
 
 */config/development
 */logs/log-*.php
@@ -26,3 +29,14 @@ system/
 !*/cache/index.html
 !*/cache/.htaccess
 .idea/
+vendor
+assets/grocery_crud
+assets/uploads
+assets/libs
+assets/index.html
+composer.lock
+user_guide/
+.project
+.buildpath
+.settings
+.editorconfig

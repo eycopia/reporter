@@ -31,13 +31,15 @@ class Server extends CI_Controller {
 			$crud->set_theme('mybootstrap');
 			$crud->set_table('server_connection');
 			$crud->set_subject('Server Connections');
+			$crud->set_relation('idDriver', 'driver', 'name');
 			$crud->field_type('password', 'password');
-			$crud->fields('name','dbName','host','user', 'password', 'port', 'oracle', 'status');
+			$crud->fields('name','dbName','host','user', 'password', 'port', 'dsn', 'idDriver', 'status' );
 			$crud->required_fields('name', 'dbName','host', 'user', 'port');
 			$crud->callback_before_insert(array($this,'encrypt_password_callback'));
     		$crud->callback_before_update(array($this,'encrypt_password_callback'));
     		$crud->callback_edit_field('password',array($this,'decrypt_password_callback'));
-			$crud->unset_texteditor('oracle');
+    		$crud->display_as('idDriver', 'Gestor de Base de datos');
+			$crud->unset_texteditor('dsn');
             $crud->unset_export();
             $crud->unset_print();
 			$output = $crud->render();
