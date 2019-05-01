@@ -11,7 +11,10 @@
 class Project_m extends Grid implements interfaceGrid{
 
     private $table = "project";
+    
     private $idProject = null;
+    
+    
     public function __construct()
     {
         parent::__construct( new ModelReporter() );

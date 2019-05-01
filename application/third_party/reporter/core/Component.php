@@ -16,7 +16,7 @@ class Component extends  CI_Controller{
             $filename = $components->fileName . date('Ymd_His').'.'.$components->fileExtension;
             $obj->download($components->idReport, $filename);
         }else{
-            $message = "No se encontro ningÃºn componente, por favor notificar al desarrollador.";
+            $message = "No se encontro ningún componente, por favor notificar al desarrollador.";
             show_error($message, 1, $heading = 'Imposible cargar componente');
         }
     }

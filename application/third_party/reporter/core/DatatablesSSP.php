@@ -73,52 +73,7 @@ class DatatablesSSP {
 
 	}
 
-    /***
-     * Custom limit for MYSQL DATABASES
-     * @param $request array
-     * @param $columns array
-     * @param $sql string
-     * @return string
-     */
-    static function limit_mysql($request, $columns, $sql){
-        $limit = '';
-
-        if ( isset($request['start']) && $request['length'] != -1 ) {
-            $limit = "LIMIT ".intval($request['start']).", ".intval($request['length']);
-        }
-
-        if(empty($limit)){
-            $limit = " LIMIT 1, 10";
-        }
-
-        return $sql ." " .$limit;
-    }
-
-    /**
-     * Custom limit for Oracle Database
-     * @param $request the user request
-     * @param $columns columns for sql
-     * @return string
-     */
-    static function limit_oracle($request, $columns, $sql){
-        if ( isset($request['start']) && $request['length'] != -1 ) {
-            $start = $request['start'];
-            $length = $request['length'] + $start;
-        }else {
-            $start = 1;
-            $length = 10;
-        }
-        $sql =  "SELECT i.*
-              FROM (SELECT i.*
-                      FROM (SELECT i.*, ROWNUM AS rn
-                              FROM ( {$sql} ) i
-                             WHERE ROWNUM <= {$length}
-                           ) i
-                     WHERE rn > {$start}
-                   ) i
-             ORDER BY rn";
-        return $sql;
-    }
+    
 
 	/**
 	 * Paging

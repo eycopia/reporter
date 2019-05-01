@@ -29,15 +29,27 @@ class Server_m extends CI_Model{
          }
         return $this->connectDB($server);
     }
+    
+    public function getDriver($idDriver){
+        $sql = "SELECT * FROM driver where idDriver = %d";
+        $q = $this->db->query(sprintf($sql, $idDriver));
+        return $q->row();
+    }
 
     public function connectDB($server){
-        $driver = is_null($server->oracle) ? "mysqli" : "oci8";
+        $infoDriver = $this->getDriver($server->idDriver);
+        if(isset($server->dsn)){
+            $host = $server->dsn;
+        }else{ //legacy support
+            $host = $server->oracle;
+        }
+        $support = $this->config->item('db_drivers');
         $config = array(
-            'hostname' => empty($server->oracle)? $server->host : $server->oracle,
+            'hostname' => $host,
             'username' => $server->user,
             'password' => $server->password,
             'database' => $server->dbName,
-            'dbdriver' => $driver,
+            'dbdriver' => $support[$infoDriver->config_name],
             'dbprefix' => '',
             'pconnect' => FALSE,
             'db_debug' => (ENVIRONMENT !== 'production'),

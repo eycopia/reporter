@@ -27,10 +27,10 @@ class Grid extends CI_Model
     protected $utilities = null;
 
     /**
-     * Indica el motor de base de datos que se esta utilizando
-     * @var string
+     * Connexion a la base de datos local o remoto
+     * @var DB
      */
-    protected $database = 'mysql';
+    protected $db_connection;
 
     /**
      * El enlace que sera utilizado para cargar los datos en la grilla
@@ -54,6 +54,12 @@ class Grid extends CI_Model
     private $pagination = true;
 
     private $avoid_basic_filter =false;
+    
+    /**
+     * 
+     * @var iGestorDB
+     */
+    private $gestor;
 
     public function __construct(interfaceAccessDB $model){
         $this->model = $model;
@@ -66,9 +72,9 @@ class Grid extends CI_Model
      * @throws
      */
     public function prepare($table){
+        $this->db_connection = $this->getDbConnection();
         $this->initFilterGrid($table['filters']);
-        $db = isset($table['db_connection']) ? $table['db_connection'] : null;
-        $this->model->setDbConnection($db);
+        $this->model->setDbConnection($this->db_connection);
         if(isset($table['sql'])){
             $this->sqlReport = $table['sql'];
         }else{
@@ -78,13 +84,32 @@ class Grid extends CI_Model
         if(isset($table['columns']) && count($table['columns']) > 0){
             $this->columns = $table['columns'];
         }
+        
         $this->data_url = $table['data_url'];
         $this->utilities = isset($table['utilities']) ? $table['utilities'] : null;
-        $this->database = isset($table['database']) ? $table['database'] : $this->database;
         $this->pagination = isset($table['pagination']) ? $table['pagination'] : true;
         $this->avoid_basic_filter = isset($table['avoid_basic_filter']) ? $table['avoid_basic_filter'] : false;
     }
 
+    
+    /**
+     * Devuelve la conexion a la base de datos que usara el reporte
+     */
+    public function getDbConnection()
+    {
+        if(property_exists($this, "report")){
+            $con = $this->server_m->getDbConnection($this->report->idServerConnection);
+            $server = $this->server_m->find($this->report->idServerConnection);
+            $driver = $this->server_m->getDriver($server->idDriver);
+            $nameGestor =  ucfirst($driver->config_name);
+        }else{
+            $con = $this->db; 
+            $nameGestor =  ucfirst($this->config->item('db_default_driver'));
+        }
+        $this->gestor = new $nameGestor;
+        return $con;  
+    }
+    
     private function  initFilterGrid($filters){
         if(isset($filters)){
             $this->load->model('VarTypes_m'); //todo: necesito quitar esto
@@ -189,16 +214,10 @@ class Grid extends CI_Model
      */
     protected function applyFilters($sql){
         $sql = $this->applyCustomFilters($sql);
-        $conexion = $this->database;
         $columns = $this->columns;
         $sql = DatatablesSSP::getQuery($_REQUEST, $sql, $columns);
         $this->sqlFiltered = DatatablesSSP::getSqlOrder($_REQUEST, $sql, $columns);
-        return DatatablesSSP::limit(
-            $conexion,
-            $_REQUEST,
-            $columns,
-            $this->sqlFiltered
-        );
+        return $this->gestor->getSqlPaginate($_REQUEST, $columns, $this->sqlFiltered);
     }
 
     public function applyCustomFilters($sql){
@@ -253,20 +272,13 @@ class Grid extends CI_Model
         return $formated;
     }
 
+    
     private function getDefaultColumns(){
         $sql = $this->applyCustomFilters($this->sqlReport);
-        if($this->database == 'mysql'){
-            $sql = "$sql  limit 1";
-        }else{
-            $syntaxAnalyze = new SyntaxAnalyze($sql);
-            $sql = $syntaxAnalyze->addSql('where', " rownum <= 1 ");
-        }
+        $sql = $this->gestor->getLimitForColumns($sql);
         $data = $this->model->row($sql);
         return array_keys((array)$data);
     }
-
-    private function addLimitForGDB($tipoDb, $cantidad){
-        $tdb = new $tipoDb;
-        return $tdb->addLimit($cantidad);
-    }
+    
+    
 }

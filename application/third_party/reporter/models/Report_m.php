@@ -14,7 +14,7 @@ class Report_m extends Grid implements interfaceGrid {
 
     public $columns = array();
 
-    private $report = '';
+    protected $report = '';
 
     public function __construct()
     {
@@ -88,7 +88,7 @@ class Report_m extends Grid implements interfaceGrid {
             'idProject' =>$this->report->idProject,
             'slug' => $this->report->slug);
         $sql = trim($this->report->sql);
-        $database = is_null($this->report->oracle) ? 'mysql' : 'oracle';
+//         $database = is_null($this->report->oracle) ? 'mysql' : 'oracle';
         return array(
             'title' => $this->report->title,
             'description' => $this->report->details,
@@ -96,9 +96,9 @@ class Report_m extends Grid implements interfaceGrid {
             'data_url' => $this->getReportDataUrl(),
             'filters' => (count($vars) > 0) ? $vars : 'basic',
             'columns' => (count($dbColumns)>0) ? $dbColumns : array(),
-            'db_connection' => $this->getDbConnection(),
+//             'db_connection' => $this->getDbConnection(),
             'pagination' => $this->report->pagination,
-            'database' => $database,
+//             'database' => $database,
             'sql' => $sql,
             'utilities' => array(
                 'auto_reload' => $this->report->auto_reload,
@@ -108,14 +108,6 @@ class Report_m extends Grid implements interfaceGrid {
                 'show_columns' => true
             )
         );
-    }
-
-    /**
-     * Devuelve la conexion a la base de datos que usara el reporte
-     */
-    public function getDbConnection()
-    {
-        return  $this->server_m->getDbConnection($this->report->idServerConnection);
     }
 
 

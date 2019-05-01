@@ -43,3 +43,15 @@ $config['config_email'] = array(
     'charset'    => 'utf-8',
     'newline'    => "\r\n",
     'mailtype' => 'html');
+
+
+//DB Driver for the installation
+$config['db_default_driver'] = 'mysql';
+
+//DB Drivers supported
+$config['db_drivers'] = array(
+    'mysql' => 'mysqli',
+    'oracle' => 'oci8',
+    'postgresql' => 'postgre',
+    'sqlserver' => 'odbc'
+);
