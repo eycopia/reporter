@@ -56,12 +56,8 @@ class Report_m extends Grid implements interfaceGrid {
     }
 
     public function loadReport($id){
-        $query = $this->db->query("SELECT r.*, p.name as project, p.template, p.slug, s.oracle
-			FROM {$this->table} as r
-			JOIN project as p on p.idProject = r.idProject
-			JOIN server_connection as s on s.idServerConnection = r.idServerConnection
-			WHERE idReport = $id and p.status = 1");
-        $this->report = $query->row_object();
+        $this->load->model("admin/AdminReport_m");
+        $this->report = $this->AdminReport_m->find($id);
     }
 
     public function getReportsPerProject(){
@@ -88,7 +84,6 @@ class Report_m extends Grid implements interfaceGrid {
             'idProject' =>$this->report->idProject,
             'slug' => $this->report->slug);
         $sql = trim($this->report->sql);
-//         $database = is_null($this->report->oracle) ? 'mysql' : 'oracle';
         return array(
             'title' => $this->report->title,
             'description' => $this->report->details,
@@ -96,9 +91,7 @@ class Report_m extends Grid implements interfaceGrid {
             'data_url' => $this->getReportDataUrl(),
             'filters' => (count($vars) > 0) ? $vars : 'basic',
             'columns' => (count($dbColumns)>0) ? $dbColumns : array(),
-//             'db_connection' => $this->getDbConnection(),
             'pagination' => $this->report->pagination,
-//             'database' => $database,
             'sql' => $sql,
             'utilities' => array(
                 'auto_reload' => $this->report->auto_reload,

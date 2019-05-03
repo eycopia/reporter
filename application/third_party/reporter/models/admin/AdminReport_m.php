@@ -17,7 +17,14 @@ class AdminReport_m extends Grid implements interfaceGrid{
     }
 
     public function find($idReport){
-        $sql = "SELECT * FROM {$this->table} where idReport = {$idReport}";
+        $sql = "SELECT  r.idReport,  r.idUser,  r.idProject,  r.idServerConnection,  
+                    r.title,  r.url,  r.sql, r.description,  r.details, r.cron_notify, 
+                    r.auto_reload, r.format_notify,  r.slug,  r.status, r.columns,
+                    p.name as project, p.template, p.slug, rp.*  
+                FROM {$this->table} as r
+                JOIN project as p on p.idProject = r.idProject
+			    LEFT JOIN report_performance as rp on r.idReportPerformance = rp.idReportPerformance
+                WHERE r.idReport = {$idReport} and r.status = 1";
         $report = $this->db->query($sql);
         return $report->row();
     }
@@ -61,12 +68,23 @@ class AdminReport_m extends Grid implements interfaceGrid{
             'url' => $data['url'],
             'sql' => $this->validSql($data['sql']),
             'columns' => $data['columns'],
-            'items_per_page' => $data['items'],
             'auto_reload' => $data['reload'],
             'format_notify' => $data['format_notify']
         );
         $this->db->where('idReport', $data['idReport']);
         $this->db->update($this->table, $update);
+    }
+    
+    public function setPerformance($idReport, $data){
+        $data['field_for_paginate'] = $this->validSql($data['field_for_paginate']);
+        $report = $this->find($idReport);
+        if(!isset($report->idReportPerformance)){
+            $this->db->insert("report_performance", $data);
+        }else{
+            $this->db->where('idReportPerformance', $report->idReportPerformance)
+                     ->update("report_performance", $data);
+               
+        }
     }
 
     public function delete($idReport){

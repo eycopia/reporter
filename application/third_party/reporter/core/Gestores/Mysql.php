@@ -9,6 +9,16 @@ class Mysql implements iGestorDB
 {
     
     /**
+     * The data report 
+     * @var object
+     */
+    private $report;
+    
+    public function __construct($report){
+        $this->report = $report;
+    }
+    
+    /**
      * Get Limit Default
      * @param string $sql
      * @return string

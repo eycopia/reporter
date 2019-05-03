@@ -21,6 +21,8 @@ application/libraries/Grocery_CRUD.php
 application/libraries/image_moo.php
 application/models/Grocery_crud_model.php
 application/index.html
+application/tests/
+!application/tests/models/
 
 */config/development
 */logs/log-*.php

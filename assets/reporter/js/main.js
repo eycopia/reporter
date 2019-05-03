@@ -83,9 +83,14 @@ $(document).ready(function() {
     $('input[type=reset]').click();
     $(".multiple-var").select2();
     $(".multiple-object").select2();
-
+    var type_pagination = "full_numbers";
+    
+    if(!active_pagination){
+    	type_pagination = "simple";
+    }
     $table = $('#datatable').DataTable( {
           "processing": true,
+          "pagingType": type_pagination,
           "fixedHeader": {header: true},
           "order": [], //no quitar
           "serverSide": true,
@@ -95,8 +100,20 @@ $(document).ready(function() {
             data.vars = $('form').serializeArray();
             datatableAjaxRequest(callback, uri, data);
           },
-          "columns": columns_datables
+          "columns": columns_datables,
+          "infoCallback": function( settings, start, end, max, total, pre ) {
+        	    var api = this.api();
+        	    var pageInfo = api.page.info();
+        	    if(active_pagination){
+        	    	return 'Showing '+pageInfo.length +' records of '+ (pageInfo.recordsTotal) + ".";
+        	    }else{
+        	    	return 'Showing '+pageInfo.length +' records for page.';
+        	    }
+        	 
+        	    
+          }
     } );
+    
 
     $('#auto_refresh').on('click', autoRefresh);
 

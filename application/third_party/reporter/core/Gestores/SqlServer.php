@@ -6,6 +6,18 @@
  *        
  */
 class Sqlserver implements iGestorDB{
+    
+    /**
+     * The data report
+     * @var object
+     */
+    private $report;
+    
+    public function __construct($report){
+        $this->report = $report;
+    }
+    
+    
     /**
      * Get Limit Default
      * @param string $sql
@@ -24,6 +36,30 @@ class Sqlserver implements iGestorDB{
      * @return string
      */
     public function getSqlPaginate($request, $columns, $sql){
+        $syntaxAnalyze = new SyntaxAnalyze($sql);
+        $field = trim($this->report->field_for_paginate);
+        if(empty($field) && is_null($field)){
+            $limit = $this->report->items_per_page;
+            $sql = $syntaxAnalyze->addSql("select", "top $limit");
+        }
+        else{
+            
+            if ( isset($request['start']) && $request['length'] != -1 ) {
+                $start = $request['start'];
+                $length = $request['length'] + $start;
+            }else {
+                $start = 1;
+                $length = 10;
+            }
+            $positions = $syntaxAnalyze->getPositions();
+            $sql = substr($sql, $positions['SELECT'] + 6, strlen($sql));
+            $sql = "SELECT  *
+                FROM ( SELECT ROW_NUMBER() OVER ( ORDER BY {$field} ) AS RowNum,
+                          {$sql} ) AS RowConstrainedResult
+                WHERE   RowNum >= {$start} AND RowNum < {$length}
+                ORDER BY RowNum";
+        }
+        
         return $sql;
     }
 }

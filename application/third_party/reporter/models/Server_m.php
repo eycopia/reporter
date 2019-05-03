@@ -52,7 +52,7 @@ class Server_m extends CI_Model{
             'dbdriver' => $support[$infoDriver->config_name],
             'dbprefix' => '',
             'pconnect' => FALSE,
-            'db_debug' => (ENVIRONMENT !== 'production'),
+            'db_debug' => false, //(ENVIRONMENT !== 'production'),
             'cache_on' => FALSE,
             'cachedir' => '',
             'char_set' => 'utf8',

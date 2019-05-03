@@ -102,11 +102,13 @@ class Grid extends CI_Model
             $server = $this->server_m->find($this->report->idServerConnection);
             $driver = $this->server_m->getDriver($server->idDriver);
             $nameGestor =  ucfirst($driver->config_name);
+            $param = $this->report;
         }else{
             $con = $this->db; 
             $nameGestor =  ucfirst($this->config->item('db_default_driver'));
+            $param = null;
         }
-        $this->gestor = new $nameGestor;
+        $this->gestor = new $nameGestor($param);
         return $con;  
     }
     
@@ -153,8 +155,8 @@ class Grid extends CI_Model
         $keyColumns = isset($sqlData[0]) ? array_keys($sqlData[0]) : array();
         $this->columns = $this->makeColumns($keyColumns);
         $data = DatatablesSSP::data_output($this->columns, $sqlData);
-        $total = ($this->pagination) ? $this->getTotal() : 10000;
-        return array(
+        $total = ($this->pagination) ? $this->getTotal() : 1000000;
+        $result =  array(
             "columns" => $_REQUEST['columns'],
             "draw" => isset ( $_REQUEST['draw'] ) ? intval( $_REQUEST['draw'] ) : 0,
             "data" => $data,
@@ -166,7 +168,6 @@ class Grid extends CI_Model
         if(ENVIRONMENT == 'development'){
             $result["sql"] = $this->sqlFiltered;
         }
-
         return $result;
     }
 

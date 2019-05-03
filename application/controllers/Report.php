@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+error_reporting(1);
 /**
  * Class Report
  * @package Reporter\Controllers
@@ -19,9 +19,22 @@ class Report extends CI_Controller{
 		$this->report_m->loadReport($id);
 		session_write_close();
 		$data = $this->report_m->dataGrid($id);
+		$json = json_encode($this->utf8ize( $data ));
 		return $this->output
 			->set_content_type('application/json')
-			->set_output(json_encode($data));
+			->set_output($json);
+	}
+	
+	
+	private function utf8ize( $mixed ) {
+	    if (is_array($mixed)) {
+	        foreach ($mixed as $key => $value) {
+	            $mixed[$key] = $this->utf8ize($value);
+	        }
+	    } elseif (is_string($mixed)) {
+	        return mb_convert_encoding($mixed, "UTF-8", "UTF-8");
+	    }
+	    return $mixed;
 	}
 
 	public function grid($id){

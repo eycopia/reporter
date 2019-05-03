@@ -16,9 +16,11 @@ form   {
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#information" aria-controls="information" role="tab" data-toggle="tab">Details</a></li>
     <li role="presentation" class=""><a href="#sqlReport" aria-controls="sqlReport" role="tab" data-toggle="tab">SQL</a></li>
-    <li role="presentation" class=""><a href="#customice" aria-controls="customice" role="tab" data-toggle="tab">Custom Grid</a></li>
     <li role="presentation" class=""><a href="#notify" aria-controls="notify" role="tab" data-toggle="tab">Notifications</a></li>
-    <?php if(isset($report)) {
+    <?php if(isset($report)) { ?>
+    <li role="presentation" class=""><a href="#customice" aria-controls="customice" role="tab" data-toggle="tab">Custom Grid</a></li>
+    <li role="presentation" class=""><a href="#performance" aria-controls="performance" role="tab" data-toggle="tab">Performance</a></li>
+    <?php
         $path = (empty($report->url)) ? "report/grid/{$report->idReport }" : $report->url;
         $link = site_url($path);
         echo "<li><a href='{$link}'
@@ -152,26 +154,7 @@ form   {
  <div role="customice" class="tab-pane" id="customice">
         <div class="col-lg-12 col-sm-10 center-block " style="float:none">
             <div class="form-group">
-                <br>
-                <div class="col-sm-3">
-                    <div class="col-sm-4">
-                        <label  class="control-label">Items:</label>
-                        </div>
-                    <div class="col-sm-8"><input name="items" class="form-control" type="number"
-                              value="<?php echo  isset($report->items_per_page)? $report->items_per_page : 10;?>">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label  class="control-label">Auto reload:</label>
-
-                        <input name="reload" type="radio" value="1"
-                            <?php echo ( isset($report->auto_reload) && $report->auto_reload == 1) ? "checked='checked' autocomplete=\"off\"" : ''; ?>
-                        > Si
-                        <input name="reload" type="radio" value="0"
-                            <?php echo (isset($report->auto_reload) && $report->auto_reload == 0) ? "checked='checked' autocomplete=\"off\"" : ''; ?>
-                        > No
-
-                </div>
+                
                 <?php if(isset($columns)){ ?>
                 <div class="col-sm-12">
                     <p><br></p><h4>Configure Columns:</h4>
@@ -204,6 +187,45 @@ form   {
             </div>
         </div>
 </div>
+<div role="performance" class="tab-pane" id="performance">
+        <div class="form-group">
+        	<div class="col-sm-12">
+                <div class="col-sm-3">
+                        <label  class="control-label">Items per page:</label><br>
+                        <input name="items" class="form-control" type="number"
+                                  value="<?php echo  isset($report->items_per_page)? $report->items_per_page : 10;?>">
+                </div>
+                
+                <div class="col-sm-4">
+                    <label  class="control-label">Show pagination:</label><br/>
+                    <input name="pagination" value='1' type="radio" 
+                   		 <?php echo ( isset($report->pagination) && $report->pagination == 1) ? "checked='checked' autocomplete=\"off\"" : ''; ?>> Yes
+                    <input name="pagination" value='0' type="radio"
+                    	 <?php echo ( isset($report->pagination) && $report->pagination == 0) ? "checked='checked' autocomplete=\"off\"" : ''; ?>> Not
+                </div>
+                 
+                <div class="col-sm-4">
+                    <label  class="control-label">Auto reload:</label><br>
+
+                        <input name="reload" type="radio" value="1"
+                            <?php echo ( isset($report->auto_reload) && $report->auto_reload == 1) ? "checked='checked' autocomplete=\"off\"" : ''; ?>
+                        > Si
+                        <input name="reload" type="radio" value="0"
+                            <?php echo (isset($report->auto_reload) && $report->auto_reload == 0) ? "checked='checked' autocomplete=\"off\"" : ''; ?>
+                        > No
+
+                </div>
+                
+                <div class="col-sm-12">
+                	<label>Custom Order By (Usually used for pagination ):</label>
+                	<br>
+                	<input name="order" value="<?php echo (isset($report->field_for_paginate) ) ? $report->field_for_paginate : ''; ?>" type="text" class="form-control">
+                </div>
+                
+             </div>
+                
+        </div>
+  </div>
     <div role="notify" class="tab-pane" id="notify">
         <div class="form-group">
             <div class="col-sm-4">
@@ -216,8 +238,6 @@ form   {
                             echo "<option $selected  value='".strtolower($f)."'>$f</option>";
                         }
                     ?>
-                    ?>
-
 
                 </select>
             </div>

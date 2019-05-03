@@ -162,6 +162,7 @@ class Report extends AdminGrid{
             if(empty($data['report']['url'])){
                 $this->getGridColumns($idReport);
                 $data['report']['columns'] =  $this->mergeColumns($data['report']['columns']);
+                $this->model->setPerformance($idReport, $data['performance']);
                 $this->model->edit($data['report']);
             }
             $this->NotifyReport_m->save($data['emails'], $data['report']['idReport']);
@@ -220,6 +221,7 @@ class Report extends AdminGrid{
 
             }
         }
+        
         $report = array(
             'title' => $reportValues['title'],
             'project' => $reportValues['project'],
@@ -227,11 +229,17 @@ class Report extends AdminGrid{
             'details' => $reportValues['details'],
             'columns' => (isset($reportValues['columns'])) ? $reportValues['columns'] : '',
             'url' => $reportValues['url'],
-            'sql' => $reportValues['sql'],
-            'items' => $reportValues['items'],
+            'sql' => $reportValues['sql'],            
             'reload' => isset($reportValues['reload']) ? $reportValues['reload'] : null,
             'format_notify' => $reportValues['format_notify']
         );
+        
+        $performance = array(
+            'items_per_page' => $reportValues['items'],
+            'pagination' => $reportValues['pagination'],
+            'field_for_paginate' => $reportValues['order']
+        );
+        
         if(is_numeric($reportValues['connection'])){
             $report['connection'] = $reportValues['connection'];
         }
@@ -243,7 +251,8 @@ class Report extends AdminGrid{
         }
         return array('report' => $report,
             'vars' => $reportValues['vars'],
-            'emails' => $emails
+            'emails' => $emails,
+            'performance' => $performance
         );
     }
 

@@ -1,8 +1,9 @@
 <?php
-require_once APPPATH."models".DIRECTORY_SEPARATOR."Datatables".DIRECTORY_SEPARATOR."SyntaxAnalyze.php";
+$sep = DIRECTORY_SEPARATOR;
+require_once APPPATH."third_party{$sep}reporter{$sep}core{$sep}SyntaxAnalyze.php";
 
-class SyntaxAnalyze_test extends PHPUnit_Framework_TestCase{
-
+class SyntaxAnalyze_test extends PHPUnit_Framework_TestCase
+{    
     public function test_SqlSinWhere()
     {
         $sql = "select * from un_from";
