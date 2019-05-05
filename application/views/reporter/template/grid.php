@@ -77,7 +77,7 @@
 
 <script type="text/javascript">
   var data_url = "<?php echo $table['data_url']; ?>";
-  var active_pagination = "<?php echo $report->pagination; ?>";
+  var active_pagination = "<?php echo (isset($report->pagination)) ? $report->pagination : 1 ; ?>";
   var items_per_page = <?php echo isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : 25; ?>;
   var auto_reload= <?php echo isset($table['utilities']['auto_reload']) ? $table['utilities']['auto_reload'] : 0;?>;
   var columns_datables = [
