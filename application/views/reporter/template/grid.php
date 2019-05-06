@@ -2,12 +2,12 @@
 <div id="menu_report" class="nav top-nav">
     <div class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        <i class="fa fa-fw fa-table"></i> <?php echo $report->project; ?> <b class="caret"></b></a>
+        <i class="fa fa-fw fa-table"></i> <?php echo $report->current_project->name; ?> <b class="caret"></b></a>
     <ul class="dropdown-menu alert-dropdown">
         <?php
         foreach($report->moreReports as $link){
             if($link->idReport == $report->idReport) {continue;}
-            echo "<li> <a href='".site_url('report/grid/'.$link->idReport)."'>"
+            echo "<li> <a href='".site_url("report/grid/{$link->idReport}/{$link->idProject}")."'>"
                  ."<i class='fa fa-fw fa-link'></i> ".$link->title
                 ."</a></li>";
         }
@@ -78,7 +78,7 @@
 <script type="text/javascript">
   var data_url = "<?php echo $table['data_url']; ?>";
   var active_pagination = "<?php echo (isset($report->pagination)) ? $report->pagination : 1 ; ?>";
-  var items_per_page = <?php echo isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : 25; ?>;
+  var items_per_page = <?php echo isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : $this->config->item('grid_items_per_page'); ?>;
   var auto_reload= <?php echo isset($table['utilities']['auto_reload']) ? $table['utilities']['auto_reload'] : 0;?>;
   var columns_datables = [
               <?php

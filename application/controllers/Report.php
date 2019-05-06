@@ -37,10 +37,16 @@ class Report extends CI_Controller{
 	    return $mixed;
 	}
 
-	public function grid($id){
-		$this->report_m->loadReport($id);
+	public function grid($id, $idProject=null){
+	    $this->report_m->loadReport($id);
+		
 		$table = $this->report_m->bodyGrid($id);
-		$report = $this->report_m->getReportData();
+		
+		$report = $this->report_m->getReportData($idProject);
+		if(!is_null($idProject)){
+		    $this->load->model('project_m');
+		    $report->current_project = $this->project_m->find($idProject);
+		}
 		$breadcrumb = $this->getBreadCrumb($report);
 		$views = $this->config->item('rpt_template');
 		$base = $this->config->item('rpt_base_template');
@@ -49,7 +55,7 @@ class Report extends CI_Controller{
 			'title_page' => $report->title,
 			'main_content' => $views . 'grid',
             'table' => $table,
-			'report' => $report,
+			'report' => $report,		    
             'breadcrumb' => $breadcrumb,
             'data_url' => site_url('report/show/'.$id)
 		);
@@ -79,8 +85,8 @@ class Report extends CI_Controller{
 				'title'=> $this->lang->line('home'),
 				'link'=> site_url()
 			),array(
-				'title'=> $report->project,
-				'link'=> site_url('project/name/'.url_title($report->slug))
+				'title'=> $report->current_project->name,
+				'link'=> site_url('project/name/'.url_title($report->current_project->slug))
 			), array(
 				'title' => $report->title
 			));
