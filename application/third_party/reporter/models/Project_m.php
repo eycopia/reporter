@@ -123,9 +123,9 @@ class Project_m extends Grid implements interfaceGrid{
     public function getColumns(){
         $that = $this;
         return array(
-            array('dt' => 'Reports', 'db' => 'idReport', 'table' => 'r',
+            array('dt' => 'Reports', 'db' => 'title', 'table' => 'r',
                 "formatter" => function($d, $row) use ($that ) {
-                    $url = $that->generarRuta($d, $row);
+                    $url = $that->generarRuta($row['idReport'], $row);
                     return "<a class='' $url>
                     ".$row['title']."</a>";
                 }),

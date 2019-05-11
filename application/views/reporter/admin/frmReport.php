@@ -121,6 +121,8 @@ form   {
        <div class="form-group">
            <div class="">
                <label class="control-label">Query Sql</label>
+               <div class="alert alert-success"><strong>Tip:</strong> Usted puede utilizar los siguientes comandos html en el resultado del select p, a, strong, ul, li, h1, h2, h3, h4, div, span, ol, img, hr, b, i; estos serán interpretados en la grilla.</div>
+               <div class="alert alert-danger"><strong>PELIGRO, NO UTILIZAR:</strong> CREATE, DROP, ALTER, UPDATE, INSERT o DELETE; bajo su propia responsabilidad.</div>
                <div class="form-control" id="sql"><?php if(isset($report->sql)){
                        echo $report->sql; } ?> </div>
            </div>

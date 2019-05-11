@@ -151,6 +151,12 @@ class Grid extends CI_Model
      */
     public function dataGrid(){
         $this->prepare($this->gridDefinition());
+        if (isset($_REQUEST['vars'])){
+            $_REQUEST['vars'] = $this->security->xss_clean($_REQUEST['vars']);
+        }
+        if(isset($_REQUEST['columns'])){
+            $_REQUEST['columns'] = $this->security->xss_clean($_REQUEST['columns']);
+        }
         $sqlData = $this->getData();
         $keyColumns = isset($sqlData[0]) ? array_keys($sqlData[0]) : array();
         $this->columns = $this->makeColumns($keyColumns);
@@ -222,7 +228,7 @@ class Grid extends CI_Model
     }
 
     public function applyCustomFilters($sql){
-        return $this->filterGrid->applyFilterOnSql($sql);
+       return $this->filterGrid->applyFilterOnSql($sql);
     }
 
     protected function getSqlCount($sintax, $positions, $sql){

@@ -152,15 +152,19 @@ class Report extends AdminGrid{
     private function editReport($data){
         $idReport = $data['report']['idReport'];
         try {
-            $this->model->edit($data['report']);
+           
             if(isset($data['vars']) && !empty($data['vars'])){
                 $this->VarReport_m->save($data['vars'], $idReport);
             }
             if(empty($data['report']['url'])){
                 $this->getGridColumns($idReport);
                 $data['report']['columns'] =  $this->mergeColumns($data['report']['columns']);
+            }
+            
+            $this->model->edit($data['report']);
+            
+            if(isset($data['performance'])){
                 $this->model->setPerformance($idReport, $data['performance']);
-//                 $this->model->edit($data['report']);
             }
             
             $this->model->editProjects($data['report']['idReport'], $data['projects']);
@@ -180,6 +184,7 @@ class Report extends AdminGrid{
         foreach(json_decode($columns) as $col){
             $lastColumns[$col->db] = $col;
         }
+
         foreach($this->grid->makeColumnsFromSql() as $col){
             if(isset($lastColumns[$col['db']])){
                 $newColumns[] = array(

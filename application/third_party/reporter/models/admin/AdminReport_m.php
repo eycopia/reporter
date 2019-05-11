@@ -119,10 +119,10 @@ class AdminReport_m extends Grid implements interfaceGrid{
      * @return string
      */
     private function validSql($sql){
-        $re = '/(\b(?:update|delete|insert)\b )/mi';
+        $re = '/(\b(?:update|delete|insert|create|drop|alter)\b )/mi';
         $replace = ' ';
         $sql = preg_replace($re, $replace, $sql);
-        return $sql;
+        return strip_tags($sql, $this->htmlValid);
     }
 
     public function gridDefinition(){
