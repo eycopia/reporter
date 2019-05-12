@@ -50,8 +50,10 @@ class Report_m extends Grid implements interfaceGrid {
         return $q->row();
     }
 
-    public function getReportData(){
-        $this->report->moreReports = $this->getProjectReports($this->report->idProject);
+    public function getReportData($idProject){
+        if(!is_null($idProject)){
+            $this->report->moreReports = $this->getProjectReports($idProject);
+        }        
         return $this->report;
     }
 
@@ -60,34 +62,24 @@ class Report_m extends Grid implements interfaceGrid {
         $this->report = $this->AdminReport_m->find($id);
     }
 
-    public function getReportsPerProject(){
-        $projects = $this->project_m->getProjects();
-        foreach( $projects as $project){
-            $project->reports = $this->getProjectReports($project->idProject);
-        }
-        return $projects;
-    }
 
     public function getProjectReports($idProject){
-        $q = $this->db->query("SELECT idReport, idProject, url,
-            idServerConnection, title, description
-            FROM {$this->table}
-            WHERE idProject = {$idProject} and status = 1");
+        $q = $this->db->query("SELECT r.idReport, rbp.idProject, r.url,
+            r.idServerConnection, r.title, r.description
+            FROM {$this->table} as r
+            LEFT JOIN reports_by_project as rbp on rbp.idReport = r.idReport
+            LEFT JOIN project as p on p.idProject = rbp.idProject
+            WHERE rbp.idProject = {$idProject} and p.status = 1");
         return $q->result();
     }
 
     public function gridDefinition(){
         $vars = $this->declareVars();
         $dbColumns = json_decode($this->report->columns, true);
-        $project = array(
-            'name' => $this->report->project,
-            'idProject' =>$this->report->idProject,
-            'slug' => $this->report->slug);
         $sql = trim($this->report->sql);
         return array(
             'title' => $this->report->title,
             'description' => $this->report->details,
-            'project' => $project,
             'data_url' => $this->getReportDataUrl(),
             'filters' => (count($vars) > 0) ? $vars : 'basic',
             'columns' => (count($dbColumns)>0) ? $dbColumns : array(),

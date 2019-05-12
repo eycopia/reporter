@@ -1,10 +1,15 @@
+<?php 
+
+$items_per_page = isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : $this->config->item('grid_items_per_page');
+
+?> 
 <div class="col-sm-12">
     <br>
     <div class="col-lg-1 col-sm-2">
         <label><?php echo $this->lang->line('label_show'); ?>:</label>
         <select class="form-control" id="showRows">
-            <option value="<?php echo $table['utilities']['items_per_page'];?>" selected="selected">
-                <?php echo $table['utilities']['items_per_page'];?></option>
+            <option value="<?php echo $items_per_page?>" selected="selected">
+                <?php echo $items_per_page;?></option>
             <option value="25">25</option>
             <option value="50">50</option>
             <option value="100">100</option>

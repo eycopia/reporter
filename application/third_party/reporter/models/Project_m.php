@@ -84,8 +84,8 @@ class Project_m extends Grid implements interfaceGrid{
 
     /**
      * Check if the current user is authorized for the project
-     * @param $idUser user to evaluate
-     * @param $idProject project id
+     * @param $idUser int user to evaluate
+     * @param $idProject int project id
      */
     public function validate_user($idUser, $idProject)
     {
@@ -106,9 +106,11 @@ class Project_m extends Grid implements interfaceGrid{
 
     public function gridDefinition(){
         return array(
-            'sql' => "SELECT r.idReport, r.sql, r.url, r.title, r.description, r.created, p.name as project
+            'sql' => "SELECT r.idReport, r.sql, r.url, r.title, r.description,
+            p.idProject, r.created, p.name as project
             FROM {$this->table} as p
-            join report as r on r.idProject = p.idProject
+            join reports_by_project as rp on p.idProject = rp.idProject 
+            join report as r on rp.idReport = r.idReport
             WHERE p.status = 1 and r.status = 1 and p.idProject = {$this->idProject}
             ORDER BY r.idReport asc",
             'description' => '',
@@ -121,9 +123,9 @@ class Project_m extends Grid implements interfaceGrid{
     public function getColumns(){
         $that = $this;
         return array(
-            array('dt' => 'Reports', 'db' => 'idReport', 'table' => 'r',
+            array('dt' => 'Reports', 'db' => 'title', 'table' => 'r',
                 "formatter" => function($d, $row) use ($that ) {
-                    $url = $that->generarRuta($d, $row);
+                    $url = $that->generarRuta($row['idReport'], $row);
                     return "<a class='' $url>
                     ".$row['title']."</a>";
                 }),
@@ -147,7 +149,7 @@ class Project_m extends Grid implements interfaceGrid{
         }else if(strlen($text) > 0 ){
             $url = site_url($row['url']);
         }else{
-            $url = site_url('report/grid/'.$d);
+            $url = site_url("report/grid/$d/{$row['idProject']}");
         }
         return "href='$url' target = '$target'";
     }

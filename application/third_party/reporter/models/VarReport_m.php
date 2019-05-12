@@ -88,7 +88,7 @@ class VarReport_m extends CI_Model{
 
     /**
      * Add a new Var
-     * @param $data Values to insert
+     * @param $data array Values to insert
      * @param $idReport Report
      * @throws string Mysql error message
      */

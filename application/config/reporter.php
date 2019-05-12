@@ -25,6 +25,7 @@ $config['rpt_auth_adapter'] = 'No_auth_adapter';
 
 $config['rpt_login'] = 'Auth/login';
 
+$config['grid_items_per_page'] = 25;
 
 //when enviroment is development or testing, all emails send to this email
 $config['tester_email'] = 'eycopia@gmail.com';

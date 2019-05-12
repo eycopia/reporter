@@ -17,16 +17,24 @@ class AdminReport_m extends Grid implements interfaceGrid{
     }
 
     public function find($idReport){
-        $sql = "SELECT  r.idReport,  r.idUser,  r.idProject,  r.idServerConnection,  
+        $sql = "SELECT  r.idReport,  r.idUser, r.idServerConnection,  
                     r.title,  r.url,  r.sql, r.description,  r.details, r.cron_notify, 
-                    r.auto_reload, r.format_notify,  r.slug,  r.status, r.columns,
-                    p.name as project, p.template, p.slug, rp.*  
-                FROM {$this->table} as r
-                JOIN project as p on p.idProject = r.idProject
-			    LEFT JOIN report_performance as rp on r.idReportPerformance = rp.idReportPerformance
+                    r.auto_reload, r.format_notify,  r.slug,  r.status, r.columns, 
+                    rp.idReportPerformance, rp.pagination, rp.items_per_page, rp.field_for_paginate 
+                FROM {$this->table} as r                
+			    LEFT JOIN report_performance as rp on r.idReport = rp.idReport
                 WHERE r.idReport = {$idReport} and r.status = 1";
+        
         $report = $this->db->query($sql);
-        return $report->row();
+        $r = $report->row();
+        
+        $sql2 = "SELECT p.name as project, p.idProject, p.template, p.slug
+                FROM  project as p 
+                LEFT JOIN reports_by_project as rp on p.idProject = rp.idProject
+                WHERE rp.idReport = {$idReport}";
+        $projects = $this->db->query($sql2);
+        $r->projects = $projects->result();
+        return $r;
     }
 
 
@@ -37,20 +45,31 @@ class AdminReport_m extends Grid implements interfaceGrid{
      */
     public function add($data){
         $sql = sprintf("INSERT INTO {$this->table} "
-            ."(`idUser`,`idProject`, `idServerConnection`, `title`,"
-            ."`description`,`url`,`sql`, `items_per_page`,`auto_reload`) "
-            ." VALUE (%d,%d, %d, '%s','%s', '%s', \"%s\", %d, '%s')",
-            $_SESSION['user_id'],
-            $data['project'], $data['connection'],
+            ."(`idUser`, `idServerConnection`, `title`,"
+            ."`description`,`url`,`sql`) "
+            ." VALUE (%d,%d, '%s','%s', '%s', \"%s\")",
+            $_SESSION['user_id'], $data['connection'],
             strip_tags($data['title'],$this->htmlValid),
             strip_tags($data['description'], $this->htmlValid),
             $data['url'],
-            $this->validSql($data['sql']),
-            $data['items'], $data['reload']);
+            $this->validSql($data['sql']));
         if( ! $this->db->query($sql) ){
             throw new Exception("Error sql", $this->db->error());
         }
         return $this->db->insert_id();
+    }
+    
+    public function addProjects($idReport, $projects){
+        foreach($projects as $p ){
+            $params = array('idProject' => $p, 'idReport' => $idReport);
+            $this->db->insert('reports_by_project', $params);
+        }
+    }
+    
+    public function editProjects($idReport, $projects){
+        $this->db->where('idReport', $idReport)
+            ->delete('reports_by_project');
+        $this->addProjects($idReport, $projects);
     }
 
     /**
@@ -60,7 +79,6 @@ class AdminReport_m extends Grid implements interfaceGrid{
     public function  edit($data){
         $update = array(
             'idUser' => $_SESSION['user_id'],
-            'idProject' => $data['project'],
             'idServerConnection' => $data['connection'],
             'title' => strip_tags($data['title'],$this->htmlValid),
             'description' => strip_tags($data['description'], $this->htmlValid),
@@ -77,12 +95,15 @@ class AdminReport_m extends Grid implements interfaceGrid{
     
     public function setPerformance($idReport, $data){
         $data['field_for_paginate'] = $this->validSql($data['field_for_paginate']);
-        $report = $this->find($idReport);
-        if(!isset($report->idReportPerformance)){
-            $this->db->insert("report_performance", $data);
+        $query = $this->db->query("SELECT * FROM report_performance where idReport = $idReport");
+        $performance = $query->row();
+        
+        if(isset($performance->idReportPerformance)){
+            $this->db->where('idReportPerformance', $performance->idReportPerformance)
+            ->update("report_performance", $data);
         }else{
-            $this->db->where('idReportPerformance', $report->idReportPerformance)
-                     ->update("report_performance", $data);
+            $data['idReport'] = $idReport;
+            $this->db->insert("report_performance", $data);            
                
         }
     }
@@ -98,19 +119,21 @@ class AdminReport_m extends Grid implements interfaceGrid{
      * @return string
      */
     private function validSql($sql){
-        $re = '/(\b(?:update|delete|insert)\b )/mi';
+        $re = '/(\b(?:update|delete|insert|create|drop|alter)\b )/mi';
         $replace = ' ';
         $sql = preg_replace($re, $replace, $sql);
-        return $sql;
+        return strip_tags($sql, $this->htmlValid);
     }
 
     public function gridDefinition(){
         return array(
             'description' => '',
-            'sql' => "SELECT r.idReport, r.title, r.created, p.name as project
+            'sql' => "SELECT r.idReport, r.title, r.created, group_concat(p.name order by p.name asc separator  ', ' ) as project
                 FROM {$this->table} as r
-                join project  as p on p.idProject = r.idProject and p.status = 1
-                WHERE r.status = 1
+                left join reports_by_project as rp on r.idReport  = rp.idReport
+                left join project  as p on rp.idProject = p.idProject and p.status = 1
+                WHERE r.status = 1 
+                GROUP BY r.idReport
                 ORDER BY r.idReport desc",
             'data_url' => site_url('admin/report/show/'),
             'database' => 'mysql',

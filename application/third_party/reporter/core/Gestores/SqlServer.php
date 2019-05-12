@@ -37,9 +37,9 @@ class Sqlserver implements iGestorDB{
      */
     public function getSqlPaginate($request, $columns, $sql){
         $syntaxAnalyze = new SyntaxAnalyze($sql);
-        $field = trim($this->report->field_for_paginate);
-        if(empty($field) && is_null($field)){
-            $limit = $this->report->items_per_page;
+        $field = trim( isset($this->report->field_for_paginate) ? $this->report->field_for_paginate : null);
+        if(empty($field) ||  is_null($field)){
+            $limit = isset($this->report->items_per_page) ? $this->report->items_per_page : 10;
             $sql = $syntaxAnalyze->addSql("select", "top $limit");
         }
         else{
@@ -59,7 +59,6 @@ class Sqlserver implements iGestorDB{
                 WHERE   RowNum >= {$start} AND RowNum < {$length}
                 ORDER BY RowNum";
         }
-        
         return $sql;
     }
 }

@@ -40,8 +40,8 @@ class NotifyReport_m extends CI_Model
 
     /**
      * Insert a new record on table notify_report
-     * @param $idNotify the notify
-     * @param $idReport the report
+     * @param $idNotify int id notify
+     * @param $idReport int id report
      */
     public function add($idNotify, $idReport){
         $params = array(

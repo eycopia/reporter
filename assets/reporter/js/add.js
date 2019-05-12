@@ -1,9 +1,10 @@
 function init(){
    CKEDITOR.replace( 'details');
-
-
-    //editor sql
-    var editor = ace.edit("sql");
+   
+    el = document.getElementById("sql");
+    text = el.innerHTML;
+    editor = ace.edit(el);
+    editor.session.setValue(text);
     editor.setTheme("ace/theme/eclipse");
     editor.getSession().setMode("ace/mode/sql");
 

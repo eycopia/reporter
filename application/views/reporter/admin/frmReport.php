@@ -51,35 +51,43 @@ form   {
                 >
             </div>
         </div>
+        
         <div class="form-group">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
+                    <label  class="control-label">Server Connection</label>
+                    <select name="connection" class="form-control">
+                        <option>---Select-----</option>
+                        <?php
+                        foreach ($servers as $server) {
+                            if(isset($report) && $report->idServerConnection==$server->idServerConnection) {
+                                echo "<option value='{$server->idServerConnection}' selected='selected'>{$server->name}</option>";
+                            }else{
+                                echo "<option value='{$server->idServerConnection}'>{$server->name}</option>";
+                            }
+                        }?>
+                    </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-12">
                 <label  class="control-label">Project</label>
-                <select name="project" class="form-control">
+                <select multiple="multiple" name="projects" class="form-control" >
                     <option>---Select-----</option>
                     <?php
                     foreach ($projects as $project) {
-                        if(isset($report) && $report->idProject==$project->idProject){
-                            echo "<option value='{$project->idProject}' selected='selected'>{$project->name}</option>";
-                        }else{
-                            echo "<option value='{$project->idProject}'>{$project->name}</option>";
+                        $select = '';
+                        foreach($report->projects as $rp){
+                            if ($rp->idProject == $project->idProject) {
+                               $select =  "selected='selected'" ;
+                               break;
+                            }                           
                         }
+                        echo "<option $select value='{$project->idProject}'>{$project->name}</option>";
                     }?>
                 </select>
             </div>
-            <div class="col-sm-6">
-                <label  class="control-label">Server Connection</label>
-                <select name="connection" class="form-control">
-                    <option>---Select-----</option>
-                    <?php
-                    foreach ($servers as $server) {
-                        if(isset($report) && $report->idServerConnection==$server->idServerConnection) {
-                            echo "<option value='{$server->idServerConnection}' selected='selected'>{$server->name}</option>";
-                        }else{
-                            echo "<option value='{$server->idServerConnection}'>{$server->name}</option>";
-                        }
-                    }?>
-                </select>
-            </div>
+            
         </div>
 
       <div class="form-group">
@@ -113,6 +121,8 @@ form   {
        <div class="form-group">
            <div class="">
                <label class="control-label">Query Sql</label>
+               <div class="alert alert-success"><strong>Tip:</strong> Usted puede utilizar los siguientes comandos html en el resultado del select p, a, strong, ul, li, h1, h2, h3, h4, div, span, ol, img, hr, b, i; estos serán interpretados en la grilla.</div>
+               <div class="alert alert-danger"><strong>PELIGRO, NO UTILIZAR:</strong> CREATE, DROP, ALTER, UPDATE, INSERT o DELETE; bajo su propia responsabilidad.</div>
                <div class="form-control" id="sql"><?php if(isset($report->sql)){
                        echo $report->sql; } ?> </div>
            </div>
@@ -193,7 +203,7 @@ form   {
                 <div class="col-sm-3">
                         <label  class="control-label">Items per page:</label><br>
                         <input name="items" class="form-control" type="number"
-                                  value="<?php echo  isset($report->items_per_page)? $report->items_per_page : 10;?>">
+                                  value="<?php echo  isset($report->items_per_page)? $report->items_per_page : $this->config->item('grid_items_per_page');?>">
                 </div>
                 
                 <div class="col-sm-4">
