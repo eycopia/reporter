@@ -17,7 +17,6 @@ class Project extends CI_Controller
         parent::__construct();
         $this->load->model('Report_m');
         $this->load->model('Project_m');
-        $this->reporter_auth->isLogin();
         $this->user = $this->reporter_auth->get_user_id();
     }
 

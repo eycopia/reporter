@@ -20,8 +20,8 @@ $config['rpt_models'] = $namePackege;
 $config['rpt_controllers'] = $namePackege;
 
 //adapter for auth
+//defaults implements: No_auth_adapter, Ion_auth_adapter, Nette_Security_adapter
 $config['rpt_auth_adapter'] = 'No_auth_adapter';
-//$config['rpt_auth_adapter'] = $namePackege.'Ion_auth_adapter';
 
 $config['rpt_login'] = 'Auth/login';
 

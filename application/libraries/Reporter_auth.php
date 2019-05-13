@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once APPPATH."third_party/reporter/libraries/interfaceAuthReporter.php";
-//require_once APPPATH."third_party/reporter/libraries/Ion_auth_adapter.php";
-//require_once APPPATH."third_party/reporter/libraries/No_auth_adapter.php";
+
 
 
 
