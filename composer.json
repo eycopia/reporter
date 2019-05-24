@@ -1,7 +1,8 @@
 {
 	"require" : {
 		"php" : ">=5.2.4",
-		"eycopia/excel" : "^1.0"
+		"eycopia/excel" : "^1.0",
+		"chriskacerguis/codeigniter-restserver": "^3.0"
 	},
 	"require-dev" : {
 		"mikey179/vfsStream" : "1.1.*",
