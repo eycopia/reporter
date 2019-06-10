@@ -23,6 +23,8 @@ application/models/Grocery_crud_model.php
 application/index.html
 application/tests/
 !application/tests/models/
+application/vendor
+application/composer.lock
 
 */config/development
 */logs/log-*.php
@@ -30,12 +32,14 @@ application/tests/
 */cache/*
 !*/cache/index.html
 !*/cache/.htaccess
-.idea/
-vendor
+
 assets/grocery_crud
 assets/uploads
 assets/libs
 assets/index.html
+
+.idea/
+vendor
 composer.lock
 user_guide/
 .project

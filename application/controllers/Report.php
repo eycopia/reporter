@@ -1,21 +1,21 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-error_reporting(1);
 /**
  * Class Report
  * @package Reporter\Controllers
  * @author Jorge Copia Silva <eycopia@gmail.com>
  * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
-class Report extends CI_Controller{
+class Report extends CustomReport{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('report_m');
-		$this->validateUserReport();
+//         parent::__construct();
+// 		$this->load->model('report_m');
+// 		$this->validateUserReport();
 		$this->reporter_auth->isLogin();
 	}
 
-	public function show($id){
+	public function show($id=null){
 		$this->report_m->loadReport($id);
 		session_write_close();
 		$data = $this->report_m->dataGrid($id);
@@ -38,32 +38,37 @@ class Report extends CI_Controller{
 	}
 
 	public function grid($id, $idProject=null){
-	    $this->report_m->loadReport($id);
+// 	    $this->report_m->loadReport($id);
+	    $replace = ['data_url' => site_url('report/show/'.$id)];
+// 	    $data = 
+	    $this->index($id, $idProject, $replace);
+// 	    $this->load->view($data['template'], $data);
+// 	    $this->report_m->loadReport($id);
 		
-		$table = $this->report_m->bodyGrid($id);
+// 		$table = $this->report_m->bodyGrid($id);
 		
-		$report = $this->report_m->getReportData($idProject);
-		if(!is_null($idProject)){
-		    $this->load->model('project_m');
-		    $report->current_project = $this->project_m->find($idProject);
-		}
-		$breadcrumb = $this->getBreadCrumb($report);
-		$views = $this->config->item('rpt_template');
-		$base = $this->config->item('rpt_base_template');
-		$template = is_null($report->template) ? $base : $report->template;
-		$data = array(
-			'title_page' => $report->title,
-			'main_content' => $views . 'grid',
-            'table' => $table,
-			'report' => $report,		    
-            'breadcrumb' => $breadcrumb,
-            'data_url' => site_url('report/show/'.$id)
-		);
-		$this->load->view($template, $data);
+// 		$report = $this->report_m->getReportData($idProject);
+// 		if(!is_null($idProject)){
+// 		    $this->load->model('project_m');
+// 		    $report->current_project = $this->project_m->find($idProject);
+// 		}
+// 		$breadcrumb = $this->getBreadCrumb($report);
+// 		$views = $this->config->item('rpt_template');
+// 		$base = $this->config->item('rpt_base_template');
+// 		$template = is_null($report->template) ? $base : $report->template;
+// 		$data = array(
+// 			'title_page' => $report->title,
+// 			'main_content' => $views . 'grid',
+//             'table' => $table,
+// 			'report' => $report,		    
+//             'breadcrumb' => $breadcrumb,
+//             'data_url' => site_url('report/show/'.$id)
+// 		);
+// 		$this->load->view($template, $data);
 	}
 
 
-    public function download($id){
+    public function download($id=null){
 		$this->report_m->loadReport($id);
 		session_write_close();
         $params = array('model' => $this->report_m, 'idReport' => $id);
@@ -79,16 +84,16 @@ class Report extends CI_Controller{
         $this->Project_m->validate_user($this->reporter_auth->get_user_id(), $report->idProject);
     }
 
-	private function getBreadCrumb($report){
-		return array(
-			array(
-				'title'=> $this->lang->line('home'),
-				'link'=> site_url()
-			),array(
-				'title'=> $report->current_project->name,
-				'link'=> site_url('project/name/'.url_title($report->current_project->slug))
-			), array(
-				'title' => $report->title
-			));
-	}
+// 	private function getBreadCrumb($report){
+// 		return array(
+// 			array(
+// 				'title'=> $this->lang->line('home'),
+// 				'link'=> site_url()
+// 			),array(
+// 				'title'=> $report->current_project->name,
+// 				'link'=> site_url('project/name/'.url_title($report->current_project->slug))
+// 			), array(
+// 				'title' => $report->title
+// 			));
+// 	}
 }
