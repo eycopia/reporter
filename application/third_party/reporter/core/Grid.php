@@ -63,6 +63,24 @@ class Grid extends CI_Model
 
     public function __construct(interfaceAccessDB $model){
         $this->model = $model;
+        $this->load->model('server_m');
+        $this->load->model('report_m');
+    }
+
+
+    public function loadReport($idReport, $idProject=null){
+        $this->load->model("admin/AdminReport_m");
+        $this->report = $this->report_m->find($idReport);
+        if(!is_null($idProject)){
+            $this->report->idProject = $idProject;
+        }
+    }
+
+    public function getReportData($idProject){
+        if(!is_null($idProject)){
+            $this->report->moreReports = $this->report_m->getReportsByProject($idProject);
+        }
+        return $this->report;
     }
 
     /**
@@ -75,6 +93,7 @@ class Grid extends CI_Model
         $this->db_connection = $this->getDbConnection();
         $this->initFilterGrid($table['filters']);
         $this->model->setDbConnection($this->db_connection);
+//        print_r($table);Exit;
         if(isset($table['sql'])){
             $this->sqlReport = $table['sql'];
         }else{

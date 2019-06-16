@@ -46,6 +46,7 @@ class Report extends AdminGrid{
         $this->reporter_auth->isLogin();
         $this->reporter_auth->checkAdmin();
         $this->load->model( 'admin/AdminReport_m', 'model');
+        $this->load->model('report_m');
         $this->load->model('VarReport_m');
         $this->load->model('admin/NotifyReport_m');
         $this->title_page = lang('admin_report_title');
@@ -91,7 +92,7 @@ class Report extends AdminGrid{
             'type_vars' => $this->VarTypes_m->getTypes()
         );
         if(!is_null($idReport)){
-            $data['report'] = $this->model->find($idReport);
+            $data['report'] = $this->report_m->find($idReport);
             $data['vars'] = $this->VarReport_m->getVarsReport($idReport);
             $data['people'] = $this->NotifyReport_m->getPeopleToNotify($idReport);
             $this->title_page = 'Edit Report: '.$data['report']->title;

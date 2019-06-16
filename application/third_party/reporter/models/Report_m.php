@@ -6,7 +6,7 @@
  * @author Jorge Copia Silva <eycopia@gmail.com>
  * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
-class Report_m extends Grid implements interfaceGrid {
+class Report_m extends CI_Model {
 
     private $table = "report";
 
@@ -18,10 +18,30 @@ class Report_m extends Grid implements interfaceGrid {
 
     public function __construct()
     {
-        parent::__construct( new ModelReporter() );
-        $this->load->model('component_m');
-        $this->load->model('project_m');
-        $this->load->model('server_m');
+//        parent::__construct( new ModelReporter() );
+//        $this->load->model('component_m');
+//        $this->load->model('project_m');
+    }
+
+    public function find($idReport){
+        $sql = "SELECT  r.idReport,  r.idUser, r.idServerConnection,  
+                    r.title,  r.url,  r.sql, r.description,  r.details, r.cron_notify, 
+                    r.auto_reload, r.format_notify,  r.slug,  r.status, r.columns, 
+                    rp.idReportPerformance, rp.pagination, rp.items_per_page, rp.field_for_paginate 
+                FROM {$this->table} as r                
+			    LEFT JOIN report_performance as rp on r.idReport = rp.idReport
+                WHERE r.idReport = {$idReport} and r.status = 1";
+
+        $report = $this->db->query($sql);
+        $r = $report->row();
+
+        $sql2 = "SELECT p.name as project, p.idProject, p.template, p.slug
+                FROM  project as p 
+                LEFT JOIN reports_by_project as rp on p.idProject = rp.idProject
+                WHERE rp.idReport = {$idReport}";
+        $projects = $this->db->query($sql2);
+        $r->projects = $projects->result();
+        return $r;
     }
 
     public function search($q){
@@ -34,36 +54,7 @@ class Report_m extends Grid implements interfaceGrid {
         return $data;
     }
 
-    /**
-     * Retorna el sql filtrado
-     * @param $id
-     * @return array
-     */
-    public function getReportSql($id){
-        $this->loadReport($id);
-        $this->applyFilters($this->report->sql);
-        return $this->getSqlFiltered();
-    }
-
-    public function find($id){
-        $q = $this->db->query("SELECT * FROM {$this->table} WHERE idReport = $id");
-        return $q->row();
-    }
-
-    public function getReportData($idProject){
-        if(!is_null($idProject)){
-            $this->report->moreReports = $this->getProjectReports($idProject);
-        }        
-        return $this->report;
-    }
-
-    public function loadReport($id){
-        $this->load->model("admin/AdminReport_m");
-        $this->report = $this->AdminReport_m->find($id);
-    }
-
-
-    public function getProjectReports($idProject){
+    public function getReportsByProject($idProject){
         $q = $this->db->query("SELECT r.idReport, rbp.idProject, r.url,
             r.idServerConnection, r.title, r.description
             FROM {$this->table} as r
@@ -73,60 +64,15 @@ class Report_m extends Grid implements interfaceGrid {
         return $q->result();
     }
 
-    public function gridDefinition(){
-        $vars = $this->declareVars();
-        $dbColumns = json_decode($this->report->columns, true);
-        $sql = trim($this->report->sql);
-        return array(
-            'title' => $this->report->title,
-            'description' => $this->report->details,
-            'data_url' => $this->getReportDataUrl(),
-            'filters' => (count($vars) > 0) ? $vars : 'basic',
-            'columns' => (count($dbColumns)>0) ? $dbColumns : array(),
-            'pagination' => $this->report->pagination,
-            'sql' => $sql,
-            'utilities' => array(
-                'auto_reload' => $this->report->auto_reload,
-                'items_per_page' => $this->report->items_per_page,
-                'download_all' => $this->getDownloadUrl(),
-                'donwload_view' => true,
-                'show_columns' => true
-            )
-        );
-    }
 
-
-    /**
-     * Devuelve la url donde esta el report
-     * @return string
-     */
-    public function getReportDataUrl()
-    {
-        $data_url = site_url('report/show/'.$this->report->idReport);
-        if(!empty($this->report->url)){
-            $data_url = site_url($this->report->url."/show");
-        }
-        return $data_url;
-    }
-
-
-    public function declareVars()
+    public function declareVars($idReport)
     {
         $sql = "SELECT vr.name as 'name', vr.label, vt.name  as 'type', vr.default, vt.frontendClass
             FROM var_report as vr
             JOIN var_type as vt on vr.idVarType = vt.idVarType
-            WHERE vr.idReport = {$this->report->idReport} and vr.status = 1";
+            WHERE vr.idReport = {$idReport} and vr.status = 1";
         $vars = $this->db->query($sql);
         return $vars->result_array();
     }
 
-    private function getDownloadUrl(){
-        $component = $this->component_m->getComponentDownload($this->report->idReport);
-        if(isset($component)){
-            $url = site_url('component/download/'.$component->idComponent);
-        }else{
-            $url = site_url('report/download/'.$this->report->idReport);
-        }
-        return $url;
-    }
 }

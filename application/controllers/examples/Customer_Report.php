@@ -5,15 +5,14 @@
  * @author Jorge Copia Silva <eycopia@gmail.com>
  * @license https://github.com/eycopia/reporter/blob/master/LICENSE
  */
-class Report extends Grid_Controller {
+class Customer_Report extends Grid_Controller {
 
 	public function __construct(){
-		parent::__construct();
+		parent::__construct('examples/Customer_m');
 	}
 
-	public function grid($id, $idProject=null){
-	    $replace = ['data_url' => site_url('report/show/'.$id)];
- 	    $data = $this->getGridDefinition($id, $idProject, $replace);
+	public function index($idReport, $idProject){
+ 	    $data = $this->getGridDefinition($idReport, $idProject);
  	    $this->load->view($data['template'], $data);
-	}
+    }
 }

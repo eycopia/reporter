@@ -7,14 +7,14 @@ class Grid_Controller extends CI_Controller{
      * The custom model for grid
      * @param interfaceGrid $customModel
      */
-    public function __construct($customModel, $aliasModel=null){
+    public function __construct($customModel=null){
         parent::__construct();
-        
-        if(is_null($aliasModel)){
-            $aliasModel = 'custom_grid_model';
+
+        if(!is_null($customModel)){
+            $this->load->model($customModel, 'grid_report_m');
         }
-        
-        $this->load->model($customModel, $aliasModel);
+
+        $this->load->model('grid_report_m');
     }
     
     /**
@@ -24,10 +24,10 @@ class Grid_Controller extends CI_Controller{
      * @param array $dataReplace replace the default values 
      */
     public function getGridDefinition($idReport, $idProject=null, $dataReplace=null){
-       
-        $table = $this->report_m->bodyGrid($idReport);
+        $this->grid_report_m->loadReport($idReport, $idProject);
+        $table = $this->grid_report_m->bodyGrid();
         $base = $this->config->item('rpt_base_template');
-        $report = $this->report_m->getReportData($idProject);
+        $report = $this->grid_report_m->getReportData($idProject);
         $template = null;
 		if(!is_null($idProject)){
 		    $this->load->model('project_m');
@@ -53,7 +53,26 @@ class Grid_Controller extends CI_Controller{
         return $data;
         
     }
-    
+
+    public function show($idReport){
+        session_write_close();
+        $this->grid_report_m->loadReport($idReport);
+        $data = $this->grid_report_m->dataGrid($idReport);
+        $json = json_encode($this->utf8ize( $data ));
+		return $this->output
+			->set_content_type('application/json')
+			->set_output($json);
+    }
+
+    public function download($idReport)
+    {
+        $this->grid_report_m->loadReport($idReport);
+        session_write_close();
+        $params = array('model' => $this->grid_report_m, 'idReport' => $idReport);
+        $this->load->library('Large_Download', $params);
+        return $this->large_download->download();
+    }
+
     protected function getBreadCrumb($report){
         return array(
             array(
@@ -65,5 +84,16 @@ class Grid_Controller extends CI_Controller{
             ), array(
                 'title' => $report->title
             ));
+    }
+
+    private function utf8ize( $mixed ) {
+        if (is_array($mixed)) {
+            foreach ($mixed as $key => $value) {
+                $mixed[$key] = $this->utf8ize($value);
+            }
+        } elseif (is_string($mixed)) {
+            return mb_convert_encoding($mixed, "UTF-8", "UTF-8");
+        }
+        return $mixed;
     }
 }

@@ -16,27 +16,6 @@ class AdminReport_m extends Grid implements interfaceGrid{
         parent::__construct(new ModelReporter());
     }
 
-    public function find($idReport){
-        $sql = "SELECT  r.idReport,  r.idUser, r.idServerConnection,  
-                    r.title,  r.url,  r.sql, r.description,  r.details, r.cron_notify, 
-                    r.auto_reload, r.format_notify,  r.slug,  r.status, r.columns, 
-                    rp.idReportPerformance, rp.pagination, rp.items_per_page, rp.field_for_paginate 
-                FROM {$this->table} as r                
-			    LEFT JOIN report_performance as rp on r.idReport = rp.idReport
-                WHERE r.idReport = {$idReport} and r.status = 1";
-        
-        $report = $this->db->query($sql);
-        $r = $report->row();
-        
-        $sql2 = "SELECT p.name as project, p.idProject, p.template, p.slug
-                FROM  project as p 
-                LEFT JOIN reports_by_project as rp on p.idProject = rp.idProject
-                WHERE rp.idReport = {$idReport}";
-        $projects = $this->db->query($sql2);
-        $r->projects = $projects->result();
-        return $r;
-    }
-
 
     /**
      * Add new Report

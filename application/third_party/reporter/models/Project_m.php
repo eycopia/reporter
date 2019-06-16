@@ -147,7 +147,7 @@ class Project_m extends Grid implements interfaceGrid{
             $url = $text;
             $target = 'target="_blank"';
         }else if(strlen($text) > 0 ){
-            $url = site_url($row['url']);
+            $url = site_url("{$row['url']}/index/{$d}/{$row['idProject']}");
         }else{
             $url = site_url("report/grid/$d/{$row['idProject']}");
         }
