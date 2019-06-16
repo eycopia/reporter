@@ -107,10 +107,11 @@ class Project_m extends Grid implements interfaceGrid{
     public function gridDefinition(){
         return array(
             'sql' => "SELECT r.idReport, r.sql, r.url, r.title, r.description,
-            p.idProject, r.created, p.name as project
+            p.idProject, r.created, p.name as project, rpf.resource
             FROM {$this->table} as p
             join reports_by_project as rp on p.idProject = rp.idProject 
             join report as r on rp.idReport = r.idReport
+            left join report_performance as rpf on rpf.idReport = r.idReport
             WHERE p.status = 1 and r.status = 1 and p.idProject = {$this->idProject}
             ORDER BY r.idReport asc",
             'description' => '',
@@ -125,32 +126,43 @@ class Project_m extends Grid implements interfaceGrid{
         return array(
             array('dt' => 'Reports', 'db' => 'title', 'table' => 'r',
                 "formatter" => function($d, $row) use ($that ) {
-                    $url = $that->generarRuta($row['idReport'], $row);
+                    $url = $that->getUrl($d, $row);
                     return "<a class='' $url>
                     ".$row['title']."</a>";
                 }),
             array('dt' => 'Description', 'db' => 'description', 'type' => 'column'),
             array('dt' => '', 'db' => 'idReport', 'type' => 'column',
                 "formatter" => function($d, $row) use ($that){
-                    $url = $that->generarRuta($d, $row);
+                    $url = $that->getUrl($d, $row);
                     return "<a class='btn btn-success' $url>
                     <i class='fa fa-eye'></i> {$that->lang->line('show')}</a>";
                 }),
         );
     }
 
-    public function generarRuta($d, $row){
-        $text = trim($row['url']);
-        $pattern = "/\b((www|https?)[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/)))/";
-        $target = '';
-        if(strlen($text) > 0 && preg_match($pattern, $text)){
-            $url = $text;
-            $target = 'target="_blank"';
-        }else if(strlen($text) > 0 ){
-            $url = site_url("{$row['url']}/index/{$d}/{$row['idProject']}");
-        }else{
-            $url = site_url("report/grid/$d/{$row['idProject']}");
+    public function getUrl($d, $row){
+        $resource = 'normal';
+        if (isset($row['resource']) && !empty($row['resource'])){
+            $resource = $row['resource'];
         }
-        return "href='$url' target = '$target'";
+        return call_user_func(array($this, $resource . "_url"), $d, $row);
+    }
+
+    public function normal_url($d, $row){
+        $url = site_url("report/grid/{$row['idReport']}/{$row['idProject']}");
+        return "href='$url'";
+    }
+
+    public function model_url($d, $row){
+        return $this->normal_url($d, $row);
+    }
+
+    public function construct_url($d, $row){
+        $url = site_url("{$row['url']}/index/{$row['idReport']}/{$row['idProject']}");
+        return "href='$url'";
+    }
+
+    public function external_url($d, $row){
+        return "href='{$row['url']}' target = '_blank'";
     }
 }

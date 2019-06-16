@@ -21,7 +21,8 @@ class Grid_Controller extends CI_Controller{
      * View path to show report
      * @param int $idReport
      * @param int|null $idProject projecto to work
-     * @param array $dataReplace replace the default values 
+     * @param array $dataReplace replace the default values
+     * @return array
      */
     public function getGridDefinition($idReport, $idProject=null, $dataReplace=null){
         $this->grid_report_m->loadReport($idReport, $idProject);

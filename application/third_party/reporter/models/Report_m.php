@@ -18,9 +18,17 @@ class Report_m extends CI_Model {
 
     public function __construct()
     {
-//        parent::__construct( new ModelReporter() );
-//        $this->load->model('component_m');
-//        $this->load->model('project_m');
+        parent::__construct();
+    }
+
+    public function getResources(){
+        return array(
+            'normal' => 'Default',
+            'construct' => 'Custom Constructor',
+            'model' => 'Custom Model',
+            'external' => 'External Report',
+            'embedded' => 'Report Embedded'
+        );
     }
 
     public function find($idReport){

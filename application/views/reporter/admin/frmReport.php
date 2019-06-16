@@ -225,12 +225,33 @@ form   {
                         > No
 
                 </div>
-                
+
                 <div class="col-sm-12">
-                	<label>Custom Order By (Usually used for pagination ):</label>
-                	<br>
-                	<input name="order" value="<?php echo (isset($report->field_for_paginate) ) ? $report->field_for_paginate : ''; ?>" type="text" class="form-control">
+                    <hr>
                 </div>
+
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <label>Method to build the report:</label>
+                        <br>
+                        <select class="form-control" name="resource">
+                            <?php
+
+                            foreach($resources as $value => $name){
+                            $selected = (isset($report->resource) && $report->resource == ($value)) ? 'selected="selected"' : '';
+                                echo "<option $selected  value='{$value}'>{$name}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label>Custom Order By (Usually used for pagination ):</label>
+                        <br>
+                        <input name="order" value="<?php echo (isset($report->field_for_paginate) ) ? $report->field_for_paginate : ''; ?>" type="text" class="form-control">
+                    </div>
+                </div>
+
                 
              </div>
                 

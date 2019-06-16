@@ -89,7 +89,8 @@ class Report extends AdminGrid{
             'js_files' => $custom_js_files,
             'projects' => $this->project_m->getProjects(),
             'servers' => $this->server_m->getServers(),
-            'type_vars' => $this->VarTypes_m->getTypes()
+            'type_vars' => $this->VarTypes_m->getTypes(),
+            'resources' => $this->report_m->getResources()
         );
         if(!is_null($idReport)){
             $data['report'] = $this->report_m->find($idReport);
@@ -259,7 +260,8 @@ class Report extends AdminGrid{
             $rs['performance'] = array(
                 'items_per_page' => $reportValues['items'],
                 'pagination' => isset($reportValues['pagination']) ? $reportValues['pagination'] : '',
-                'field_for_paginate' => $reportValues['order']
+                'field_for_paginate' => $reportValues['order'],
+                'resource' => $reportValues['resource'],
             );
         }
         
