@@ -43,8 +43,7 @@ class Grid_Controller extends CI_Controller{
             'main_content' => $this->config->item('rpt_template') . 'grid',
             'table' => $table,
             'report' => $report,
-            'breadcrumb' => $this->getBreadCrumb($report),
-            'data_url' => isset($this->report->url) ? $this->report->url : null
+            'breadcrumb' => $this->getBreadCrumb($report)
         );
         
         if(!is_null($dataReplace)){
@@ -55,7 +54,7 @@ class Grid_Controller extends CI_Controller{
         
     }
 
-    public function show($idReport){
+    public function show($idReport, $idProject=null){
         session_write_close();
         $this->grid_report_m->loadReport($idReport);
         $data = $this->grid_report_m->dataGrid($idReport);
@@ -65,7 +64,7 @@ class Grid_Controller extends CI_Controller{
 			->set_output($json);
     }
 
-    public function download($idReport)
+    public function download($idReport, $idProject=null)
     {
         $this->grid_report_m->loadReport($idReport);
         session_write_close();

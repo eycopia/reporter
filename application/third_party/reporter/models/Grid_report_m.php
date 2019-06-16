@@ -43,7 +43,7 @@ class Grid_report_m extends Grid implements interfaceGrid
         return array(
             'title' => $this->report->title,
             'description' => $this->report->details,
-            'data_url' => $this->getReportDataUrl(),
+            'data_url' => site_url("report/show/{$this->report->idReport}/{$this->report->idProject}"),
             'filters' => (count($vars) > 0) ? $vars : 'basic',
             'columns' => (count($dbColumns)>0) ? $dbColumns : array(),
             'pagination' => $this->report->pagination,
@@ -59,26 +59,12 @@ class Grid_report_m extends Grid implements interfaceGrid
     }
 
 
-    /**
-     * Devuelve la url donde esta el report
-     * @return string
-     */
-    public function getReportDataUrl()
-    {
-        $data_url = site_url('report/show/'.$this->report->idReport);
-        if(!empty($this->report->url)){
-            $data_url = site_url($this->report->url."/show");
-        }
-        return $data_url;
-    }
-
-
     private function getDownloadUrl(){
         $component = $this->component_m->getComponentDownload($this->report->idReport);
         if(isset($component)){
             $url = site_url('component/download/'.$component->idComponent);
         }else{
-            $url = site_url('report/download/'.$this->report->idReport);
+            $url = site_url("report/download/{$this->report->idReport}/{$this->report->idProject}");
         }
         return $url;
     }

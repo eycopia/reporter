@@ -71,9 +71,7 @@ class Grid extends CI_Model
     public function loadReport($idReport, $idProject=null){
         $this->load->model("admin/AdminReport_m");
         $this->report = $this->report_m->find($idReport);
-        if(!is_null($idProject)){
-            $this->report->idProject = $idProject;
-        }
+        $this->report->idProject = !is_null($idProject) ? $idProject : null;
     }
 
     public function getReportData($idProject){
@@ -104,7 +102,7 @@ class Grid extends CI_Model
             $this->columns = $table['columns'];
         }
         
-        $this->data_url = $table['data_url'];
+        $this->data_url = isset($table['data_url']) ? $table['data_url'] : null;
         $this->utilities = isset($table['utilities']) ? $table['utilities'] : null;
         $this->pagination = isset($table['pagination']) ? $table['pagination'] : true;
         $this->avoid_basic_filter = isset($table['avoid_basic_filter']) ? $table['avoid_basic_filter'] : false;

@@ -35,7 +35,8 @@ class Report_m extends CI_Model {
         $sql = "SELECT  r.idReport,  r.idUser, r.idServerConnection,  
                     r.title,  r.url,  r.sql, r.description,  r.details, r.cron_notify, 
                     r.auto_reload, r.format_notify,  r.slug,  r.status, r.columns, 
-                    rp.idReportPerformance, rp.pagination, rp.items_per_page, rp.field_for_paginate 
+                    rp.idReportPerformance, rp.pagination, rp.items_per_page, 
+                    rp.field_for_paginate, rp.resource 
                 FROM {$this->table} as r                
 			    LEFT JOIN report_performance as rp on r.idReport = rp.idReport
                 WHERE r.idReport = {$idReport} and r.status = 1";

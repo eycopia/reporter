@@ -12,7 +12,8 @@ class Customer_Report extends Grid_Controller {
 	}
 
 	public function index($idReport, $idProject){
- 	    $data = $this->getGridDefinition($idReport, $idProject);
+        $replace = ['data_url' => site_url('examples/Customer_Report/show/'.$idReport)];
+ 	    $data = $this->getGridDefinition($idReport, $idProject, $replace);
  	    $this->load->view($data['template'], $data);
     }
 }
