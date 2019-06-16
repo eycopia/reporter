@@ -47,54 +47,63 @@
         </div>
     </div>
 
-<?php } ?>
+<?php }
 
-<div class="form-group col-sm-16">
-    <form>
-    <?php
-     if(isset($table['filters'])){ $this->load->view($this->config->item('rpt_template') . 'grid_filters');}
-     if(isset($table['utilities'])){ $this->load->view($this->config->item('rpt_template') . 'grid_utilities');}
-    ?>
-        <input type="reset" class="hidden">
-    </form>
-</div>
+if(isset($report->resource) && $report->resource == 'embedded'){
+    echo " <iframe src='{$report->url}' height='800px' width='100%'></iframe> ";
+}else {?>
 
-<table id="datatable" class="table table-striped table-bordered table-hover table-blue-head" cellspacing="0" width="100%">
-    <thead>
-        <tr><?php
-           foreach ($table['columns'] as $value) {
-               if( (!isset($value['show']) ) OR
-                    (isset($value['show']) && $value['show'] == true)
-               ){
-          	 	    echo "<th>{$value['dt']}</th>";
+    <div class="form-group col-sm-16">
+        <form>
+        <?php
+         if(isset($table['filters'])){ $this->load->view($this->config->item('rpt_template') . 'grid_filters');}
+         if(isset($table['utilities'])){ $this->load->view($this->config->item('rpt_template') . 'grid_utilities');}
+        ?>
+            <input type="reset" class="hidden">
+        </form>
+    </div>
+
+
+
+    <table id="datatable" class="table table-striped table-bordered table-hover table-blue-head" cellspacing="0" width="100%">
+        <thead>
+            <tr><?php
+               foreach ($table['columns'] as $value) {
+                   if( (!isset($value['show']) ) OR
+                        (isset($value['show']) && $value['show'] == true)
+                   ){
+                        echo "<th>{$value['dt']}</th>";
+                   }
                }
-           }
-           ?>
-        </tr>
-    </thead>
-</table>
+               ?>
+            </tr>
+        </thead>
+    </table>
+<?php } ?>
+    <script type="text/javascript">
+        var data_url = "<?php echo $table['data_url']; ?>";
+        var active_pagination = "<?php echo (isset($report->pagination)) ? $report->pagination : 1 ; ?>";
+        var items_per_page = <?php echo isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : $this->config->item('grid_items_per_page'); ?>;
+        var auto_reload= <?php echo isset($table['utilities']['auto_reload']) ? $table['utilities']['auto_reload'] : 0;?>;
+        var columns_datables = [
+            <?php
+            $columns = '';
+            foreach ($table['columns'] as $value) {
+                if( (!isset($value['show']) ) OR
+                    (isset($value['show']) && $value['show'] == true)
+                ){
+                    $columns .= '{"data" : "' . $value['dt'] . '"},';
+                }
+            }
+            echo substr($columns, 0,-1);
+            ?>
+        ];
+        var text_button_download_view = "<?php echo $this->lang->line('button_download_view'); ?>";
+        var text_button_columns_view = "<?php echo $this->lang->line('button_columns_view'); ?>";
+        $('.date').datetimepicker({ 'sideBySide': true, format : 'YYYY-MM-DD'});
+        $('.datetime').datetimepicker({ 'sideBySide': true, format : 'YYYY-MM-DD HH:mm:ss'});
+    </script>
+
 </div>
 
-<script type="text/javascript">
-  var data_url = "<?php echo $table['data_url']; ?>";
-  var active_pagination = "<?php echo (isset($report->pagination)) ? $report->pagination : 1 ; ?>";
-  var items_per_page = <?php echo isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : $this->config->item('grid_items_per_page'); ?>;
-  var auto_reload= <?php echo isset($table['utilities']['auto_reload']) ? $table['utilities']['auto_reload'] : 0;?>;
-  var columns_datables = [
-              <?php
-                  $columns = '';
-                  foreach ($table['columns'] as $value) {
-                      if( (!isset($value['show']) ) OR
-                          (isset($value['show']) && $value['show'] == true)
-                      ){
-                        $columns .= '{"data" : "' . $value['dt'] . '"},';
-                    }
-                  }
-                  echo substr($columns, 0,-1);
-              ?>
-          ];
-  var text_button_download_view = "<?php echo $this->lang->line('button_download_view'); ?>";
-  var text_button_columns_view = "<?php echo $this->lang->line('button_columns_view'); ?>";
-  $('.date').datetimepicker({ 'sideBySide': true, format : 'YYYY-MM-DD'});
-  $('.datetime').datetimepicker({ 'sideBySide': true, format : 'YYYY-MM-DD HH:mm:ss'});
-</script>
+

@@ -162,6 +162,10 @@ class Project_m extends Grid implements interfaceGrid{
         return "href='$url'";
     }
 
+    public function embedded_url($d, $row){
+        return $this->normal_url($d, $row);
+    }
+
     public function external_url($d, $row){
         return "href='{$row['url']}' target = '_blank'";
     }
