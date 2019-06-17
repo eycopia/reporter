@@ -10,7 +10,7 @@
 	},
 	"autoload" : {
 		"classmap" : [
-			"application/third_party/reporter/core"
+			"third_party/reporter/core"
 		]
 	},
 	"minimum-stability" : "dev"
