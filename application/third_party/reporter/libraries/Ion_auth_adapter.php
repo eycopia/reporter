@@ -19,6 +19,16 @@ class Ion_auth_adapter  implements interfaceAuthReporter
         $this->CI->load->library('ion_auth');
     }
 
+
+    /**
+     * Check login user, if not loggin redirect
+     */
+    public function check(){
+        if(!$this->isLogin()){
+            $this->login();
+        }
+    }
+
     /**
      * Redirect to login page
      * @return HttpRequest
@@ -43,9 +53,7 @@ class Ion_auth_adapter  implements interfaceAuthReporter
      */
     public function isLogin()
     {
-        if(!$this->CI->ion_auth->logged_in()){
-            $this->login();
-        }
+        return $this->CI->ion_auth->logged_in();
     }
 
     /**

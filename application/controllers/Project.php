@@ -17,11 +17,12 @@ class Project extends CI_Controller
         parent::__construct();
         $this->load->model('Report_m');
         $this->load->model('Project_m');
-        $this->user = $this->reporter_auth->get_user_id();
+        $this->reporter_auth->check();
+//        $this->user = $this->reporter_auth->get_user_id();
     }
 
     public function index(){
-        $projects = $this->Project_m->getUserProjects($this->user);
+        $projects = $this->Project_m->getUserProjects($this->session->reporter_user_loggin);
         $is_pretty = $this->config->item('pretty_url');
         $totalProjects = count($projects);
         if($totalProjects == 1){

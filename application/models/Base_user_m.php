@@ -16,7 +16,10 @@ class Base_user_m extends CI_Model
     }
 
     public function add($params){
-
         $this->db->insert(self::$table, $params);
+    }
+
+    public function getProjects(){
+
     }
 }

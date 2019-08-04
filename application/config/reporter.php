@@ -21,9 +21,9 @@ $config['rpt_controllers'] = $namePackege;
 
 //adapter for auth
 //defaults implements: No_auth_adapter, Ion_auth_adapter, Nette_Security_adapter
-$config['rpt_auth_adapter'] = 'No_auth_adapter';
+$config['rpt_auth_adapter'] = 'Ion_auth_adapter';
 
-$config['rpt_login'] = 'Auth/login';
+$config['rpt_login'] = 'auth/login';
 
 $config['grid_items_per_page'] = 25;
 
