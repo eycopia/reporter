@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once APPPATH."third_party/reporter/libraries/interfaceAuthReporter.php";
-//require_once APPPATH."third_party/reporter/libraries/Ion_auth_adapter.php";
-//require_once APPPATH."third_party/reporter/libraries/No_auth_adapter.php";
+
 
 
 
@@ -34,6 +33,11 @@ class Reporter_auth implements interfaceAuthReporter
         return $adapter;
     }
 
+
+    public function check(){
+        $this->adapter->check();
+    }
+
     /**
      * Redirect to login page
      * @return HttpRequest
@@ -43,11 +47,27 @@ class Reporter_auth implements interfaceAuthReporter
         $this->adapter->login();
     }
 
+    public function newSession($username){
+        $this->CI->session->set_userdata('reporter_user_loggin', $username);
+    }
+
+    /**
+     * Valida si el usuario tiene permisos para ver el recurso
+     * @param $idProject
+     * @param $username
+     */
+    public function isAuthorized($idProject, $report=null, $type=null){
+        $this->CI->load->model('project_m');
+        $username = $this->CI->session->reporter_user_loggin;
+        return $this->CI->project_m->hasPermission($idProject, $username);
+    }
+
     /**
      * @return redirect to login page
      */
     public function logout()
     {
+        $this->CI->session->unset_userdata('reporter_user_loggin');
         $this->adapter->logout();
     }
 
@@ -57,7 +77,7 @@ class Reporter_auth implements interfaceAuthReporter
      */
     public function isLogin()
     {
-        $this->adapter->isLogin();
+        return $this->adapter->isLogin();
     }
 
     /**

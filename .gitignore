@@ -8,6 +8,7 @@ application/language/
 application/libraries/index.html
 application/logs/
 application/third_party/index.html
+application/third_party/ion_auth
 application/views/errors/cli/
 application/views/index.html
 application/config/*

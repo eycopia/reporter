@@ -28,6 +28,17 @@ class Project_m extends Grid implements interfaceGrid{
         $q = $this->db->query("SELECT * FROM $this->table WHERE status=1");
         return $q->result();
     }
+
+    /**
+     * Add new relations
+     * @param $idProject
+     * @param $username
+     */
+    public function addUser($idProject, $username){
+        $params = ['idProject'=>$idProject, 'username' => $username];
+        $this->db->insert('users_by_project', $params);
+    }
+
     /**
      * Get all active projects for the current user
      *
@@ -35,14 +46,14 @@ class Project_m extends Grid implements interfaceGrid{
      *
      * @return mixed
      */
-    public function getUserProjects($user_id){
+    public function getUserProjects($username){
         $join = $where = '';
         if(!$this->reporter_auth->isAdmin()) {
-            $where  = " and  u.user_id = $user_id";
-            $join = "LEFT JOIN user_projects as u on u.idProject = p.idProject ";
+            $where  = " and  up.username = '{$username}'";
+            $join = "LEFT JOIN users_by_project as up on up.idProject = p.idProject ";
         }
 
-        $q = $this->db->query("SELECT * FROM $this->table as p $join".
+        $q = $this->db->query("SELECT p.* FROM $this->table as p $join".
             " WHERE p.status=1 $where");
         return $q->result();
     }
@@ -74,10 +85,10 @@ class Project_m extends Grid implements interfaceGrid{
         return $q->result();
     }
 
-    public function hasPermission($user_id, $idProject){
-        $q = $this->db->where('user_id', $user_id)
+    public function hasPermission($idProject, $username){
+        $q = $this->db->where('username', $username)
             ->where('idProject', $idProject)
-            ->get('user_projects');
+            ->get('users_by_project');
         $data = $q->row();
         return isset($data->idProject) ? true : false;
     }

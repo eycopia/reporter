@@ -29,9 +29,9 @@ class Users extends CI_Controller{
             $crud->unset_delete();//grid
             $crud->set_table('users');
             $crud->set_subject('Users');
-            $crud->set_relation_n_n('groups', 'users_groups', 'groups', 'user_id', 'group_id', 'name');
+            //$crud->set_relation_n_n('groups', 'users_groups', 'groups', 'user_id', 'group_id', 'name');
             $crud->set_relation_n_n('projects', 'user_projects', 'project', 'user_id', 'idProject', 'name');
-            $crud->fields('username', 'email', 'first_name', 'last_name', 'company', 'phone', 'groups', 'projects');
+            $crud->fields('username', 'email', 'first_name', 'last_name', 'company', 'phone', 'projects');
             $crud->columns('username', 'email', 'first_name', 'last_name');
             $crud->required_fields('username','first_name', 'password');
             $crud->unset_export();
