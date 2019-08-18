@@ -1,8 +1,7 @@
 {
 	"require" : {
 		"php" : ">=5.2.4",
-		"eycopia/excel" : "^1.0",
-		"nette/security": "v2.4.4"
+		"eycopia/excel" : "^1.0"
 	},
 	"require-dev" : {
 		"mikey179/vfsStream" : "1.1.*",
