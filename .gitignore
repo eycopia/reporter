@@ -22,8 +22,9 @@ application/libraries/Grocery_CRUD.php
 application/libraries/image_moo.php
 application/models/Grocery_crud_model.php
 application/index.html
+!application/tests/models/*.php
 application/tests/
-!application/tests/models/
+
 application/vendor
 application/composer.lock
 

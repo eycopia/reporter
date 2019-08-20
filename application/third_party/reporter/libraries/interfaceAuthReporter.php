@@ -11,7 +11,7 @@ interface interfaceAuthReporter{
     /**
      * Check login user, if not loggin redirect
      */
-    public function check();
+//    public function check();
 
     /**
      * Redirect to login page

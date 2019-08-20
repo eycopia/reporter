@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once APPPATH."third_party/reporter/libraries/interfaceAuthReporter.php";
+require_once APPPATH."third_party/reporter/core/Permission.php";
 
 
 
@@ -11,6 +12,8 @@ class Reporter_auth implements interfaceAuthReporter
      */
     private $CI = null;
 
+    private $keyUsername = 'reporter_user_loggin';
+
     /**
      * @var interfaceAuthReporter
      */
@@ -19,6 +22,8 @@ class Reporter_auth implements interfaceAuthReporter
     public function __construct()
     {
         $this->CI = &get_instance();
+        $this->CI->load->model('authorization_m');
+        $this->CI->load->model('base_user_m');
         $this->loadAdapter();
     }
 
@@ -33,10 +38,10 @@ class Reporter_auth implements interfaceAuthReporter
         return $adapter;
     }
 
-
-    public function check(){
-        $this->adapter->check();
-    }
+//
+//    public function check(){
+//        $this->adapter->check();
+//    }
 
     /**
      * Redirect to login page
@@ -47,19 +52,75 @@ class Reporter_auth implements interfaceAuthReporter
         $this->adapter->login();
     }
 
-    public function newSession($username){
-        $this->CI->session->set_userdata('reporter_user_loggin', $username);
+    //For test purpose
+    public function newSession($idUser){
+        $this->CI->session->set_userdata($this->keyUsername, $idUser);
+    }
+
+    public function deleteSession(){
+        if($this->CI->session->has_userdata($this->keyUsername)){
+            $this->CI->session->unset_userdata($this->keyUsername);
+        }
     }
 
     /**
-     * Valida si el usuario tiene permisos para ver el recurso
+     * Valida si el usuario tiene permisos para ingresar a un proyecto
      * @param $idProject
-     * @param $username
+      @return HttpRequest|void
      */
-    public function isAuthorized($idProject, $report=null, $type=null){
-        $this->CI->load->model('project_m');
-        $username = $this->CI->session->reporter_user_loggin;
-        return $this->CI->project_m->hasPermission($idProject, $username);
+    public function checkProjectAccess($idProject){
+        $project = $this->CI->authorization_m->getUserProject($idProject);
+        $permission = isset($project->idProject) ? Permission::$READER : 0;
+        $rs = $this->validPermission($permission, Permission::$READER);
+        if($rs === FALSE){
+            redirect(site_url());
+        }
+
+
+    }
+
+    /**
+     * Valida si el usuario tiene permiso para ingresar a un reporte y que tipo de permiso tiene
+     * @param $idReport
+     * @param string $type
+     * @return HttpRequest|void
+     */
+    public function checkReportAccess($idProject, $idReport, $type=null){
+        if(is_null($type)){
+            $type = Permission::$READER;
+        }
+        $rs = false;
+        $report = $this->CI->authorization_m->getReportProject($idProject, $idReport);
+        if($report->idReport == $idReport){
+            $project = $this->CI->authorization_m->getUserProject($idProject);
+            $permission =  isset($project->permission) ? $project->permission : 0;
+            $rs = $this->validPermission($permission, $type);
+        }
+
+        if($rs===FALSE){
+            redirect(site_url());
+        }
+    }
+
+    /**
+     * @param int $permission user permission
+     * @param int $type permission required
+     * @return bool
+     * @throws Exception
+     */
+    public function validPermission($permission, $type){
+
+        if( $permission > Permission::$DEVELOPER || $type > Permission::$DEVELOPER) {
+            throw new Exception("No existe el permiso que busca validar");
+        }
+
+        $user = $this->CI->base_user_m->findByUsername($this->get_user_id());
+
+        if($user->permission > Permission::$ADMIN && $permission < $user->permission){
+            $permission = $user->permission;
+        }
+//        echo "$permission --- <pre>";print_r($type);exit;
+        return ($permission >= $type) ? TRUE : FALSE;
     }
 
     /**
@@ -67,7 +128,7 @@ class Reporter_auth implements interfaceAuthReporter
      */
     public function logout()
     {
-        $this->CI->session->unset_userdata('reporter_user_loggin');
+        $this->deleteSession();
         $this->adapter->logout();
     }
 
@@ -77,7 +138,9 @@ class Reporter_auth implements interfaceAuthReporter
      */
     public function isLogin()
     {
-        return $this->adapter->isLogin();
+        if( ! $this->CI->session->has_userdata($this->keyUsername) ) {
+            redirect($this->CI->config->item('rpt_login'));
+        }
     }
 
     /**
@@ -86,7 +149,7 @@ class Reporter_auth implements interfaceAuthReporter
      */
     public function isAdmin()
     {
-        return $this->adapter->isAdmin();
+//        return $this->adapter->isAdmin();
     }
 
     /**
@@ -94,11 +157,15 @@ class Reporter_auth implements interfaceAuthReporter
      * @return HttpRequest
      */
     public function checkAdmin(){
-        $this->adapter->checkAdmin();
+//        $this->adapter->checkAdmin();
     }
 
     public function get_user_id()
     {
-        return $this->adapter->get_user_id();
+        return $this->CI->session->userdata($this->keyUsername);
     }
+
+//    public function get_username(){
+//        return $this->CI->session->userdata($this->keyUsername);
+//    }
 }

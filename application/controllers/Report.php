@@ -16,6 +16,7 @@ class Report extends Grid_Controller {
 	}
 
 	public function grid($idReport, $idProject=null){
+	    $this->reporter_auth->checkReportAccess($idProject, $idReport);
 	    $data = $this->checkCustomModel($idReport, $idProject);
 
  	    if($data['report']->resource == 'model'){
@@ -42,6 +43,7 @@ class Report extends Grid_Controller {
 
 	public function show($idReport, $idProject=null)
     {
+        $this->reporter_auth->checkReportAccess($idProject, $idReport);
         $this->checkCustomModel($idReport, $idProject);
         parent::show($idReport, $idProject);
     }
@@ -49,6 +51,7 @@ class Report extends Grid_Controller {
 
     public function download($idReport, $idProject=null)
     {
+        $this->reporter_auth->checkReportAccess($idProject, $idReport);
         $this->checkCustomModel($idReport, $idProject);
         parent::download($idReport, $idProject);
     }

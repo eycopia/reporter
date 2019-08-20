@@ -17,12 +17,12 @@ class Project extends CI_Controller
         parent::__construct();
         $this->load->model('Report_m');
         $this->load->model('Project_m');
-        $this->reporter_auth->check();
-//        $this->user = $this->reporter_auth->get_user_id();
+        $this->reporter_auth->isLogin();
+        $this->user = $this->reporter_auth->get_user_id();
     }
 
     public function index(){
-        $projects = $this->Project_m->getUserProjects($this->session->reporter_user_loggin);
+        $projects = $this->authorization_m->getUserProjects($this->user);
         $is_pretty = $this->config->item('pretty_url');
         $totalProjects = count($projects);
         if($totalProjects == 1){
@@ -49,7 +49,7 @@ class Project extends CI_Controller
         $slug = urldecode($name_project);
         $rpt_template = $this->config->item('rpt_template');
         $project = $this->Project_m->searchBySlug($slug);
-        $this->Project_m->validate_user($this->user, $project->idProject);
+        $this->reporter_auth->checkProjectAccess($project->idProject);
         $this->Project_m->setProject($project->idProject);
         $template = is_null($project->template) ? $this->config->item('rpt_base_template'): $project->template;
         $data = array(
@@ -67,7 +67,7 @@ class Project extends CI_Controller
      */
     public function show($idProject)
     {
-        $this->Project_m->validate_user($this->user, $idProject);
+        $this->reporter_auth->checkProjectAccess($idProject);
         $this->Project_m->setProject($idProject);
         $data = $this->Project_m->dataGrid();
         return $this->output

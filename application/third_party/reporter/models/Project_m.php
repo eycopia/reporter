@@ -31,31 +31,12 @@ class Project_m extends Grid implements interfaceGrid{
 
     /**
      * Add new relations
-     * @param $idProject
-     * @param $username
+     * @param int $idProject
+     * @param int $idUser
      */
-    public function addUser($idProject, $username){
-        $params = ['idProject'=>$idProject, 'username' => $username];
+    public function addUser($idProject, $idUser){
+        $params = ['idProject'=>$idProject, 'idUser' => $idUser];
         $this->db->insert('users_by_project', $params);
-    }
-
-    /**
-     * Get all active projects for the current user
-     *
-     * @param $user_id
-     *
-     * @return mixed
-     */
-    public function getUserProjects($username){
-        $join = $where = '';
-        if(!$this->reporter_auth->isAdmin()) {
-            $where  = " and  up.username = '{$username}'";
-            $join = "LEFT JOIN users_by_project as up on up.idProject = p.idProject ";
-        }
-
-        $q = $this->db->query("SELECT p.* FROM $this->table as p $join".
-            " WHERE p.status=1 $where");
-        return $q->result();
     }
 
     /**
@@ -85,31 +66,7 @@ class Project_m extends Grid implements interfaceGrid{
         return $q->result();
     }
 
-    public function hasPermission($idProject, $username){
-        $q = $this->db->where('username', $username)
-            ->where('idProject', $idProject)
-            ->get('users_by_project');
-        $data = $q->row();
-        return isset($data->idProject) ? true : false;
-    }
 
-    /**
-     * Check if the current user is authorized for the project
-     * @param $idUser int user to evaluate
-     * @param $idProject int project id
-     */
-    public function validate_user($idUser, $idProject)
-    {
-        $project = $this->Project_m->find($idProject);
-        $is_admin = $this->reporter_auth->isAdmin();
-        if (!is_cli() && !$is_admin && !is_null($project) && !$this->Project_m->hasPermission($idUser, $idProject)) {
-            $this->session->set_flashdata('type_message', 'danger');
-            $message = $this->lang->line('unauthorized_project')
-                . ": {$project->name}";
-            $this->session->set_flashdata('message', $message);
-            redirect(site_url());
-        }
-    }
 
     public function setProject($idProject){
         $this->idProject = $idProject;

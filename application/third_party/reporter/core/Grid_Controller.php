@@ -13,7 +13,7 @@ class Grid_Controller extends CI_Controller{
         if(!is_null($customModel)){
             $this->load->model($customModel, 'grid_report_m');
         }
-
+        $this->reporter_auth->isLogin();
         $this->load->model('grid_report_m');
     }
     
