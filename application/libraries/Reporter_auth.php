@@ -15,6 +15,11 @@ class Reporter_auth implements interfaceAuthReporter
     private $keyUsername = 'reporter_user_loggin';
 
     /**
+     * @var object BaseUser
+     */
+    private $user;
+
+    /**
      * @var interfaceAuthReporter
      */
     public $adapter;
@@ -38,10 +43,6 @@ class Reporter_auth implements interfaceAuthReporter
         return $adapter;
     }
 
-//
-//    public function check(){
-//        $this->adapter->check();
-//    }
 
     /**
      * Redirect to login page
@@ -114,12 +115,11 @@ class Reporter_auth implements interfaceAuthReporter
             throw new Exception("No existe el permiso que busca validar");
         }
 
-        $user = $this->CI->base_user_m->findByUsername($this->get_user_id());
+        $this->dataUser();
 
-        if($user->permission > Permission::$ADMIN && $permission < $user->permission){
-            $permission = $user->permission;
+        if($this->user->permission > Permission::$ADMIN && $permission < $this->user->permission){
+            $permission = $this->user->permission;
         }
-//        echo "$permission --- <pre>";print_r($type);exit;
         return ($permission >= $type) ? TRUE : FALSE;
     }
 
@@ -143,29 +143,35 @@ class Reporter_auth implements interfaceAuthReporter
         }
     }
 
+    private function dataUser(){
+        if(is_null($this->user)){
+            $this->user = $this->CI->base_user_m->findByUsername($this->get_user_id());
+        }
+    }
+
     /**
      * Check if current user is admin
      * @return boolean
      */
     public function isAdmin()
     {
-//        return $this->adapter->isAdmin();
+        $this->dataUser();
+        return $this->user->permission >= Permission::$ADMIN ? TRUE : FALSE;
     }
 
     /**
-     * Check if the current user is admin
-     * @return HttpRequest
+     * Check if current user is a developer
+     * @return boolean
      */
-    public function checkAdmin(){
-//        $this->adapter->checkAdmin();
+    public function isDeveloper(){
+        $this->dataUser();
+        return $this->user->permission == Permission::$DEVELOPER ? TRUE : FALSE;
     }
+
 
     public function get_user_id()
     {
         return $this->CI->session->userdata($this->keyUsername);
     }
 
-//    public function get_username(){
-//        return $this->CI->session->userdata($this->keyUsername);
-//    }
 }

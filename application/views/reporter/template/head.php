@@ -29,7 +29,7 @@
     <![endif]-->
     <link href="<?php echo base_url('assets/libs/datatables1.10.10/css/dataTables.bootstrap.min.css');?>" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url('assets/libs/datatables1.10.10/extras/FixedHeader/css/fixedHeader.bootstrap.min.css');?>" rel="stylesheet" type="text/css">
-
+    <link href="<?php echo base_url('assets/libs/pnotify/PNotifyBrightTheme.css');?>" rel="stylesheet" type="text/css">
     <!-- Grocery files -->
     <?php
     if(isset($css_files)){
@@ -61,4 +61,6 @@
 <script src="<?php echo base_url('assets/libs/jszip.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/extras/Buttons/js/buttons.colVis.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/extras/Buttons/js/buttons.html5.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotify.js');?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyButtons.js');?>"></script>
 <?php } ?>

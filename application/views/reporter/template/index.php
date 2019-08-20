@@ -81,7 +81,7 @@
     <?php
     $this->load->view($this->config->item('rpt_template') .'footer');
     if(isset($table)){
-        echo '<script type="text/javascript" src="'. base_url($this->config->item('rpt_assets') . 'js/main.js') .'"></script>';
+        echo '<script type="text/javascript" src="'. base_url($this->config->item('rpt_assets') . 'js/grid.js') .'"></script>';
     }
 
     // load custom js files

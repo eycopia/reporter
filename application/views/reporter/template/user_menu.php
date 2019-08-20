@@ -7,10 +7,7 @@
             <li>
                 <a href="<?php echo site_url('admin/users'); ?>"><i class="fa fa-fw fa-users"></i> <?php echo $this->lang->line('menu_users'); ?></a>
             </li>
-              <li>
-                <a href="<?php echo site_url('admin/server'); ?>"><i class="fa fa-fw fa-cloud"></i> <?php echo $this->lang->line('menu_server'); ?></a>
-            </li>
-              <li>
+            <li>
                 <a href="<?php echo site_url('admin/project'); ?>"><i class="fa fa-fw fa-desktop"></i> <?php echo $this->lang->line('menu_project'); ?></a>
             </li>
             <li>
@@ -19,7 +16,11 @@
             <li>
                 <a href="<?php echo site_url('admin/Notify_Report'); ?>"><i class="fa fa-fw fa-send"></i>Notificar</a>
             </li>
-          <?php } ?>
+          <?php } if( $this->reporter_auth->isDeveloper()) { ?>
+              <li>
+                <a href="<?php echo site_url('admin/server'); ?>"><i class="fa fa-fw fa-cloud"></i> <?php echo $this->lang->line('menu_server'); ?></a>
+            </li>
+          <?php }  ?>
             <li>
                 <a href="<?php echo site_url('auth/logout'); ?>"><i class="fa fa-fw fa-sign-out"></i><?php echo $this->lang->line('menu_logout'); ?></a>
             </li>

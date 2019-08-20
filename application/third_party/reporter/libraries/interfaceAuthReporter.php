@@ -9,11 +9,6 @@
 interface interfaceAuthReporter{
 
     /**
-     * Check login user, if not loggin redirect
-     */
-//    public function check();
-
-    /**
      * Redirect to login page
      * @return HttpRequest
      */
@@ -30,17 +25,7 @@ interface interfaceAuthReporter{
      */
     public function isLogin();
 
-    /**
-     * Check if current user is admin
-     * @return boolean
-     */
-    public function isAdmin();
 
-    /**
-     * Check if the current user is admin
-     * @return HttpRequest
-     */
-    public function checkAdmin();
     /**
      * Get the id for the current user
      * @return integer

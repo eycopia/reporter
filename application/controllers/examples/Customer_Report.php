@@ -12,7 +12,10 @@ class Customer_Report extends Grid_Controller {
 	}
 
 	public function index($idReport, $idProject){
-        $replace = ['data_url' => site_url('examples/Customer_Report/show/'.$idReport)];
+        $replace = [
+            'data_url' => site_url('examples/Customer_Report/show/'.$idReport),
+            'js_files' => [site_url('assets/reporter/js/example.js')]
+        ];
  	    $data = $this->getGridDefinition($idReport, $idProject, $replace);
  	    $this->load->view($data['template'], $data);
     }
