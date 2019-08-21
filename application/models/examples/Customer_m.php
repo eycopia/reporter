@@ -51,7 +51,12 @@ class Customer_m extends Grid implements interfaceGrid
             array('dt' => 'nombre', 'db' => 'nombre'),
             array('dt' => 'store_id_direction', 'db' => 'store_id_direction'),
             array('dt' => 'action', 'db' => 'customer_id', 'formatter' => function($field, $row){
-              return "<a href='#' class='exampleNotify btn btn-primary' data-identificador='{$row['customer_id']}'>Ver</a>";
+              return "
+                <button class='noticeNotif btn btn-default'>Notice</button>
+                <button href='#' class='infoNotif btn btn-info'>Info</button>
+                <button href='#' class='successNotif btn btn-success'>Success</button>
+                <button href='#' class='errorNotif btn btn-warning'>Error</button>
+                <button href='#' class='confirmNotif btn btn-danger' data-identificador='{$row['customer_id']}'>Eliminar</button>";
             })
         );
     }

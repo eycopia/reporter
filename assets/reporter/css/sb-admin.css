@@ -525,3 +525,8 @@ footer{
 footer .declaimer {
     font-size: 14px;color: #d2c9c9;margin-top: 10px;
 }
+
+
+.hide{
+    display: none;
+}

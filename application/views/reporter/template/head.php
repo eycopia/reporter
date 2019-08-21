@@ -47,6 +47,7 @@
     var app_url = "<?php echo site_url(); ?>";
 </script>
 <script src="<?php echo base_url('assets/libs/jquery.js');?>"></script>
+<script src="<?php echo base_url('assets/reporter/js/main.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/moment.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap-datetimepicker.min.js');?>"></script>
@@ -63,4 +64,6 @@
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/extras/Buttons/js/buttons.html5.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotify.js');?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyButtons.js');?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyConfirm.js');?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyCallbacks.js');?>"></script>
 <?php } ?>
