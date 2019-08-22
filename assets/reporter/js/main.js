@@ -3,6 +3,29 @@ $(document).ready(function() {
     PNotify.defaults.icons = 'bootstrap3'; // glyphicons
 });
 
+function showAlert( type, msg, title) {
+
+    var opts = { 'delay': 3500 };
+    var defaultTitle = null;
+
+    switch ( type)  {
+        case 'info' : defaultTitle = 'Over here.'; break;
+        case 'notice' : defaultTitle = 'Over here.'; break;
+        case 'success' : defaultTitle = 'Good news!'; break;
+        case 'error' : defaultTitle = 'Oh no!'; break;
+    }
+
+    if (title == undefined) {
+        title = defaultTitle;
+    }
+
+    opts.title = title;
+    opts.text = msg;
+    opts.type = type;
+
+    new PNotify.alert(opts);
+}
+
 function generateConfirmModal(titleModal, messageModal){
     return PNotify.notice({
         title: titleModal,

@@ -51,7 +51,10 @@
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/moment.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-3.3.6/js/bootstrap-datetimepicker.min.js');?>"></script>
-
+<script src="<?php echo base_url('assets/libs/pnotify/iife/PNotify.js');?>"></script>
+<script src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyButtons.js');?>"></script>
+<script src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyConfirm.js');?>"></script>
+<script src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyCallbacks.js');?>"></script>
 <?php if(isset($table)){ ?>
 <script src="<?php echo base_url('assets/libs/select2/js/select2.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/js/jquery.dataTables.js');?>"></script>
@@ -62,8 +65,4 @@
 <script src="<?php echo base_url('assets/libs/jszip.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/extras/Buttons/js/buttons.colVis.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.10/extras/Buttons/js/buttons.html5.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotify.js');?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyButtons.js');?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyConfirm.js');?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/libs/pnotify/iife/PNotifyCallbacks.js');?>"></script>
 <?php } ?>

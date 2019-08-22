@@ -9,20 +9,29 @@ $(document).ready(function() {
         alert('Oh ok. Chicken, I see.');
     });
 
-    $("table").on('click', "td a.confirmNotif", function(){
+    var $exTable = $("table");
+
+    $exTable.on('click', "td button.confirmNotif", function(){
         notice.open();
     });
 
 
 
 
-    $("table").on('click', "td button.noticeNotif", function(){
-         var opts = {
-                type : 'info',
-                title: 'Over Here',
-                text: "Check me out. I'm in a different stack."
-            };
-        PNotify.alert(opts);
+    $exTable.on('click', "td button.infoNotif", function(){
+        showAlert('info', 'Has presionado un boton');
+    });
+    $exTable.on('click', "td button.noticeNotif", function(){
+        showAlert('notice', 'Se envio el correo');
+    });
+    $exTable.on('click', "td button.successNotif", function(){
+        showAlert('success', 'Se creo un nuevo registro');
+    });
+    $exTable.on('click', "td button.errorNotif", function(){
+        showAlert('error', 'No se pudo contactar al servidor');
     });
 });
+
+
+
 

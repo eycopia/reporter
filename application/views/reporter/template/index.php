@@ -53,14 +53,7 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <?php if($this->session->flashdata('message')){ ?>
-                    <div class='alert alert-<?php echo $this->session->flashdata('type_message'); ?>'>
-                        <?php echo $this->session->flashdata('message'); ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                    <?php }
+                    <?php
 
                     $gridView = isset($main_content) ? $main_content : ''; //:todo falta definir el else de la vista
                     $this->load->view($gridView);
@@ -91,6 +84,17 @@
         }
     } ?>
 
+    <?php if($this->session->flashdata('message')){
+        $type_message = $this->session->flashdata('type_message');
+    ?>
+        <script type="text/javascript">
+            $(function() {
+            var flashType = "<?php echo isset( $type_message ) ? $type_message : 'info'; ?>";
+            var flashMessage = "<?php echo $this->session->flashdata('message');?>";
+            showAlert(flashType, flashMessage);
+            });
+        </script>
+    <?php } ?>
 
 </body>
 

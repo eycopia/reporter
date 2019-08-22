@@ -530,3 +530,7 @@ footer .declaimer {
 .hide{
     display: none;
 }
+
+.ui-pnotify .ui-pnotify-shadow {
+    box-shadow : 0px 5px 9px 3px rgba(175, 180, 181, 0.15) !important;
+}

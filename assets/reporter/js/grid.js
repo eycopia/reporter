@@ -175,7 +175,7 @@ $(document).ready(function() {
 
       /** Seleccion de filas */
       $('#datatable tbody').on( 'click', 'tr', function (e) {
-          if(e.target.nodeName != 'A'){
+          if( e.target.className.search('btn') < 0){
             $(this).toggleClass('selected');
           }
       } );
