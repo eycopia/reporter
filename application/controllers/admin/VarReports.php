@@ -14,7 +14,7 @@ class VarReports  extends CI_Controller{
         $this->load->helper('url');
         $this->load->library('grocery_CRUD');
         $this->reporter_auth->isLogin();
-        $this->reporter_auth->checkAdmin();
+        $this->reporter_auth->checkUserAccess(Permission::$DEVELOPER);
     }
 
     /**

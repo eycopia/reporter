@@ -104,6 +104,20 @@ class Reporter_auth implements interfaceAuthReporter
     }
 
     /**
+     * @param int $level Permission required
+     *
+     */
+    public function checkUserAccess($level){
+        $this->dataUser();
+        $rs = $this->validPermission($this->user->permission, $level);
+        if(!$rs){
+            $this->CI->session->set_flashdata('message', $this->CI->lang->line('unauthorized_resource'));
+            $this->CI->session->set_flashdata('type_message', 'error');
+            redirect(site_url());
+        }
+    }
+
+    /**
      * @param int $permission user permission
      * @param int $type permission required
      * @return bool

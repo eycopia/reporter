@@ -12,7 +12,7 @@ class Notify_Report extends CI_Controller{
     {
         parent::__construct();
         $this->reporter_auth->isLogin();
-        $this->reporter_auth->checkAdmin();
+        $this->reporter_auth->checkUserAccess(Permission::$ADMIN);
         $this->load->helper('url');
         $this->load->library('grocery_CRUD');
     }

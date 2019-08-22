@@ -44,7 +44,7 @@ class Report extends AdminGrid{
     public function __construct(){
         parent::__construct();
         $this->reporter_auth->isLogin();
-        $this->reporter_auth->checkAdmin();
+        $this->reporter_auth->checkUserAccess(Permission::$ADMIN);
         $this->load->model( 'admin/AdminReport_m', 'model');
         $this->load->model('report_m');
         $this->load->model('VarReport_m');

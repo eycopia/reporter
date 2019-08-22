@@ -13,7 +13,7 @@ class Users extends CI_Controller{
         parent::__construct();
 
         $this->reporter_auth->isLogin();
-        $this->reporter_auth->checkAdmin();
+        $this->reporter_auth->checkUserAccess(Permission::$ADMIN);
         $this->load->library('grocery_CRUD');
     }
 
@@ -27,13 +27,12 @@ class Users extends CI_Controller{
             $crud = new grocery_CRUD();
             $crud->set_theme('mybootstrap');
             $crud->unset_delete();//grid
-            $crud->set_table('users');
-            $crud->set_subject('Users');
-            //$crud->set_relation_n_n('groups', 'users_groups', 'groups', 'user_id', 'group_id', 'name');
-            $crud->set_relation_n_n('projects', 'user_projects', 'project', 'user_id', 'idProject', 'name');
-            $crud->fields('username', 'email', 'first_name', 'last_name', 'company', 'phone', 'projects');
-            $crud->columns('username', 'email', 'first_name', 'last_name');
-            $crud->required_fields('username','first_name', 'password');
+            $crud->set_table('base_user');
+            $crud->set_subject('Reporter Users');
+            $crud->fields('idUser', 'username', 'first_name', 'last_name', 'permission');
+            $crud->columns('idUser', 'username', 'first_name', 'last_name', 'permission');
+            $crud->required_fields('IdUser','username', 'permission');
+            $crud->callback_field('permission',array($this,'fn_permission'));
             $crud->unset_export();
             $crud->unset_print();
             $output = $crud->render();
@@ -43,5 +42,22 @@ class Users extends CI_Controller{
         }catch(Exception $e){
             show_error($e->getMessage().' --- '.$e->getTraceAsString());
         }
+    }
+
+    public function fn_permission($value)
+    {
+        $permission = [
+            'Reader' => Permission::$READER,
+            'Writer' => Permission::$WRITER,
+            'Deleted' => Permission::$DELETED,
+            'Administrator' => Permission::$ADMIN,
+            'Desarrollador' => Permission::$DEVELOPER,
+        ];
+        $select = "<select name='permission'>";
+        foreach($permission as $key => $val){
+            $selected = ($value == $val) ? "selected='selected'" : '';
+            $select .= "<option value='$val' $selected>$key</option>";
+        }
+        return $select . "</select>";
     }
 }

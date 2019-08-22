@@ -25,10 +25,4 @@ interface interfaceAuthReporter{
      */
     public function isLogin();
 
-
-    /**
-     * Get the id for the current user
-     * @return integer
-     */
-    public function get_user_id();
 }

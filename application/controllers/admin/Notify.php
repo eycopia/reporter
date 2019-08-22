@@ -11,7 +11,7 @@ class Notify extends  CI_Controller{
     public function __construct(){
         parent::__construct();
         $this->reporter_auth->isLogin();
-        $this->reporter_auth->checkAdmin();
+        $this->reporter_auth->checkUserAccess(Permission::$ADMIN);
         $this->load->model('notify_m');
     }
 

@@ -89,7 +89,7 @@
     ?>
         <script type="text/javascript">
             $(function() {
-            var flashType = "<?php echo isset( $type_message ) ? $type_message : 'info'; ?>";
+            var flashType = "<?php echo ( isset( $type_message ) ? $type_message : 'info'); ?>";
             var flashMessage = "<?php echo $this->session->flashdata('message');?>";
             showAlert(flashType, flashMessage);
             });

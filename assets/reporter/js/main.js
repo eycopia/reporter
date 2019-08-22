@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 function showAlert( type, msg, title) {
 
-    var opts = { 'delay': 3500 };
+    var opts = { 'delay': 5000 };
     var defaultTitle = null;
 
     switch ( type)  {
