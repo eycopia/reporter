@@ -53,3 +53,5 @@ $lang['unauthorized_project'] = "Usted no tiene permisos para ver el proyecto";
 $lang['unauthorized_resource'] = "Usted no tiene permisos para ver este recurso.";
 $lang['send_email_error'] = 'No se pudo enviar el email';
 $lang['send_email_error_html'] = "Nota: Se muestra sólo una parte del reporte, debe revizar el archivo adjunto para obtener el reporte completo.";
+$lang['login_successful'] = 'Bienvenido a ';
+$lang['login_failed'] = 'No se puede iniciar sesion con sus credenciales, verifique e intente nuevamente; si el error persiste contacte con el administrador.';

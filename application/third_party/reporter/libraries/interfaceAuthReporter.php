@@ -10,19 +10,14 @@ interface interfaceAuthReporter{
 
     /**
      * Redirect to login page
-     * @return HttpRequest
+     * @return array [success=>BOOLEAN, msg=>STRING, userid => INT]
      */
     public function login();
 
     /**
-     * @return redirect to login page
+     * @return HttpRequest to login page
      */
     public function logout();
 
-    /**
-     * Check user is login
-     * @return boolean
-     */
-    public function isLogin();
 
 }

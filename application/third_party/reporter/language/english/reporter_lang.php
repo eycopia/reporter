@@ -58,3 +58,5 @@ $lang['unauthorized_project'] = "You don't have permission for this project";
 $lang['unauthorized_resource'] = "You don't have permission for this resource.";
 $lang['send_email_error'] = 'Mail could not be sent';
 $lang['send_email_error_html'] = "Note: Shown only a part of the report, the attached file should check to get the full report.";
+$lang['login_successful'] = 'Welcome to ';
+$lang['login_failed'] = "You cann't access, please check your credenctials or contact your administrator"; 

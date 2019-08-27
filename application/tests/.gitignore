@@ -4,5 +4,6 @@ helpers
 hooks
 libraries
 mocks
+build
 !models
 TestCase.php

@@ -31,7 +31,7 @@ class Server extends CI_Controller {
 			$crud->set_theme('mybootstrap');
 			$crud->set_table('server_connection');
 			$crud->set_subject('Server Connections');
-			$crud->set_relation('idDriver', 'driver', 'name');
+			$crud->set_relation('idDriver', 'driver', 'driver');
 			$crud->field_type('password', 'password');
 			$crud->fields('name','dbName','host','user', 'password', 'port', 'dsn', 'idDriver', 'status' );
 			$crud->required_fields('name', 'dbName','host', 'user', 'port');

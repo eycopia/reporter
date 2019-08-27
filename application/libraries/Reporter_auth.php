@@ -46,14 +46,21 @@ class Reporter_auth implements interfaceAuthReporter
 
     /**
      * Redirect to login page
-     * @return HttpRequest
+     * @return array [success=>BOOLEAN, msg=>STRING, userid => INT]
      */
     public function login()
     {
-        $this->adapter->login();
+        $rs = $this->adapter->login();
+        if($rs['success']){
+            $this->newSession($rs['userid']);
+            $default = $this->CI->lang->line('login_successful') . $this->CI->config->item('app_name');
+            $rs['msg'] = (strlen($rs['msg']) > 0  ) ? $rs['msg'] : $default; 
+        }else{
+            $rs['msg'] = (strlen($rs['msg']) > 0  ) ? $rs['msg'] : $this->CI->lang->line('login_failed');
+        }
+        return $rs;
     }
 
-    //For test purpose
     public function newSession($idUser){
         $this->CI->session->set_userdata($this->keyUsername, $idUser);
     }
@@ -143,7 +150,7 @@ class Reporter_auth implements interfaceAuthReporter
     public function logout()
     {
         $this->deleteSession();
-        $this->adapter->logout();
+        $this->adapter->logout();        
     }
 
     /**
