@@ -166,7 +166,7 @@ class Reporter_auth implements interfaceAuthReporter
 
     private function dataUser(){
         if(is_null($this->user)){
-            $this->user = $this->CI->base_user_m->findByUsername($this->get_user_id());
+            $this->user = $this->CI->base_user_m->find($this->get_user_id());
         }
     }
 

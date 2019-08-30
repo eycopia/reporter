@@ -25,7 +25,7 @@ class Base_user_m extends CI_Model
                  ->update(self::$table, $params);
     }
 
-    public function findByUsername($idUser){
+    public function find($idUser){
         $sql = "SELECT * FROM %s WHERE idUser = '%d'";
         $data =  $this->db->query(sprintf($sql, self::$table, $idUser))->row();
         if(!isset($data->username)){

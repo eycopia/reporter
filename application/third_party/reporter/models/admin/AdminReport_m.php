@@ -10,28 +10,29 @@
 class AdminReport_m extends Grid implements interfaceGrid{
     private $table = "report";
     private $htmlValid = '<p><a><strong><ul><li><h1><h2><h3><h4><div><span><ol><img><hr><b><i>';
-
+    
     public function __construct()
     {
         parent::__construct(new ModelReporter());
     }
-
-
+    
+    
     /**
      * Add new Report
      * @param array $data
      * @throws string DB error
      */
     public function add($data){
+        $userId = $this->reporter_auth->get_user_id();
         $sql = sprintf("INSERT INTO {$this->table} "
-            ."(`idUser`, `idServerConnection`, `title`,"
+        ."(`idUser`, `idServerConnection`, `title`,"
             ."`description`,`url`,`sql`) "
-            ." VALUE (%d,%d, '%s','%s', '%s', \"%s\")",
-            $_SESSION['user_id'], $data['connection'],
-            strip_tags($data['title'],$this->htmlValid),
-            strip_tags($data['description'], $this->htmlValid),
-            $data['url'],
-            $this->validSql($data['sql']));
+                ." VALUE (%d,%d, '%s','%s', '%s', \"%s\")",
+                $userId, $data['connection'],
+                strip_tags($data['title'],$this->htmlValid),
+                strip_tags($data['description'], $this->htmlValid),
+                $data['url'],
+                $this->validSql($data['sql']));
         if( ! $this->db->query($sql) ){
             throw new Exception("Error sql", $this->db->error());
         }
@@ -47,17 +48,17 @@ class AdminReport_m extends Grid implements interfaceGrid{
     
     public function editProjects($idReport, $projects){
         $this->db->where('idReport', $idReport)
-            ->delete('reports_by_project');
+        ->delete('reports_by_project');
         $this->addProjects($idReport, $projects);
     }
-
+    
     /**
      * Edit Report
      * @param array $data
      */
     public function  edit($data){
         $update = array(
-            'idUser' => $_SESSION['user_id'],
+            'idUser' => $this->reporter_auth->get_user_id(),
             'idServerConnection' => $data['connection'],
             'title' => strip_tags($data['title'],$this->htmlValid),
             'description' => strip_tags($data['description'], $this->htmlValid),
@@ -82,17 +83,17 @@ class AdminReport_m extends Grid implements interfaceGrid{
             ->update("report_performance", $data);
         }else{
             $data['idReport'] = $idReport;
-            $this->db->insert("report_performance", $data);            
-               
+            $this->db->insert("report_performance", $data);
+            
         }
     }
-
+    
     public function delete($idReport){
         $this->db->where('idReport', $idReport)
-            ->update($this->table, array('status' => 0));
+        ->update($this->table, array('status' => 0));
     }
-
-
+    
+    
     /**
      * @param $sql
      * @return string
@@ -103,7 +104,7 @@ class AdminReport_m extends Grid implements interfaceGrid{
         $sql = preg_replace($re, $replace, $sql);
         return strip_tags($sql, $this->htmlValid);
     }
-
+    
     public function gridDefinition(){
         return array(
             'description' => '',
@@ -111,20 +112,20 @@ class AdminReport_m extends Grid implements interfaceGrid{
                 FROM {$this->table} as r
                 left join reports_by_project as rp on r.idReport  = rp.idReport
                 left join project  as p on rp.idProject = p.idProject and p.status = 1
-                WHERE r.status = 1 
+                WHERE r.status = 1
                 GROUP BY r.idReport
                 ORDER BY r.idReport desc",
-            'data_url' => site_url('admin/report/show/'),
-            'database' => 'mysql',
-            'filters' => 'basic',
-            'columns' => $this->getColumns(),
-            'links' => array( array(
-                'fileName' => '<span class="fa fa-plus-circle"></span> '.$this->lang->line('btn_new_report'),
-                'fileExtension' => site_url('admin/report/add'),
-                'nameClass' => 'btn btn-primary'))
-        );
+                'data_url' => site_url('admin/report/show/'),
+                'database' => 'mysql',
+                'filters' => 'basic',
+                'columns' => $this->getColumns(),
+                'links' => array( array(
+                    'fileName' => '<span class="fa fa-plus-circle"></span> '.$this->lang->line('btn_new_report'),
+                    'fileExtension' => site_url('admin/report/add'),
+                    'nameClass' => 'btn btn-primary'))
+                );
     }
-
+    
     /**
      * Setea las columns de la grilla
      */
@@ -136,11 +137,11 @@ class AdminReport_m extends Grid implements interfaceGrid{
             array('dt' => 'Created', 'db' => 'created'),
             array('dt' => 'Action', 'db' => 'idReport',
                 "formatter" => function($d){
-                    return "<a class='btn btn-success' href='".site_url('admin/report/edit/'.$d)."'>
+                return "<a class='btn btn-success' href='".site_url('admin/report/edit/'.$d)."'>
                     <i class=\"fa fa-edit\"></i> Edit</a>
                     <a class='btn btn-danger' href='".site_url('admin/report/del/'.$d)."'>
                     <i class=\"fa fa-trash\"></i> Delete</a>";
                 })
-        );
+            );
     }
 }
