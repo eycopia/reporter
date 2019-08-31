@@ -1,7 +1,5 @@
 <?php
 /** Boostrap CSS */
-$this->set_css($this->theme_path.$this->theme.'/css/bootstrap.min.css');
-$this->set_css($this->theme_path.$this->theme.'/css/font-awesome.min.css');
 
 $this->set_js_lib($this->default_javascript_path . '/' . grocery_CRUD::JQUERY);
 
@@ -39,6 +37,9 @@ $this->load_js_jqueryui();
 
     var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 </script>
+
+
+
 <div id='list-report-error' class='report-div error text-danger'></div>
 <?php if ($success_message !== null) { ?>
     <div id='list-report-success' class='report-div success report-list text-success alert alert-success'

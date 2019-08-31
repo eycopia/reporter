@@ -74,16 +74,18 @@ class Grid_Controller extends CI_Controller{
     }
 
     protected function getBreadCrumb($report){
-        return array(
+        $rs = [];
+        if(isset($report->current_project->name)){
+            $rs = array(
             array(
                 'title'=> $this->lang->line('home'),
                 'link'=> site_url()
             ),array(
                 'title'=> $report->current_project->name,
                 'link'=> site_url('project/name/'.url_title($report->current_project->slug))
-            ), array(
-                'title' => $report->title
             ));
+        }
+        return $rs;
     }
 
     private function utf8ize( $mixed ) {

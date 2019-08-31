@@ -69,7 +69,7 @@ class Report_m extends CI_Model {
             FROM {$this->table} as r
             LEFT JOIN reports_by_project as rbp on rbp.idReport = r.idReport
             LEFT JOIN project as p on p.idProject = rbp.idProject
-            WHERE rbp.idProject = {$idProject} and p.status = 1");
+            WHERE rbp.idProject = {$idProject} and p.status = 1 and r.status = 1");
         return $q->result();
     }
 

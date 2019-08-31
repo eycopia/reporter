@@ -1,3 +1,4 @@
+
 <?php 
 
 	$column_width = (int)(80/count($columns));

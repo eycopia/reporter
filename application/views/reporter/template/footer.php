@@ -1,8 +1,9 @@
+<footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+              
+              <div class="copyright text-center my-auto">
+              	<strong>REPORTER</strong>  by: Jorge Copia - <span>MIT Licence</span>
+              </div>
+            </div>
+          </footer>
 <footer>
-    <strong>REPORTER</strong><br>
-    <div class="declaimer">
-        <p>Un proyecto open source - By: Jorge Copia</p>
-        <span>Licencia MIT</span>
-    </div>
-</footer>
-

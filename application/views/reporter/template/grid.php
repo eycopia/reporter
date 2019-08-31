@@ -16,6 +16,9 @@
     </div>
 </div>
 <?php } ?>
+
+
+
 <?php if(isset($table['links'])){ ?>
 <div class="col-sm-12" >
     <br>
@@ -59,26 +62,34 @@ if(isset($report->resource) && $report->resource == 'embedded'){
          if(isset($table['filters'])){ $this->load->view($this->config->item('rpt_template') . 'grid_filters');}
          if(isset($table['utilities'])){ $this->load->view($this->config->item('rpt_template') . 'grid_utilities');}
         ?>
-            <input type="reset" class="hidden">
+            <input type="reset" class="invisible">
         </form>
     </div>
 
 
-
-    <table id="datatable" class="table table-striped table-bordered table-hover table-blue-head" cellspacing="0" width="100%">
-        <thead>
-            <tr><?php
-               foreach ($table['columns'] as $value) {
-                   if( (!isset($value['show']) ) OR
-                        (isset($value['show']) && $value['show'] == true)
-                   ){
-                        echo "<th>{$value['dt']}</th>";
-                   }
-               }
-               ?>
-            </tr>
-        </thead>
-    </table>
+<div class="card shadow mb-4">
+            <div class="card-header py-3">
+            
+            </div>
+<div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="datatable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr><?php
+                           foreach ($table['columns'] as $value) {
+                               if( (!isset($value['show']) ) OR
+                                    (isset($value['show']) && $value['show'] == true)
+                               ){
+                                    echo "<th>{$value['dt']}</th>";
+                               }
+                           }
+                           ?>
+                        </tr>
+                    </thead>
+                </table>
+    </div>
+    </div>
+</div>
 <?php } ?>
     <script type="text/javascript">
         var data_url = "<?php echo $table['data_url']; ?>";

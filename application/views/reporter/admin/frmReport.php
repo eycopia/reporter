@@ -1,32 +1,28 @@
-<style>
-form   {
-    clear: both;
-    margin-bottom: 150px;
-}
-    footer{
-        bottom: 0;
-        position: relative;
-    }
-</style>
-<form class="form-horizontal col-sm-9 center-block" action="<?php echo site_url('admin/report/save'); ?> " method="POST"  style="float:none">
+<div class="col-sm-12">
+<div class="row justify-content-md-center">
+<div class="col-lg-9">
+<div class="card shadow mb-4">
+<div class="card-body">
+              
+<form class="form-horizontal" action="<?php echo site_url('admin/report/save'); ?> " method="POST"  style="float:none">
     <?php if(isset($report)){
           echo "<input name='report' value='{$report->idReport}' type='hidden'>";
     } ?>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#information" aria-controls="information" role="tab" data-toggle="tab">Details</a></li>
-    <li role="presentation" class=""><a href="#sqlReport" aria-controls="sqlReport" role="tab" data-toggle="tab">SQL</a></li>
-    <li role="presentation" class=""><a href="#notify" aria-controls="notify" role="tab" data-toggle="tab">Notifications</a></li>
+    <li role="presentation" class="nav-item"><a href="#information" class="nav-link active" aria-controls="information" role="tab" data-toggle="tab">Details</a></li>
+    <li role="presentation" class="nav-item"><a href="#sqlReport" class="nav-link" aria-controls="sqlReport" role="tab" data-toggle="tab">SQL</a></li>
+    <li role="presentation" class="nav-item"><a href="#notify" class="nav-link" aria-controls="notify" role="tab" data-toggle="tab">Notifications</a></li>
     <?php if(isset($report)) { ?>
-    <li role="presentation" class=""><a href="#customice" aria-controls="customice" role="tab" data-toggle="tab">Custom Grid</a></li>
-    <li role="presentation" class=""><a href="#performance" aria-controls="performance" role="tab" data-toggle="tab">Performance</a></li>
+    <li role="presentation" class="nav-item"><a href="#customice" class="nav-link" aria-controls="customice" role="tab" data-toggle="tab">Custom Grid</a></li>
+    <li role="presentation" class="nav-item"><a href="#performance" class="nav-link" aria-controls="performance" role="tab" data-toggle="tab">Performance</a></li>
     <?php
         $path = (empty($report->url)) ? "report/grid/{$report->idReport }" : $report->url;
         $link = site_url($path);
-        echo "<li><a href='{$link}'
+        echo "<li> <div class='col-sm-12'> <a href='{$link}'
              class='btn btn-success btn-preview' target='_blank'>
-            <i class='fa fa-fw fa-external-link'></i>
-            {$this->lang->line('show')} {$this->lang->line('report')}</a></li>";
+            <i class='fa fa-fw fa-external-link-alt'> </i>
+            {$this->lang->line('show')} {$this->lang->line('report')}</a></div></li>";
     }?>
     <li role="" class=""><a href="<?php echo site_url('admin/report/add'); ?>" class="btn btn-primary btn-preview">
             <span class="fa fa-plus-circle"></span>
@@ -290,7 +286,10 @@ form   {
     </div>
 
 </form>
-
+</div>
+</div>
+</div>
+</div>
 <script type="text/javascript">
     var app_url = '<?php echo base_url('admin'); ?>';
     //Available Type of Vars for Report

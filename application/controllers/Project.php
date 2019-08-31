@@ -37,6 +37,7 @@ class Project extends CI_Controller
             'projects' =>  $projects,
             'is_pretty' => $is_pretty
         );
+//         $this->load->view('reporter/sbadmin');
         $this->load->view( $this->config->item('rpt_base_template'), $data);
     }
 

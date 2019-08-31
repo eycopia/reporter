@@ -16,7 +16,7 @@ for ($i=0; $i < count($table['columns']); $i++ ) {
         box-shadow: 0 0 2px rgba(0,0,0,.3) inset;
     }
 </style>
-<div class="col-sm-12">
+<div class="row">
     <?php
     $btnSearch = false;
     if(!$table['avoid_basic_filter'] && !empty($searchOptions)){
@@ -38,10 +38,8 @@ for ($i=0; $i < count($table['columns']); $i++ ) {
         $this->load->view($table['viewsFilters'][$filter['type']], array('filter' => $filter));
     }
     if($btnSearch){    ?>
-    <div class="col-lg-1 col-sm-2">
-        <div clas=""></div>
-        <label class="form-label clear"><br></label>
-        <button class="btn btn-primary" id="runSearch">
+    <div class="col-sm-1 row align-items-end">
+        	<button class="btn btn-primary" id="runSearch">
             <i class="fa fa-search"></i> <?php echo $this->lang->line('button_search'); ?></button>
     </div>
     <?php } ?>

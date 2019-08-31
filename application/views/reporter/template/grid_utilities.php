@@ -3,7 +3,7 @@
 $items_per_page = isset($table['utilities']['items_per_page']) ? $table['utilities']['items_per_page'] : $this->config->item('grid_items_per_page');
 
 ?> 
-<div class="col-sm-12">
+<div class="col-lg-12">
     <br>
     <div class="col-lg-1 col-sm-2">
         <label><?php echo $this->lang->line('label_show'); ?>:</label>

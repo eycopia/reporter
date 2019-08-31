@@ -1,7 +1,17 @@
 $(document).ready(function() {
-    PNotify.defaults.styling = 'bootstrap3'; // Bootstrap version 3
-    PNotify.defaults.icons = 'bootstrap3'; // glyphicons
+//    PNotify.defaults.styling = 'bootstrap3'; // Bootstrap version 3
+//    PNotify.defaults.icons = 'bootstrap3'; // glyphicons
+    fixedFooter();
 });
+
+function fixedFooter(){
+	var $content = $('#content');
+	var sizeContent = $content.height();
+	var sizeWindow = window.innerHeight;
+	if ( ( sizeWindow / sizeContent  ) > 3 ) {
+		$content.css('height', ( sizeWindow -  ( sizeContent - 100) )  );
+	}
+}
 
 function showAlert( type, msg, title) {
 

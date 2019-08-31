@@ -35,7 +35,7 @@ class AdminReport_m extends Grid implements interfaceGrid{
                 $this->validSql($data['sql']));
         if( ! $this->db->query($sql) ){
             throw new Exception("Error sql", $this->db->error());
-        }
+        }        
         return $this->db->insert_id();
     }
     
@@ -69,8 +69,9 @@ class AdminReport_m extends Grid implements interfaceGrid{
             'auto_reload' => $data['reload'],
             'format_notify' => $data['format_notify']
         );
+        
         $this->db->where('idReport', $data['idReport']);
-        $this->db->update($this->table, $update);
+        $this->db->update($this->table, $update);       
     }
     
     public function setPerformance($idReport, $data){

@@ -1,8 +1,5 @@
 <?php
     $this->set_css($this->theme_path.$this->theme.'/css/mybootstrap.css');
-    $this->set_css($this->theme_path.$this->theme.'/css/bootstrap.min.css');
-    $this->set_css($this->theme_path.$this->theme.'/css/font-awesome.min.css');
-
 	$this->set_js_lib($this->theme_path.$this->theme.'/js/jquery.form.js');
     $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
 	$this->set_js_config($this->theme_path.$this->theme.'/js/flexigrid-add.js');
@@ -10,6 +7,12 @@
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
 ?>
+<div class="col-sm-12">
+<div class="row justify-content-md-center">
+<div class="col-lg-9">
+<div class="card shadow mb-4">
+<div class="card-body">
+
 <div class="col-lg-6">
 <div class="crud-form panel panel-default" style='width: 100%;' data-unique-hash="<?php echo $unique_hash; ?>">
 	<div class="mDiv panel-heading">
@@ -79,6 +82,10 @@
 
 		</div>
 	<?php echo form_close(); ?>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

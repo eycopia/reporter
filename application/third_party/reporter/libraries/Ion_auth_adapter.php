@@ -17,16 +17,10 @@ class Ion_auth_adapter  implements interfaceAuthReporter
     {
         $this->CI = &get_instance();
         $this->CI->load->library('ion_auth');
-    }
-
-
-    /**
-     * Check login user, if not loggin redirect
-     */
-    public function check(){
-        if(!$this->isLogin()){
-            $this->login();
-        }
+        $this->CI->load->library('form_validation');
+        $this->CI->form_validation->set_error_delimiters($this->CI->config->item('error_start_delimiter', 'ion_auth'), $this->CI->config->item('error_end_delimiter', 'ion_auth'));
+        
+        $this->CI->lang->load('auth');
     }
 
     /**
@@ -35,7 +29,22 @@ class Ion_auth_adapter  implements interfaceAuthReporter
      */
     public function login()
     {
-        redirect($this->CI->config->item('rpt_login'));
+        // validate form input
+        $this->CI->form_validation->set_rules('username', str_replace(':', '', $this->CI->lang->line('login_identity_label')), 'required');
+        $this->CI->form_validation->set_rules('password', str_replace(':', '', $this->CI->lang->line('login_password_label')), 'required');
+        
+        $rs = ['success' => FALSE, 'msg' => ''];
+        if ($this->CI->form_validation->run() === TRUE)
+        {
+            // check to see if the user is logging in
+            // check for "remember me"
+            $remember = (bool)$this->CI->input->post('remember');
+            
+            $rs['success']= $this->CI->ion_auth->login($this->CI->input->post('username'), $this->CI->input->post('password'), $remember);
+            $rs['userid'] = $this->CI->ion_auth->get_user_id();
+        }
+        return $rs;
+           
     }
 
     /**
@@ -47,39 +56,4 @@ class Ion_auth_adapter  implements interfaceAuthReporter
         redirect($this->CI->config->item('rpt_login'));
     }
 
-    /**
-     * Check user is login
-     * @return boolean
-     */
-    public function isLogin()
-    {
-        return $this->CI->ion_auth->logged_in();
-    }
-
-    /**
-     * Check if current user is admin
-     * @return boolean
-     */
-    public function isAdmin()
-    {
-        return $this->CI->ion_auth->is_admin();
-    }
-
-    /**
-     * Check if the current user is admin
-     * @return HttpRequest
-     */
-    public function checkAdmin()
-    {
-        if(!$this->isAdmin()){
-            $this->CI->session->set_flashdata('message', $this->CI->lang->line('unauthorized_resource'));
-            $this->CI->session->set_flashdata('type_message', 'danger');
-            redirect(base_url());
-        }
-    }
-
-    public function get_user_id()
-    {
-        return $this->CI->ion_auth->get_user_id();
-    }
 }

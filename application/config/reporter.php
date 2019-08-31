@@ -3,7 +3,7 @@
 
 $namePackege = 'reporter/';
 
-$config['app_name'] = "Generador de Reportes";
+$config['app_name'] = "Reporter";
 $config['third_party_name'] = $namePackege;
 
 //config url

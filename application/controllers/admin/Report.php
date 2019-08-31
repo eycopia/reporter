@@ -46,7 +46,7 @@ class Report extends AdminGrid{
         $this->reporter_auth->isLogin();
         $this->reporter_auth->checkUserAccess(Permission::$ADMIN);
         $this->load->model( 'admin/AdminReport_m', 'model');
-        $this->load->model('report_m');
+        $this->load->model('grid_report_m');
         $this->load->model('VarReport_m');
         $this->load->model('admin/NotifyReport_m');
         $this->title_page = lang('admin_report_title');
@@ -116,8 +116,7 @@ class Report extends AdminGrid{
      */
     public function save(){
         $data = $this->cleanInputs();
-//         echo "<pre>";print_r($data);exit;
-        if($this->validate($data['report'])){
+        if($this->validate($data['report'])){            
             isset($data['report']['idReport']) ? $this->editReport($data) : $this->newReport($data);
         }else{
             $this->response['status'] = false;
@@ -158,11 +157,11 @@ class Report extends AdminGrid{
             if(isset($data['vars']) && !empty($data['vars'])){
                 $this->VarReport_m->save($data['vars'], $idReport);
             }
+            
             if(empty($data['report']['url'])){
                 $this->getGridColumns($idReport);
                 $data['report']['columns'] =  $this->mergeColumns($data['report']['columns']);
             }
-            
             $this->model->edit($data['report']);
             
             if(isset($data['performance'])){
@@ -187,7 +186,7 @@ class Report extends AdminGrid{
             $lastColumns[$col->db] = $col;
         }
 
-        foreach($this->grid->makeColumnsFromSql() as $col){
+        foreach($this->grid_report_m->makeColumnsFromSql() as $col){
             if(isset($lastColumns[$col['db']])){
                 $newColumns[] = array(
                     'dt' => $lastColumns[$col['db']]->dt,
@@ -319,9 +318,10 @@ class Report extends AdminGrid{
 
     private function getGridColumns($idReport){
         $columns = array();
-        $this->load->model('Report_m', 'grid');
-        $this->grid->loadReport($idReport);
-        $grid = $this->grid->bodyGrid();
+        
+        $this->grid_report_m->loadReport($idReport);
+        $grid = $this->grid_report_m->bodyGrid();
+//         echo "<pre>";print_r($grid);exit;
         if (is_array($grid['columns']) && count($grid['columns']) > 0){
             $columns = $grid['columns'];
         }

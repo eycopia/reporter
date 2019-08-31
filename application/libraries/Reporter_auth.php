@@ -98,11 +98,16 @@ class Reporter_auth implements interfaceAuthReporter
             $type = Permission::$READER;
         }
         $rs = false;
-        $report = $this->CI->authorization_m->getReportProject($idProject, $idReport);
-        if($report->idReport == $idReport){
-            $project = $this->CI->authorization_m->getUserProject($idProject);
-            $permission =  isset($project->permission) ? $project->permission : 0;
-            $rs = $this->validPermission($permission, $type);
+        
+        if(is_null($idProject) && $this->isAdmin()){
+            $rs = true;
+        }else{
+            $report = $this->CI->authorization_m->getReportProject($idProject, $idReport);
+            if($report->idReport == $idReport){
+                $project = $this->CI->authorization_m->getUserProject($idProject);
+                $permission =  isset($project->permission) ? $project->permission : 0;
+                $rs = $this->validPermission($permission, $type);
+            }
         }
 
         if($rs===FALSE){
