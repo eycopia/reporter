@@ -42,7 +42,10 @@
     if(isset($css_files)){
         foreach($css_files as $file): ?>
             <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
-        <?php  endforeach; }?>
+ <?php  endforeach; }
+        if(!empty($this->config->item('app_main_css'))){  ?>
+	    <link href="<?php echo base_url($this->config->item('app_main_css'));?>" rel="stylesheet" type="text/css">
+	<?php } ?>
 
 </head>
 <body id="page-top">

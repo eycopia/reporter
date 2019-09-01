@@ -10,8 +10,8 @@
         <nav class="navbar navbar-expand topbar mb-4 static-top ">
 
           <a class="d-flex align-items-center justify-content-center" href="<?php echo base_url();?>" id="bussiness-logo"> 
-    		 <div class="sidebar-brand-icon rotate-n-15">
-	           <img src="<?php echo base_url('assets/reporter/img/logo.png'); ?>" alt='bussiness logo' title="bussiness logo"> 
+    		 <div class="sidebar-brand-icon">
+	           <img src="<?php echo base_url($this->config->item('app_logo')); ?>" alt='bussiness logo' title="bussiness logo"> 
 		         </div>
 	         <div class="sidebar-brand-text mx-3"> <?php echo  $this->session->has_userdata('project') ? $this->session->userdata('project') : $this->config->item('app_name');?></div> 
 	        
@@ -93,9 +93,13 @@
         foreach($js_files as $file){
             echo "<script type='text/javascript' src='{$file}'></script>";
         }
-    } ?>
-
-    <?php if($this->session->flashdata('message')){
+    }
+    
+    if(!empty($this->config->item('app_main_js'))){
+        echo base_url($this->config->item('app_main_js'));
+    }
+    
+    if($this->session->flashdata('message')){
         $type_message = $this->session->flashdata('type_message');
     ?>
         <script type="text/javascript">
