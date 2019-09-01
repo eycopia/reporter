@@ -57,6 +57,7 @@ class AdminReport_m extends Grid implements interfaceGrid{
      * @param array $data
      */
     public function  edit($data){
+        echo "<pre>";print_r($data);
         $update = array(
             'idUser' => $this->reporter_auth->get_user_id(),
             'idServerConnection' => $data['connection'],
@@ -71,7 +72,7 @@ class AdminReport_m extends Grid implements interfaceGrid{
         );
         
         $this->db->where('idReport', $data['idReport']);
-        $this->db->update($this->table, $update);       
+        $this->db->update($this->table, $update);
     }
     
     public function setPerformance($idReport, $data){

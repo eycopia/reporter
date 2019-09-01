@@ -91,7 +91,6 @@ class Grid extends CI_Model
         $this->db_connection = $this->getDbConnection();
         $this->initFilterGrid($table['filters']);
         $this->model->setDbConnection($this->db_connection);
-//        print_r($table);Exit;
         if(isset($table['sql'])){
             $this->sqlReport = $table['sql'];
         }else{
@@ -299,9 +298,15 @@ class Grid extends CI_Model
     
     private function getDefaultColumns(){
         $sql = $this->applyCustomFilters($this->sqlReport);
-        $sql = $this->gestor->getLimitForColumns($sql);
+        $sql = $this->gestor->getLimitForColumns($sql); 
         $data = $this->model->row($sql);
-        return array_keys((array)$data);
+        $rs =  array_keys((array)$data);
+        if (count($rs) == 0 ){
+            $this->session->set_flashdata('message', "El query no proporciona ningun resultado, favor revisar");
+            $this->session->set_flashdata('type_message', 'error');
+            $rs = [];
+        }
+        return $rs;
     }
     
     

@@ -4,6 +4,21 @@
 	}
 }
 
+.navbar {
+	background: #4e73df;
+	box-shadow: 0 0 9px rgba(0,0,0,0.4);
+}
+
+.navbar .nav-link, .navbar #bussiness-logo {
+	color: white;
+	text-decoration: none;
+}
+
+#bussiness-logo .sidebar-brand-text{
+	font-size: 1.3rem;
+	font-family: verdana;
+}
+
 #bussiness-logo img{
 	width: 48px;
 }
@@ -132,3 +147,18 @@ tr:hover {
     width: 100%;
     height: 300px;
 }
+
+.component_link {
+	border-radius: 5px 0px 0 5px;
+}
+
+.dt-buttons.btn-group{
+	height: 38px;
+	margin: 0 5px;
+	border-radius: 4px;
+}
+
+.dt-buttons.btn-group button{
+	margin-right: 1px;
+}
+

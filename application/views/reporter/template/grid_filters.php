@@ -16,6 +16,8 @@ for ($i=0; $i < count($table['columns']); $i++ ) {
         box-shadow: 0 0 2px rgba(0,0,0,.3) inset;
     }
 </style>
+
+
 <div class="row">
     <?php
     $btnSearch = false;

@@ -237,7 +237,6 @@ class Report extends AdminGrid{
             'reload' => isset($reportValues['reload']) ? $reportValues['reload'] : null,
             'format_notify' => $reportValues['format_notify']
         );
-
         
         if(is_numeric($reportValues['connection'])){
             $report['connection'] = $reportValues['connection'];
@@ -318,10 +317,9 @@ class Report extends AdminGrid{
 
     private function getGridColumns($idReport){
         $columns = array();
-        
         $this->grid_report_m->loadReport($idReport);
         $grid = $this->grid_report_m->bodyGrid();
-//         echo "<pre>";print_r($grid);exit;
+        
         if (is_array($grid['columns']) && count($grid['columns']) > 0){
             $columns = $grid['columns'];
         }
