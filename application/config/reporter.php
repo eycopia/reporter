@@ -4,7 +4,6 @@
 $namePackege = 'reporter/';
 
 $config['app_name'] = "Reporter";
-$config['app_logo'] = "assets/reporter/img/logo.png";
 $config['app_main_css'] = "";
 $config['app_main_js'] = "";
 

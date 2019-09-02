@@ -25,8 +25,7 @@ class Auth extends CI_Controller
 	        $this->session->set_flashdata('type_message', $type);
 	        redirect($redir);
 	    }
-	    $data =  ['main_content' =>  $this->config->item('rpt_template') . "login"];
-	    $this->load->view($this->config->item('rpt_base_template'), $data);	    
+	    $this->load->view($this->config->item('rpt_template') . "login");	    
 	}
 	
 	

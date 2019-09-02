@@ -4,6 +4,15 @@
 	}
 }
 
+.reporter-login-jpg {
+    background: url("../../img/login.jpg");
+        background-position-x: 0%;
+        background-position-y: 0%;
+        background-size: auto;
+    background-position: center;
+    background-size: cover;
+}
+
 .navbar {
 	background: #4e73df;
 	box-shadow: 0 0 9px rgba(0,0,0,0.4);

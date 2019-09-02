@@ -11,7 +11,7 @@
 
           <a class="d-flex align-items-center justify-content-center" href="<?php echo base_url();?>" id="bussiness-logo"> 
     		 <div class="sidebar-brand-icon">
-	           <img src="<?php echo base_url($this->config->item('app_logo')); ?>" alt='bussiness logo' title="bussiness logo"> 
+	           <img src="<?php echo base_url("assets/img/logo.png"); ?>" alt='bussiness logo' title="bussiness logo"> 
 		         </div>
 	         <div class="sidebar-brand-text mx-3"> <?php echo  $this->session->has_userdata('project') ? $this->session->userdata('project') : $this->config->item('app_name');?></div> 
 	        

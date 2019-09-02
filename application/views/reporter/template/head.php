@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"> <?php //echo ($this->config->item('language') == 'english') ? 'en' : 'es'; ?>
+<html lang="<?php echo ($this->config->item('language') == 'english') ? 'en' : 'es'; ?>">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
