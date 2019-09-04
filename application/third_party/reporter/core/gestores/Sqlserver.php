@@ -43,7 +43,6 @@ class Sqlserver implements iGestorDB{
             $sql = $syntaxAnalyze->addSql("select", "top $limit");
         }
         else{
-            
             if ( isset($request['start']) && $request['length'] != -1 ) {
                 $start = $request['start'];
                 $length = $request['length'] + $start;
@@ -51,14 +50,18 @@ class Sqlserver implements iGestorDB{
                 $start = 1;
                 $length = 10;
             }
+            
             $positions = $syntaxAnalyze->getPositions();
             $sql = substr($sql, $positions['SELECT'] + 6, strlen($sql));
+            $fieldDt = DatatablesSSP::order($_REQUEST, $columns);
+            $field = empty($fieldDt) ? $field : $fieldDt;
             $sql = "SELECT  *
                 FROM ( SELECT ROW_NUMBER() OVER ( ORDER BY {$field} ) AS RowNum,
                           {$sql} ) AS RowConstrainedResult
                 WHERE   RowNum >= {$start} AND RowNum < {$length}
                 ORDER BY RowNum";
         }
+
         return $sql;
     }
 }

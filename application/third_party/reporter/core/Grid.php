@@ -239,7 +239,12 @@ class Grid extends CI_Model
         $sql = $this->applyCustomFilters($sql);
         $columns = $this->columns;
         $sql = DatatablesSSP::getQuery($_REQUEST, $sql, $columns);
-        $this->sqlFiltered = DatatablesSSP::getSqlOrder($_REQUEST, $sql, $columns);
+        if( get_class($this->gestor) != 'Sqlserver' ){
+            $this->sqlFiltered = DatatablesSSP::getSqlOrder($_REQUEST, $sql, $columns);
+        }else{
+            $this->sqlFiltered = $sql;    
+        }
+        
         return $this->gestor->getSqlPaginate($_REQUEST, $columns, $this->sqlFiltered);
     }
 
