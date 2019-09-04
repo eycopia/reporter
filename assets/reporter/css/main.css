@@ -171,3 +171,20 @@ tr:hover {
 	margin-right: 1px;
 }
 
+.datepicker thead{
+    background: #eee;
+}
+
+.datepicker thead th  {
+	margin: 0px !important;;
+    padding: 0px !important;;
+    background: #eee;
+    border-radius: none;
+    border-color: #eee !important;
+    color: #000;
+}
+
+.datepicker td {
+    border: none;
+    padding: 4px 2px;
+}

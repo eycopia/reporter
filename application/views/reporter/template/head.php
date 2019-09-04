@@ -16,7 +16,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo  base_url('assets/libs/select2/css/select2.min.css');?>" rel="stylesheet"> 
-  	<link href="<?php echo base_url('assets/libs/bootstrap-4/bootstrap-datetimepicker.min.css');?>" rel="stylesheet">
+  	<link href="<?php echo base_url('assets/libs/tempus/tbootstrap-4.min.css');?>" rel="stylesheet">
 
 
 
@@ -63,7 +63,7 @@
 <script src="<?php echo base_url('assets/libs/popper.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/bootstrap-4/js/bootstrap.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/moment.min.js');?>"></script>
-<script src="<?php echo base_url('assets/libs/bootstrap-4/bootstrap-datetimepicker.min.js');?>"></script>
+<script src="<?php echo base_url('assets/libs/tempus/tbootstrap-4.min.js');?>"></script>
 <?php if(isset($table)){ ?>
 <script src="<?php echo base_url('assets/libs/select2/js/select2.min.js');?>"></script>
 <script src="<?php echo base_url('assets/libs/datatables1.10.18/datatables.min.js');?>"></script>
