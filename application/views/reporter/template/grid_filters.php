@@ -40,7 +40,7 @@ for ($i=0; $i < count($table['columns']); $i++ ) {
         $this->load->view($table['viewsFilters'][$filter['type']], array('filter' => $filter));
     }
     if($btnSearch){    ?>
-    <div class="col-sm-1 row align-items-end">
+    <div class="col-sm-2 row align-items-end">
         	<button class="btn btn-primary" id="runSearch">
             <i class="fa fa-search"></i> <?php echo $this->lang->line('button_search'); ?></button>
     </div>
