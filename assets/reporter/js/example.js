@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     notice.on('pnotify.confirm', function() {
         alert('Ok, cool.');
-
+        notice.close();
     });
     notice.on('pnotify.cancel', function() {
         alert('Oh ok. Chicken, I see.');

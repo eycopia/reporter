@@ -33,6 +33,7 @@ application/composer.lock
 !*/cache/index.html
 !*/cache/.htaccess
 
+application/third_party/grocerycrud
 assets/grocery_crud
 assets/uploads
 assets/libs
