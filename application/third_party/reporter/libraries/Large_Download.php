@@ -58,7 +58,8 @@ class Large_Download {
     }
 
     private function make(){
-        $this->filename = tempnam('/temp', 'report-');
+        $dir = dirname(APPPATH) . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "uploads";
+        $this->filename = tempnam($dir, 'report-');
         if($this->filename){
             $this->fp = fopen($this->filename, "w");
             $this->fillData();
