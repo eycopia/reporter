@@ -65,6 +65,7 @@ class Grid extends CI_Model
         $this->model = $model;
         $this->load->model('server_m');
         $this->load->model('report_m');
+        $this->load->model('component_m');
     }
 
 
@@ -151,6 +152,7 @@ class Grid extends CI_Model
             "viewsFilters" => $this->filterGrid->getNameViews(),
             "data_url" => $this->data_url,
             "utilities" => $this->utilities,
+            "buttons" => isset($table['buttons']) ? $table['buttons'] : null,
             'avoid_basic_filter' => $this->avoid_basic_filter,
             "draw" => isset ( $_REQUEST['draw'] ) ? intval( $_REQUEST['draw'] ) : 0
         );

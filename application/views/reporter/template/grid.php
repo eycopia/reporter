@@ -42,10 +42,13 @@ if(isset($report->resource) && $report->resource == 'embedded'){
   
     <div class="form-group col-sm-16">
         <form>
-        <?php
-         if(isset($table['filters'])){ $this->load->view($this->config->item('rpt_template') . 'grid_filters');}
-        ?>
+        <div class="row">
+            <?php
+             if(isset($table['filters'])){ $this->load->view($this->config->item('rpt_template') . 'grid_filters');}
+             if(isset($table['buttons'])){ $this->load->view($this->config->item('rpt_template') . 'buttons');}
+             ?>
             <input type="reset" class="invisible">
+         </div>
         </form>
     </div>
 </div>

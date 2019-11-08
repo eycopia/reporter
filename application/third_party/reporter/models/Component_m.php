@@ -12,6 +12,7 @@ class Component_m extends CI_Model {
     private $table = 'component';
 
     const  COMPONENT_DOWNLOAD = 1;
+    const  COMPONENT_BUTTON = 2;
 
     public function __construct(){
         parent::__construct();
@@ -35,5 +36,16 @@ class Component_m extends CI_Model {
         and tc.idTypeComponent = ".self::COMPONENT_DOWNLOAD;
         $components = $this->db->query($sql);
         return $components->row();
+    }
+    
+    public function getButtonsForReport($idReport){
+        $sql = "SELECT c.idComponent, c.definition, c.idTypeComponent, c.idReport, 
+           tc.name as type_component, tc.definition as original_definition
+        FROM {$this->table} as c
+        JOIN type_component as tc on c.idTypeComponent = tc.idTypeComponent
+        WHERE c.idReport = $idReport
+        and tc.status = 1 and tc.idTypeComponent = ".self::COMPONENT_BUTTON;
+        $components = $this->db->query($sql);
+        return $components->result();
     }
 }

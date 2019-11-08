@@ -34,6 +34,7 @@ class Customer_m extends Grid implements interfaceGrid
             'filters' => 'basic',
             'columns' => $this->getColumns(),
             'pagination' => $this->report->pagination,
+            'buttons' => $this->component_m->getButtonsForReport($this->report->idReport),
             'sql' => $sql,
             'utilities' => array(
                 'auto_reload' => $this->report->auto_reload,

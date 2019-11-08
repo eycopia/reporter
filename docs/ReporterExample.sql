@@ -660,3 +660,9 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-06-14 14:19:43
+
+alter table type_component add column definition text default null;
+alter table type_component modify column created timestamp default current_timestamp;
+insert into type_component (name, `created`,  `status`) values ("download", '2019-11-08 09:00:00', 1);
+insert into type_component (name, `status`, `definition`) values ("button", 1, '{ "href": "#", "class": "btn btn-default", "name": "Default anchor", "title": "Default anchor", "id": "", "icon": "fa fa-link"}');
+alter table component add column definition text default null ;

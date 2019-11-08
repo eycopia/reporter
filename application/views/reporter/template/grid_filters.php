@@ -18,7 +18,7 @@ for ($i=0; $i < count($table['columns']); $i++ ) {
 </style>
 
 
-<div class="row">
+
     <?php
     $btnSearch = false;
     if(!$table['avoid_basic_filter'] && !empty($searchOptions)){
@@ -45,4 +45,4 @@ for ($i=0; $i < count($table['columns']); $i++ ) {
             <i class="fa fa-search"></i> <?php echo $this->lang->line('button_search'); ?></button>
     </div>
     <?php } ?>
-</div>
+

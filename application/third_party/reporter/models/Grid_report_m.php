@@ -19,7 +19,6 @@ class Grid_report_m extends Grid implements interfaceGrid
     public function __construct()
     {
         parent::__construct( new ModelReporter() );
-        $this->load->model('component_m');
         $this->load->model('project_m');
     }
 
@@ -47,6 +46,7 @@ class Grid_report_m extends Grid implements interfaceGrid
             'filters' => (count($vars) > 0) ? $vars : 'basic',
             'columns' => (count($dbColumns)>0) ? $dbColumns : array(),
             'pagination' => $this->report->pagination,
+            'buttons' => $this->component_m->getButtonsForReport($this->report->idReport),
             'sql' => $sql,
             'utilities' => array(
                 'auto_reload' => $this->report->auto_reload,
