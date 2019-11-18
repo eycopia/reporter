@@ -56,7 +56,7 @@ class Authorization_m extends CI_Model
         }
         $join = "LEFT JOIN users_by_project as up on up.idProject = p.idProject ";
         $q = $this->db->query("SELECT p.* FROM project as p $join".
-            " WHERE p.status=1 $where");
+            " WHERE p.status=1 $where GROUP BY p.idProject");
         return $q->result();
     }
 

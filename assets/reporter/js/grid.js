@@ -93,6 +93,7 @@ $(document).ready(function() {
           "pagingType": type_pagination,
           "fixedHeader": {header: true},
           "order": [], //no quitar
+          "responsive": true,
           "serverSide": true,
           "pageLength" : items_per_page,
           "ajax": function(data, callback, settings) {

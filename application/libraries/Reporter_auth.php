@@ -164,6 +164,12 @@ class Reporter_auth implements interfaceAuthReporter
      */
     public function isLogin()
     {
+        if(is_cli()){
+            if(!$this->CI->session->has_userdata($this->keyUsername)){
+                $this->newSession(1);
+            }
+        }
+        
         if( ! $this->CI->session->has_userdata($this->keyUsername) ) {
             redirect($this->CI->config->item('rpt_login'));
         }

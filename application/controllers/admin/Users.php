@@ -29,8 +29,9 @@ class Users extends CI_Controller{
             $crud->unset_delete();//grid
             $crud->set_table('base_user');
             $crud->set_subject('Reporter Users');
-            $crud->fields('idUser', 'username', 'first_name', 'last_name', 'permission');
-            $crud->columns('idUser', 'username', 'first_name', 'last_name', 'permission');
+            $crud->set_relation_n_n('projects','users_by_project', 'project', 'idUser', 'idProject', 'name');
+            $crud->fields('idUser', 'username', 'first_name', 'last_name', 'permission', 'projects');
+            $crud->columns('idUser', 'username', 'first_name', 'last_name', 'permission', 'projects');
             $crud->required_fields('IdUser','username', 'permission');
             $crud->callback_field('permission',array($this,'fn_permission'));
             $crud->unset_export();
@@ -59,5 +60,9 @@ class Users extends CI_Controller{
             $select .= "<option value='$val' $selected>$key</option>";
         }
         return $select . "</select>";
+    }
+    
+    public function fn_projects(){
+        return "<select name='projects[]' multiple='multiple' class='chosen-select'><option>1</option></select>";
     }
 }

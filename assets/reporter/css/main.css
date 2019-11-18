@@ -94,7 +94,8 @@ table .form-control {
 }
 
 .selected {
-    background: #DEECFF !important; 
+    background: #DEECFF !important;
+    color: #807e7e !important; 
 }
 
 tr:hover {
