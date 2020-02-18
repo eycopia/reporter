@@ -26,6 +26,7 @@ $lang['menu_users'] = 'Admin. Usuarios';
 $lang['menu_report'] = 'Admin. Reportes';
 $lang['menu_server'] = 'Admin. Servidores';
 $lang['menu_project'] = 'Admin. Proyectos';
+$lang['menu_component'] = 'Componentes';
 $lang['menu_chart'] = 'Gráficos';
 $lang['menu_type_chart'] = 'Admin. Tipo de Gráficos';
 

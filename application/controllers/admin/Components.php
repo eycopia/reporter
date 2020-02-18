@@ -34,8 +34,8 @@ class Components extends CI_Controller{
             $crud->set_relation('idTypeComponent','type_component','name');
             $output = $crud->render();
             $output->title_page = 'Components for Reports';
-            $output->main_content =  'admin';
-            $this->load->view('template/index',$output);
+            $output->main_content = $this->config->item('rpt_views') . 'admin';
+            $this->load->view( $this->config->item('rpt_base_template'),$output);
         }catch(Exception $e){
             show_error($e->getMessage().' --- '.$e->getTraceAsString());
         }

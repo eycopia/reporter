@@ -24,6 +24,7 @@ $lang['menu_logout'] = 'Logout';
 $lang['menu_report'] = 'Admin Reports';
 $lang['menu_server'] = 'Admin Servers';
 $lang['menu_project'] = 'Admin Projects';
+$lang['menu_component'] = 'Components';
 $lang['menu_chart'] = 'Charts';
 $lang['menu_type_chart'] = 'Admin Types of Charts';
 

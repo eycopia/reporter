@@ -1,4 +1,6 @@
 #codeigniter
+application/controllers/Welcome.php
+application/views/welcome_message.php
 application/.htaccess
 application/cache/
 application/core/

@@ -37,6 +37,7 @@
     <a class="dropdown-item" href="<?php echo site_url('admin/Notify_Report'); ?>"><i class="fa fa-fw fa-paper-plane"></i>Notificar</a>
      <?php } if( $this->reporter_auth->isDeveloper()) { ?>
     <a class="dropdown-item" href="<?php echo site_url('admin/server'); ?>"><i class="fa fa-fw fa-server"></i> <?php echo $this->lang->line('menu_server'); ?></a>
+    <a class="dropdown-item" href="<?php echo site_url('admin/components'); ?>"><i class="fa fa-fw fa-plug"></i> <?php echo $this->lang->line('menu_component'); ?></a>
 	 <?php }  ?>
     <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>"><i class="fa fa-fw fa-sign-out-alt"></i><?php echo $this->lang->line('menu_logout'); ?></a>
 </div>
