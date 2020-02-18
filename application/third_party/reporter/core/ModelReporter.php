@@ -69,4 +69,8 @@ class ModelReporter implements  interfaceAccessDb
         }
     }
 
+    function getConn(){
+        return $this->conn;
+    }
+
 }
